@@ -79,6 +79,42 @@ export const getOrganizerDashboard = asyncHandler(async (req, res) => {
   });
 });
 
+export const getParticipantDashboard = asyncHandler(async (req, res) => {
+  const myTeams = await Team.find({
+    members: req.user._id,
+  });
+
+  const teamIds = myTeams.map((team) => team._id);
+
+  const registeredHackathons = await Registration.countDocuments({
+    team: { $in: teamIds },
+  });
+
+  const submissions = await Submission.countDocuments({
+    team: { $in: teamIds },
+  });
+
+  const submissionIds = (
+    await Submission.find({
+      team: { $in: teamIds },
+    })
+  ).map((submission) => submission._id);
+
+  const reviewsReceived = await Review.countDocuments({
+    submission: { $in: submissionIds },
+  });
+
+  res.status(200).json({
+    success: true,
+    dashboard: {
+      myTeams: myTeams.length,
+      registeredHackathons,
+      submissions,
+      reviewsReceived,
+    },
+  });
+});
+
 export const getJudgeDashboard = asyncHandler(async (req, res) => {
   const completedReviews = await Review.countDocuments({
     judge: req.user._id,

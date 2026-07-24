@@ -10,6 +10,7 @@ import teamRoutes from "./routes/teamRoutes.js";
 import submissionRoutes from "./routes/submissionRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 import leaderboardRoutes from "./routes/leaderboardRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use("/api/teams", teamRoutes);
 app.use("/api/submissions", submissionRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 app.use(errorMiddleware);
 
