@@ -3,60 +3,61 @@ import Submission from "../models/Submission.js";
 import asyncHandler from "../utils/asyncHandler.js";
 
 export const getLeaderboard = asyncHandler(async (req, res) => {
-  const leaderboard = await Review.aggregate([
-    {
-      $lookup: {
-        from: "submissions",
-        localField: "submission",
-        foreignField: "_id",
-        as: "submission",
+  const { hackathonId } = req.params;
+
+  const reviews = await Review.find()
+    .populate({
+      path: "submission",
+      match: {
+        hackathon: hackathonId,
       },
-    },
-
-    {
-      $unwind: "$submission",
-    },
-
-    {
-      $match: {
-        "submission.hackathon": req.params.hackathonId,
+      populate: {
+        path: "team",
       },
-    },
+    });
 
-    {
-      $group: {
-        _id: "$submission.team",
+  const leaderboardMap = {};
 
-        projectName: {
-          $first: "$submission.projectName",
-        },
+  reviews.forEach((review) => {
+    if (!review.submission) return;
 
-        totalScore: {
-          $sum: "$totalScore",
-        },
+    const submissionId = review.submission._id.toString();
 
-        reviewCount: {
-          $sum: 1,
-        },
-      },
-    },
+    if (!leaderboardMap[submissionId]) {
+      leaderboardMap[submissionId] = {
+        submissionId,
+        projectName: review.submission.projectName,
+        teamName: review.submission.team.teamName,
+        totalScore: 0,
+        reviews: 0,
+      };
+    }
 
-    {
-      $sort: {
-        totalScore: -1,
-      },
-    },
-  ]);
+    leaderboardMap[submissionId].totalScore += review.totalScore;
+    leaderboardMap[submissionId].reviews++;
+  });
 
-  const rankedLeaderboard = leaderboard.map((team, index) => ({
-    rank: index + 1,
-
-    ...team,
-  }));
+  const leaderboard = Object.values(leaderboardMap)
+    .map((item) => ({
+      ...item,
+      averageScore:
+        item.reviews === 0
+          ? 0
+          : Number(
+              (
+                item.totalScore /
+                item.reviews
+              ).toFixed(2)
+            ),
+    }))
+    .sort((a, b) => b.averageScore - a.averageScore)
+    .map((item, index) => ({
+      rank: index + 1,
+      ...item,
+    }));
 
   res.status(200).json({
     success: true,
-    leaderboard: rankedLeaderboard,
+    leaderboard,
   });
 });
-
