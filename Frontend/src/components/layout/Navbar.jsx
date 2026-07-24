@@ -26,14 +26,14 @@ function Navbar() {
             Home
           </Link>
 
-          <Link to="/hackathons" className="hover:text-blue-600 transition">
+          <Link to={`/leaderboard/${hackathon._id}`} className="hover:text-blue-600 transition">
             Hackathons
           </Link>
 
           <Link to="/leaderboard" className="hover:text-blue-600 transition">
             Leaderboard
           </Link>
-          
+
           <Link to="/teams" className="hover:text-blue-600 transition">
             Teams
           </Link>
