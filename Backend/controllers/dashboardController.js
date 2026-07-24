@@ -1,0 +1,101 @@
+import User from "../models/User.js";
+import Hackathon from "../models/Hackathon.js";
+import Team from "../models/Team.js";
+import Submission from "../models/Submission.js";
+import Review from "../models/Review.js";
+import Registration from "../models/Registration.js";
+import asyncHandler from "../utils/asyncHandler.js";
+
+export const getAdminDashboard = asyncHandler(async (req, res) => {
+  const totalUsers = await User.countDocuments();
+
+  const totalHackathons = await Hackathon.countDocuments();
+
+  const totalTeams = await Team.countDocuments();
+
+  const totalSubmissions = await Submission.countDocuments();
+
+  const totalReviews = await Review.countDocuments();
+
+  const totalOrganizers = await User.countDocuments({
+    role: "organizer",
+  });
+
+  const totalJudges = await User.countDocuments({
+    role: "judge",
+  });
+
+  const totalParticipants = await User.countDocuments({
+    role: "participant",
+  });
+
+  res.status(200).json({
+    success: true,
+    dashboard: {
+      totalUsers,
+      totalHackathons,
+      totalTeams,
+      totalSubmissions,
+      totalReviews,
+      totalOrganizers,
+      totalJudges,
+      totalParticipants,
+    },
+  });
+});
+
+export const getOrganizerDashboard = asyncHandler(async (req, res) => {
+  const myHackathons = await Hackathon.find({
+    organizer: req.user._id,
+  });
+
+  const hackathonIds = myHackathons.map((hackathon) => hackathon._id);
+
+  const registrations = await Registration.countDocuments({
+    hackathon: { $in: hackathonIds },
+  });
+
+  const submissions = await Submission.countDocuments({
+    hackathon: { $in: hackathonIds },
+  });
+
+  const completedHackathons = myHackathons.filter(
+    (hackathon) => hackathon.status === "Completed"
+  ).length;
+
+  const upcomingHackathons = myHackathons.filter(
+    (hackathon) => hackathon.status === "Upcoming"
+  ).length;
+
+  res.status(200).json({
+    success: true,
+    dashboard: {
+      myHackathons: myHackathons.length,
+      registrations,
+      submissions,
+      completedHackathons,
+      upcomingHackathons,
+    },
+  });
+});
+
+export const getJudgeDashboard = asyncHandler(async (req, res) => {
+  const completedReviews = await Review.countDocuments({
+    judge: req.user._id,
+  });
+
+  // We'll implement proper judge assignment later
+  const assignedProjects = completedReviews;
+
+  const pendingReviews = 0;
+
+  res.status(200).json({
+    success: true,
+    dashboard: {
+      assignedProjects,
+      completedReviews,
+      pendingReviews,
+    },
+  });
+});
+
