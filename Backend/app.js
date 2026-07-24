@@ -8,7 +8,7 @@ import hackathonRoutes from "./routes/hackathonRoutes.js";
 import registrationRoutes from "./routes/registrationRoutes.js";
 import teamRoutes from "./routes/teamRoutes.js";
 import submissionRoutes from "./routes/submissionRoutes.js";
-
+import reviewRoutes from "./routes/reviewRoutes.js";
 
 const app = express();
 
@@ -32,6 +32,7 @@ app.use("/api/hackathons", hackathonRoutes);
 app.use("/api/registrations", registrationRoutes);
 app.use("/api/teams", teamRoutes);
 app.use("/api/submissions", submissionRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 app.use(errorMiddleware);
 
