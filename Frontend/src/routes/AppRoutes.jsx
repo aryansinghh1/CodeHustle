@@ -12,6 +12,7 @@ import MyRegistrations from "../pages/Registration/MyRegistrations";
 import ParticipantDashboard from "../pages/Participant/Dashboard";
 import OrganizerDashboard from "../pages/Organizer/Dashboard";
 import CreateHackathon from "../pages/Organizer/CreateHackathon";
+import MyHackathons from "../pages/Organizer/MyHackathons";
 
 function AppRoutes() {
   return (
@@ -37,6 +38,8 @@ function AppRoutes() {
       <Route path="/organizer/dashboard" element={<OrganizerDashboard />} />
 
       <Route path="/organizer/create-hackathon" element={<CreateHackathon />} />
+
+      <Route path="/organizer/my-hackathons" element={<MyHackathons />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
