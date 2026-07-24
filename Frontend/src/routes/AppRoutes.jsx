@@ -19,6 +19,8 @@ import MySubmissions from "../pages/Submission/MySubmissions";
 import CreateSubmission from "../pages/Submission/CreateSubmission";
 import EditSubmission from "../pages/Submission/EditSubmission";
 import JudgeDashboard from "../pages/Judge/Dashboard";
+import JudgeSubmissions from "../pages/Judge/Submissions";
+import ReviewSubmission from "../pages/Judge/ReviewSubmission";
 
 function AppRoutes() {
   return (
@@ -58,6 +60,10 @@ function AppRoutes() {
       <Route path="/submission/edit/:id" element={<EditSubmission />} />
 
       <Route path="/judge/dashboard" element={<JudgeDashboard />} />
+
+      <Route path="/judge/submissions" element={<JudgeSubmissions />} />
+
+      <Route path="/judge/review/:id" element={<ReviewSubmission />} />
 
       
 
