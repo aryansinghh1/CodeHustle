@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
 import { getHackathonById } from "../../services/hackathonService";
-import { useNavigate } from "react-router-dom";
 
 function Details() {
   const { id } = useParams();
