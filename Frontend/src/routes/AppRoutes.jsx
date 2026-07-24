@@ -22,6 +22,7 @@ import JudgeDashboard from "../pages/Judge/Dashboard";
 import JudgeSubmissions from "../pages/Judge/Submissions";
 import ReviewSubmission from "../pages/Judge/ReviewSubmission";
 import Leaderboard from "../pages/Leaderboard/Leaderboard";
+import AdminDashboard from "../pages/Admin/Dashboard";
 
 function AppRoutes() {
   return (
@@ -67,6 +68,8 @@ function AppRoutes() {
       <Route path="/judge/review/:id" element={<ReviewSubmission />} />
 
       <Route path="/leaderboard/:hackathonId" element={<Leaderboard />} />
+
+      <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
       
 
