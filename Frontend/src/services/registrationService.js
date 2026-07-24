@@ -8,3 +8,12 @@ export const getMyRegistrations = () =>
 
 export const cancelRegistration = (id) =>
   api.delete(`/registrations/${id}`);
+
+export const getHackathonRegistrations = (hackathonId) =>
+  api.get(`/registrations/hackathon/${hackathonId}`);
+
+export const approveRegistration = (id) =>
+  api.put(`/registrations/${id}/approve`);
+
+export const rejectRegistration = (id) =>
+  api.put(`/registrations/${id}/reject`);
