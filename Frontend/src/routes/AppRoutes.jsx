@@ -9,6 +9,7 @@ import Details from "../pages/Hackathon/Details";
 import TeamPage from "../pages/Team/TeamPage";
 import Register from "../pages/Registration/Register";
 import MyRegistrations from "../pages/Registration/MyRegistrations";
+import ParticipantDashboard from "../pages/Participant/Dashboard";
 
 function AppRoutes() {
   return (
@@ -28,6 +29,8 @@ function AppRoutes() {
       <Route path="/register/:hackathonId" element={<Register />} />
 
       <Route path="/my-registrations" element={<MyRegistrations />} />
+
+      <Route path="/participant/dashboard" element={<ParticipantDashboard />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
