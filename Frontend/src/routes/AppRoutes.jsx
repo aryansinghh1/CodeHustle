@@ -14,6 +14,7 @@ import OrganizerDashboard from "../pages/Organizer/Dashboard";
 import CreateHackathon from "../pages/Organizer/CreateHackathon";
 import MyHackathons from "../pages/Organizer/MyHackathons";
 import EditHackathon from "../pages/Organizer/EditHackathon";
+import Registrations from "../pages/Organizer/Registrations";
 
 function AppRoutes() {
   return (
@@ -43,6 +44,8 @@ function AppRoutes() {
       <Route path="/organizer/my-hackathons" element={<MyHackathons />} />
 
       <Route path="/organizer/edit-hackathon/:id" element={<EditHackathon />} />
+
+      <Route path="/organizer/registrations/:id" element={<Registrations />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
