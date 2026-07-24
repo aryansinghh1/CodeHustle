@@ -71,7 +71,6 @@ function Navbar() {
           >
             Get Started
           </Link>
-
         </div>
 
       </div>

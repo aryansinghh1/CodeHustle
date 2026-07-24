@@ -16,11 +16,12 @@ function AppRoutes() {
 
       <Route path="/signup" element={<Signup />} />
 
-      <Route path="*" element={<NotFound />} />
       
       <Route path="/hackathons" element={<Listing />} />
 
       <Route path="/hackathons/:id" element={<Details />} />
+
+      <Route path="*" element={<NotFound />} />
       
     </Routes>
   );
