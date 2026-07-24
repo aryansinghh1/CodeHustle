@@ -21,6 +21,7 @@ import EditSubmission from "../pages/Submission/EditSubmission";
 import JudgeDashboard from "../pages/Judge/Dashboard";
 import JudgeSubmissions from "../pages/Judge/Submissions";
 import ReviewSubmission from "../pages/Judge/ReviewSubmission";
+import Leaderboard from "../pages/Leaderboard/Leaderboard";
 
 function AppRoutes() {
   return (
@@ -64,6 +65,8 @@ function AppRoutes() {
       <Route path="/judge/submissions" element={<JudgeSubmissions />} />
 
       <Route path="/judge/review/:id" element={<ReviewSubmission />} />
+
+      <Route path="/leaderboard/:hackathonId" element={<Leaderboard />} />
 
       
 
