@@ -74,13 +74,45 @@ export const createHackathon = asyncHandler(async (req, res) => {
 });
 
 export const getAllHackathons = asyncHandler(async (req, res) => {
-  const hackathons = await Hackathon.find()
+  const { search, theme, mode, status, page = 1, limit = 10 } = req.query;
+
+  const query = {};
+
+  if (search) {
+    query.title = {
+      $regex: search,
+      $options: "i",
+    };
+  }
+
+  if (theme) {
+    query.theme = theme;
+  }
+
+  if (mode) {
+    query.mode = mode;
+  }
+
+  if (status) {
+    query.status = status;
+  }
+
+  const total = await Hackathon.countDocuments(query);
+
+  const hackathons = await Hackathon.find(query)
     .populate("organizer", "name email")
+    .skip((page - 1) * limit)
+    .limit(Number(limit))
     .sort({ createdAt: -1 });
 
   res.status(200).json({
     success: true,
-    count: hackathons.length,
+    total,
+
+    currentPage: Number(page),
+
+    totalPages: Math.ceil(total / limit),
+
     hackathons,
   });
 });
