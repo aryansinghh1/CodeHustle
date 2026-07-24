@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import authRoutes from "./routes/authRoutes.js";
 import errorMiddleware from "./middleware/errorMiddleware.js";
 
 const app = express();
@@ -18,6 +19,8 @@ app.get("/", (req, res) => {
         message: "Welcome to CodeHustle API 🚀"
     });
 });
+
+app.use("/api/auth", authRoutes);
 
 app.use(errorMiddleware);
 
