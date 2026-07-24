@@ -213,3 +213,17 @@ export const deleteHackathon = asyncHandler(async (req, res) => {
     message: "Hackathon deleted successfully.",
   });
 });
+
+export const getMyHackathons = asyncHandler(async (req, res) => {
+
+  const hackathons = await Hackathon.find({
+    organizer: req.user._id,
+  }).sort({ createdAt: -1 });
+
+  res.status(200).json({
+    success: true,
+    count: hackathons.length,
+    hackathons,
+  });
+
+});
