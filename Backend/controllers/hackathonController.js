@@ -18,6 +18,36 @@ export const createHackathon = asyncHandler(async (req, res) => {
     judgingCriteria,
   } = req.body;
 
+  const registrationDate = new Date(registrationDeadline);
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  if (registrationDate >= start) {
+    return res.status(400).json({
+      success: false,
+      message: "Registration deadline must be before the start date.",
+    });
+  }
+
+  if (start >= end) {
+    return res.status(400).json({
+      success: false,
+      message: "End date must be after the start date.",
+    });
+  }
+
+  const existingHackathon = await Hackathon.findOne({
+    title,
+    organizer: req.user._id,
+  });
+
+  if (existingHackathon) {
+    return res.status(400).json({
+      success: false,
+      message: "Hackathon with this title already exists.",
+    });
+  }
+
   const hackathon = await Hackathon.create({
     title,
     description,
@@ -83,7 +113,6 @@ export const updateHackathon = asyncHandler(async (req, res) => {
     });
   }
 
-  // Only owner organizer or admin
   if (
     hackathon.organizer.toString() !== req.user._id.toString() &&
     req.user.role !== "admin"
@@ -94,7 +123,27 @@ export const updateHackathon = asyncHandler(async (req, res) => {
     });
   }
 
-  Object.assign(hackathon, req.body);
+  const allowedFields = [
+    "title",
+    "description",
+    "theme",
+    "mode",
+    "venue",
+    "startDate",
+    "endDate",
+    "registrationDeadline",
+    "bannerImage",
+    "prizePool",
+    "maxTeamSize",
+    "rules",
+    "judgingCriteria",
+  ];
+
+  allowedFields.forEach((field) => {
+    if (req.body[field] !== undefined) {
+      hackathon[field] = req.body[field];
+    }
+  });
 
   await hackathon.save();
 
