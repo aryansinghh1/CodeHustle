@@ -3,6 +3,9 @@ import api from "./axios";
 export const getHackathons = (params) =>
   api.get("/hackathons", { params });
 
+export const getMyHackathons = () =>
+  api.get("/hackathons/my");
+
 export const getHackathonById = (id) =>
   api.get(`/hackathons/${id}`);
 
