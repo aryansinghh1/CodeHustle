@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { getHackathons } from "../../services/hackathonService";
 
 import MainLayout from "../../layouts/MainLayout";
 
-import {
-  createTeam,
-  getMyTeams,
-  deleteTeam,
-} from "../../services/teamService";
+import { createTeam, getMyTeams, deleteTeam } from "../../services/teamService";
 
 function TeamPage() {
   const [teams, setTeams] = useState([]);
+  const [hackathons, setHackathons] = useState([]);
+
   const [teamName, setTeamName] = useState("");
   const [hackathonId, setHackathonId] = useState("");
 
@@ -23,8 +22,19 @@ function TeamPage() {
     }
   };
 
+  const fetchHackathons = async () => {
+    try {
+      const res = await getHackathons();
+
+      setHackathons(res.data.hackathons);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     fetchTeams();
+    fetchHackathons();
   }, []);
 
   const handleCreate = async (e) => {
@@ -63,18 +73,13 @@ function TeamPage() {
 
   return (
     <MainLayout>
-
       <div className="max-w-6xl mx-auto px-6 py-10">
-
-        <h1 className="text-4xl font-bold mb-8">
-          My Teams
-        </h1>
+        <h1 className="text-4xl font-bold mb-8">My Teams</h1>
 
         <form
           onSubmit={handleCreate}
           className="bg-white border rounded-xl p-6 space-y-4 mb-10"
         >
-
           <input
             type="text"
             placeholder="Team Name"
@@ -84,47 +89,39 @@ function TeamPage() {
             required
           />
 
-          <input
-            type="text"
-            placeholder="Hackathon ID"
+          <select
             value={hackathonId}
             onChange={(e) => setHackathonId(e.target.value)}
             className="w-full border rounded-lg p-3"
             required
-          />
-
-          <button
-            className="bg-[#2b2b2b] text-white px-6 py-3 rounded-lg"
           >
+            <option value="">Select Hackathon</option>
+
+            {hackathons.map((hackathon) => (
+              <option key={hackathon._id} value={hackathon._id}>
+                {hackathon.title}
+              </option>
+            ))}
+          </select>
+
+          <button className="bg-[#2b2b2b] text-white px-6 py-3 rounded-lg">
             Create Team
           </button>
-
         </form>
 
         <div className="grid md:grid-cols-2 gap-6">
-
           {teams.map((team) => (
-
             <div
               key={team._id}
               className="border rounded-xl p-6 bg-white shadow"
             >
+              <h2 className="text-2xl font-bold">{team.teamName}</h2>
 
-              <h2 className="text-2xl font-bold">
-                {team.teamName}
-              </h2>
+              <p className="mt-3">Leader : {team.leader.name}</p>
 
-              <p className="mt-3">
-                Leader : {team.leader.name}
-              </p>
+              <p>Hackathon : {team.hackathon?.title}</p>
 
-              <p>
-                Hackathon : {team.hackathon?.title}
-              </p>
-
-              <p>
-                Members : {team.members.length}
-              </p>
+              <p>Members : {team.members.length}</p>
 
               <button
                 onClick={() => handleDelete(team._id)}
@@ -132,15 +129,10 @@ function TeamPage() {
               >
                 Delete Team
               </button>
-
             </div>
-
           ))}
-
         </div>
-
       </div>
-
     </MainLayout>
   );
 }
