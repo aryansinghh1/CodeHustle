@@ -9,13 +9,12 @@ export const signup = asyncHandler(async (req, res) => {
     name,
     email,
     password,
-    role,
     college,
     bio,
     github,
     linkedin,
     skills,
-  } = req.body;
+} = req.body;
 
   const existingUser = await User.findOne({ email });
 
@@ -32,13 +31,13 @@ export const signup = asyncHandler(async (req, res) => {
     name,
     email,
     password: hashedPassword,
-    role,
+    role: "participant",
     college,
     bio,
     github,
     linkedin,
     skills,
-  });
+});
 
   const token = generateToken(user._id, user.role);
 

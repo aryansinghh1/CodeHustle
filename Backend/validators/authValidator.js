@@ -24,20 +24,6 @@ export const validateSignup = (req, res, next) => {
     });
   }
 
-  const validRoles = [
-    "participant",
-    "organizer",
-    "judge",
-    "admin",
-  ];
-
-  if (role && !validRoles.includes(role)) {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid role selected.",
-    });
-  }
-
   next();
 };
 

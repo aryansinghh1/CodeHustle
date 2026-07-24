@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import asyncHandler from "../utils/asyncHandler.js";
+import bcrypt from "bcrypt";
 
 // Get Logged In User Profile
 export const getProfile = asyncHandler(async (req, res) => {
@@ -128,5 +129,40 @@ export const deleteUser = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     message: "User deleted successfully.",
+  });
+});
+
+export const createUserByAdmin = asyncHandler(async (req, res) => {
+  const { name, email, password, role } = req.body;
+
+  if (!["organizer", "judge", "admin"].includes(role)) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid role.",
+    });
+  }
+
+  const existingUser = await User.findOne({ email });
+
+  if (existingUser) {
+    return res.status(400).json({
+      success: false,
+      message: "User already exists.",
+    });
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const user = await User.create({
+    name,
+    email,
+    password: hashedPassword,
+    role,
+  });
+
+  res.status(201).json({
+    success: true,
+    message: `${role} created successfully.`,
+    user,
   });
 });
