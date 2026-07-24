@@ -7,6 +7,7 @@ import NotFound from "../pages/Error/NotFound";
 import Listing from "../pages/Hackathon/Listing";
 import Details from "../pages/Hackathon/Details";
 import TeamPage from "../pages/Team/TeamPage";
+import Register from "../pages/Registration/Register";
 
 function AppRoutes() {
   return (
@@ -22,6 +23,8 @@ function AppRoutes() {
       <Route path="/hackathons/:id" element={<Details />} />
 
       <Route path="/teams" element={<TeamPage />} />
+
+      <Route path="/register/:hackathonId" element={<Register />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
