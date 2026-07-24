@@ -10,6 +10,7 @@ import TeamPage from "../pages/Team/TeamPage";
 import Register from "../pages/Registration/Register";
 import MyRegistrations from "../pages/Registration/MyRegistrations";
 import ParticipantDashboard from "../pages/Participant/Dashboard";
+import OrganizerDashboard from "../pages/Organizer/Dashboard";
 
 function AppRoutes() {
   return (
@@ -31,6 +32,8 @@ function AppRoutes() {
       <Route path="/my-registrations" element={<MyRegistrations />} />
 
       <Route path="/participant/dashboard" element={<ParticipantDashboard />} />
+
+      <Route path="/organizer/dashboard" element={<OrganizerDashboard />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
