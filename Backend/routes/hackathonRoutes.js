@@ -9,12 +9,14 @@ import {
   getHackathonById,
   updateHackathon,
   deleteHackathon,
+  getMyHackathons,
 } from "../controllers/hackathonController.js";
 
 const router = express.Router();
 
 // Public
 router.get("/", getAllHackathons);
+router.get("/my", authMiddleware, roleMiddleware("organizer"), getMyHackathons);
 router.get("/:id", getHackathonById);
 
 // Organizer/Admin
@@ -22,21 +24,21 @@ router.post(
   "/",
   authMiddleware,
   roleMiddleware("organizer", "admin"),
-  createHackathon
+  createHackathon,
 );
 
 router.put(
   "/:id",
   authMiddleware,
   roleMiddleware("organizer", "admin"),
-  updateHackathon
+  updateHackathon,
 );
 
 router.delete(
   "/:id",
   authMiddleware,
   roleMiddleware("organizer", "admin"),
-  deleteHackathon
+  deleteHackathon,
 );
 
 export default router;
