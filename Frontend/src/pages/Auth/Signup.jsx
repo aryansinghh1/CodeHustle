@@ -8,11 +8,10 @@ function Signup() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    role: "participant",
-  });
+  name: "",
+  email: "",
+  password: "",
+});
 
   const [loading, setLoading] = useState(false);
 
@@ -91,21 +90,6 @@ function Signup() {
               onChange={handleChange}
               className="w-full border rounded-lg p-3 mt-2"
             />
-          </div>
-
-          <div>
-            <label>Role</label>
-
-            <select
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              className="w-full border rounded-lg p-3 mt-2"
-            >
-              <option value="participant">Participant</option>
-              <option value="organizer">Organizer</option>
-              <option value="judge">Judge</option>
-            </select>
           </div>
 
           <button
