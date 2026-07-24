@@ -15,6 +15,7 @@ import CreateHackathon from "../pages/Organizer/CreateHackathon";
 import MyHackathons from "../pages/Organizer/MyHackathons";
 import EditHackathon from "../pages/Organizer/EditHackathon";
 import Registrations from "../pages/Organizer/Registrations";
+import MySubmissions from "../pages/Submission/MySubmissions";
 
 function AppRoutes() {
   return (
@@ -46,6 +47,8 @@ function AppRoutes() {
       <Route path="/organizer/edit-hackathon/:id" element={<EditHackathon />} />
 
       <Route path="/organizer/registrations/:id" element={<Registrations />} />
+
+      <Route path="/my-submissions" element={<MySubmissions />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
