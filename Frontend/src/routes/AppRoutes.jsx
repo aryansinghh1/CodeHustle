@@ -6,6 +6,7 @@ import Signup from "../pages/Auth/Signup";
 import NotFound from "../pages/Error/NotFound";
 import Listing from "../pages/Hackathon/Listing";
 import Details from "../pages/Hackathon/Details";
+import TeamPage from "../pages/Team/TeamPage";
 
 function AppRoutes() {
   return (
@@ -16,13 +17,13 @@ function AppRoutes() {
 
       <Route path="/signup" element={<Signup />} />
 
-      
       <Route path="/hackathons" element={<Listing />} />
 
       <Route path="/hackathons/:id" element={<Details />} />
 
+      <Route path="/teams" element={<TeamPage />} />
+
       <Route path="*" element={<NotFound />} />
-      
     </Routes>
   );
 }
