@@ -18,6 +18,7 @@ import Registrations from "../pages/Organizer/Registrations";
 import MySubmissions from "../pages/Submission/MySubmissions";
 import CreateSubmission from "../pages/Submission/CreateSubmission";
 import EditSubmission from "../pages/Submission/EditSubmission";
+import JudgeDashboard from "../pages/Judge/Dashboard";
 
 function AppRoutes() {
   return (
@@ -55,6 +56,10 @@ function AppRoutes() {
       <Route path="/submission/create" element={<CreateSubmission />} />
 
       <Route path="/submission/edit/:id" element={<EditSubmission />} />
+
+      <Route path="/judge/dashboard" element={<JudgeDashboard />} />
+
+      
 
       <Route path="*" element={<NotFound />} />
     </Routes>
