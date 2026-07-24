@@ -5,6 +5,8 @@ import authRoutes from "./routes/authRoutes.js";
 import errorMiddleware from "./middleware/errorMiddleware.js";
 import userRoutes from "./routes/userRoutes.js";
 import hackathonRoutes from "./routes/hackathonRoutes.js";
+import registrationRoutes from "./routes/registrationRoutes.js";
+
 
 const app = express();
 
@@ -25,6 +27,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/hackathons", hackathonRoutes);
+app.use("/api/registrations", registrationRoutes);
 
 app.use(errorMiddleware);
 
