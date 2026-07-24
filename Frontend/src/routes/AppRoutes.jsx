@@ -23,6 +23,7 @@ import JudgeSubmissions from "../pages/Judge/Submissions";
 import ReviewSubmission from "../pages/Judge/ReviewSubmission";
 import Leaderboard from "../pages/Leaderboard/Leaderboard";
 import AdminDashboard from "../pages/Admin/Dashboard";
+import Users from "../pages/Admin/Users";
 
 function AppRoutes() {
   return (
@@ -71,7 +72,7 @@ function AppRoutes() {
 
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
-      
+      <Route path="/admin/users" element={<Users />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
