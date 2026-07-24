@@ -6,6 +6,7 @@ import errorMiddleware from "./middleware/errorMiddleware.js";
 import userRoutes from "./routes/userRoutes.js";
 import hackathonRoutes from "./routes/hackathonRoutes.js";
 import registrationRoutes from "./routes/registrationRoutes.js";
+import teamRoutes from "./routes/teamRoutes.js";
 
 
 const app = express();
@@ -28,6 +29,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/hackathons", hackathonRoutes);
 app.use("/api/registrations", registrationRoutes);
+app.use("/api/teams", teamRoutes);
 
 app.use(errorMiddleware);
 
