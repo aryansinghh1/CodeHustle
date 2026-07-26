@@ -4,7 +4,8 @@ import toast from "react-hot-toast";
 import { FaStar, FaGithub, FaExternalLinkAlt, FaCode } from "react-icons/fa";
 
 import MainLayout from "../../layouts/MainLayout";
-import { createReview } from "../../services/reviewService";
+import Loader from "../../components/common/Loader";
+import { createReview, getMyReviews } from "../../services/reviewService";
 import { getSubmissionById } from "../../services/submissionService";
 
 function ReviewSubmission() {
@@ -12,6 +13,8 @@ function ReviewSubmission() {
   const navigate = useNavigate();
 
   const [submission, setSubmission] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     innovation: 0, technicalComplexity: 0, userInterface: 0,
     functionality: 0, scalability: 0, documentation: 0,
@@ -19,32 +22,69 @@ function ReviewSubmission() {
   });
 
   useEffect(() => {
-    if (id) fetchSubmission();
+    if (id) fetchData();
   }, [id]);
 
-  const fetchSubmission = async () => {
+  const fetchData = async () => {
     try {
-      const res = await getSubmissionById(id);
-      setSubmission(res.data.submission);
+      setLoading(true);
+      const [subRes, revRes] = await Promise.allSettled([
+        getSubmissionById(id),
+        getMyReviews(),
+      ]);
+
+      if (subRes.status === "fulfilled") {
+        setSubmission(subRes.value.data.submission);
+      }
+
+      if (revRes.status === "fulfilled" && revRes.value.data.reviews) {
+        const existingReview = revRes.value.data.reviews.find(
+          (r) => r.submission === id || r.submission?._id === id
+        );
+        if (existingReview) {
+          setFormData({
+            innovation: existingReview.innovation || 0,
+            technicalComplexity: existingReview.technicalComplexity || 0,
+            userInterface: existingReview.userInterface || 0,
+            functionality: existingReview.functionality || 0,
+            scalability: existingReview.scalability || 0,
+            documentation: existingReview.documentation || 0,
+            presentation: existingReview.presentation || 0,
+            feedback: existingReview.feedback || "",
+          });
+        }
+      }
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.name === "feedback" ? e.target.value : Number(e.target.value),
-    });
+    const val =
+      e.target.name === "feedback"
+        ? e.target.value
+        : Math.min(10, Math.max(0, Number(e.target.value) || 0));
+
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: val,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setSubmitting(true);
       await createReview({ submission: id, ...formData });
-      toast.success("Review Submitted");
+      toast.success("Review Submitted Successfully");
       navigate("/judge/submissions");
-    } catch (err) { toast.error(err.response?.data?.message || "Review Failed"); }
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Review Submission Failed");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const fields = [
@@ -55,6 +95,14 @@ function ReviewSubmission() {
   const formatLabel = (field) => {
     return field.replace(/([A-Z])/g, " $1").replace(/^./, (s) => s.toUpperCase());
   };
+
+  if (loading) {
+    return (
+      <MainLayout>
+        <Loader text="Loading evaluation details..." />
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout>
@@ -144,7 +192,9 @@ function ReviewSubmission() {
               />
             </div>
 
-            <button className="primary-btn" style={{ width: "100%", marginTop: 8 }}>Submit Review</button>
+            <button disabled={submitting} className="primary-btn" style={{ width: "100%", marginTop: 8 }}>
+              {submitting ? "Submitting Review..." : "Submit Review"}
+            </button>
           </form>
         </div>
       </div>

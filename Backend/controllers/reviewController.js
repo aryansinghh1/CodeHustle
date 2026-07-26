@@ -15,21 +15,63 @@ export const createReview = asyncHandler(async (req, res) => {
     feedback,
   } = req.body;
 
+  if (!submission) {
+    return res.status(400).json({
+      success: false,
+      message: "Submission ID is required.",
+    });
+  }
+
+  const targetSubmission = await Submission.findById(submission);
+  if (!targetSubmission) {
+    return res.status(404).json({
+      success: false,
+      message: "Submission not found.",
+    });
+  }
+
+  const parseScore = (val) => {
+    const num = Number(val);
+    if (isNaN(num)) return 0;
+    return Math.min(10, Math.max(0, num));
+  };
+
+  const innovationScore = parseScore(innovation);
+  const technicalComplexityScore = parseScore(technicalComplexity);
+  const userInterfaceScore = parseScore(userInterface);
+  const functionalityScore = parseScore(functionality);
+  const scalabilityScore = parseScore(scalability);
+  const documentationScore = parseScore(documentation);
+  const presentationScore = parseScore(presentation);
+
+  const totalScore =
+    innovationScore +
+    technicalComplexityScore +
+    userInterfaceScore +
+    functionalityScore +
+    scalabilityScore +
+    documentationScore +
+    presentationScore;
+
+  const updateData = {
+    innovation: innovationScore,
+    technicalComplexity: technicalComplexityScore,
+    userInterface: userInterfaceScore,
+    functionality: functionalityScore,
+    scalability: scalabilityScore,
+    documentation: documentationScore,
+    presentation: presentationScore,
+    feedback: feedback || "",
+    totalScore,
+  };
+
   let review = await Review.findOne({
     judge: req.user._id,
     submission,
   });
 
   if (review) {
-    review.innovation = Number(innovation);
-    review.technicalComplexity = Number(technicalComplexity);
-    review.userInterface = Number(userInterface);
-    review.functionality = Number(functionality);
-    review.scalability = Number(scalability);
-    review.documentation = Number(documentation);
-    review.presentation = Number(presentation);
-    review.feedback = feedback;
-
+    Object.assign(review, updateData);
     await review.save();
 
     return res.status(200).json({
@@ -39,18 +81,23 @@ export const createReview = asyncHandler(async (req, res) => {
     });
   }
 
-  review = await Review.create({
-    judge: req.user._id,
-    submission,
-    innovation: Number(innovation),
-    technicalComplexity: Number(technicalComplexity),
-    userInterface: Number(userInterface),
-    functionality: Number(functionality),
-    scalability: Number(scalability),
-    documentation: Number(documentation),
-    presentation: Number(presentation),
-    feedback,
-  });
+  try {
+    review = await Review.create({
+      judge: req.user._id,
+      submission,
+      ...updateData,
+    });
+  } catch (err) {
+    if (err.code === 11000) {
+      review = await Review.findOneAndUpdate(
+        { judge: req.user._id, submission },
+        updateData,
+        { new: true }
+      );
+    } else {
+      throw err;
+    }
+  }
 
   res.status(201).json({
     success: true,

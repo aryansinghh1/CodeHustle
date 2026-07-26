@@ -80,17 +80,15 @@ const reviewSchema = new mongoose.Schema(
 );
 
 
-reviewSchema.pre("save", function (next) {
+reviewSchema.pre("save", function () {
   this.totalScore =
-    this.innovation +
-    this.technicalComplexity +
-    this.userInterface +
-    this.functionality +
-    this.scalability +
-    this.documentation +
-    this.presentation;
-
-  next();
+    (this.innovation || 0) +
+    (this.technicalComplexity || 0) +
+    (this.userInterface || 0) +
+    (this.functionality || 0) +
+    (this.scalability || 0) +
+    (this.documentation || 0) +
+    (this.presentation || 0);
 });
 
 
