@@ -138,7 +138,7 @@ function Hero() {
               </div>
             </div>
 
-            {/* Action Link */}
+          
             <Link to="/hackathons" className="secondary-btn" style={{ width: "100%", marginTop: 14, padding: "10px", fontSize: 13 }}>
               Join This Hackathon
               <FaArrowRight size={11} />
