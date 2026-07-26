@@ -12,6 +12,7 @@ function TeamPage() {
   const [hackathons, setHackathons] = useState([]);
   const [teamName, setTeamName] = useState("");
   const [hackathonId, setHackathonId] = useState("");
+  const [teamSize, setTeamSize] = useState(1);
 
   const fetchTeams = async () => {
     try { const res = await getMyTeams(); setTeams(res.data.teams); } catch (err) { console.log(err); }
@@ -25,9 +26,9 @@ function TeamPage() {
   const handleCreate = async (e) => {
     e.preventDefault();
     try {
-      await createTeam({ teamName, hackathon: hackathonId });
+      await createTeam({ teamName, hackathon: hackathonId, teamSize: Number(teamSize) });
       toast.success("Team Created");
-      setTeamName(""); setHackathonId("");
+      setTeamName(""); setHackathonId(""); setTeamSize(1);
       fetchTeams();
     } catch (err) { toast.error(err.response?.data?.message); }
   };
@@ -54,7 +55,7 @@ function TeamPage() {
             <FaPlus className="inline" style={{ marginRight: 6, color: "var(--primary)" }} size={13} />
             Create New Team
           </h3>
-          <form onSubmit={handleCreate} className="form-grid" style={{ alignItems: "end" }}>
+          <form onSubmit={handleCreate} className="grid grid-3 gap-4" style={{ alignItems: "end" }}>
             <div className="form-group">
               <label className="form-label">Team Name</label>
               <input type="text" placeholder="e.g. Code Warriors" value={teamName}
@@ -66,6 +67,11 @@ function TeamPage() {
                 <option value="">Select Hackathon</option>
                 {hackathons.map((h) => <option key={h._id} value={h._id}>{h.title}</option>)}
               </select>
+            </div>
+            <div className="form-group">
+              <label className="form-label">Number of Members</label>
+              <input type="number" min="1" placeholder="e.g. 4" value={teamSize}
+                onChange={(e) => setTeamSize(e.target.value)} className="input" required />
             </div>
             <div className="full-width">
               <button className="primary-btn">
@@ -90,13 +96,13 @@ function TeamPage() {
                 <div className="flex flex-col gap-1" style={{ marginTop: 12 }}>
                   <p className="text-xs text-muted flex items-center gap-1">
                     <FaCrown style={{ color: "var(--warning)" }} size={11} />
-                    Leader: <span className="font-bold" style={{ color: "var(--slate-800)" }}>{team.leader.name}</span>
+                    Leader: <span className="font-bold" style={{ color: "var(--slate-800)" }}>{team.leader?.name}</span>
                   </p>
                   <p className="text-xs text-muted">
                     Hackathon: <span className="font-semibold" style={{ color: "var(--slate-800)" }}>{team.hackathon?.title}</span>
                   </p>
                   <p className="text-xs text-muted">
-                    Members: <span className="badge badge-blue">{team.members.length}</span>
+                    Members: <span className="badge badge-blue">{team.members?.length || 0} / {team.teamSize || 1}</span>
                   </p>
                 </div>
 

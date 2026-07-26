@@ -1,14 +1,26 @@
 import Team from "../models/Team.js";
+import Hackathon from "../models/Hackathon.js";
 import asyncHandler from "../utils/asyncHandler.js";
 
 export const createTeam = asyncHandler(async (req, res) => {
-  const { teamName, hackathon } = req.body;
+  const { teamName, hackathon, teamSize } = req.body;
+
+  if (hackathon && teamSize) {
+    const targetHackathon = await Hackathon.findById(hackathon);
+    if (targetHackathon && Number(teamSize) > targetHackathon.maxTeamSize) {
+      return res.status(400).json({
+        success: false,
+        message: `Team size cannot exceed hackathon maximum team size of ${targetHackathon.maxTeamSize}.`,
+      });
+    }
+  }
 
   const team = await Team.create({
     teamName,
     leader: req.user._id,
     members: [req.user._id],
     hackathon,
+    teamSize: teamSize ? Number(teamSize) : 1,
   });
 
   res.status(201).json({
@@ -93,6 +105,13 @@ export const joinTeam = asyncHandler(async (req, res) => {
     return res.status(400).json({
       success: false,
       message: "Already a team member.",
+    });
+  }
+
+  if (team.teamSize && team.members.length >= team.teamSize) {
+    return res.status(400).json({
+      success: false,
+      message: "Team capacity reached. Cannot join full team.",
     });
   }
 

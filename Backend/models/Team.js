@@ -27,6 +27,12 @@ const teamSchema = new mongoose.Schema(
       required: true,
     },
 
+    teamSize: {
+      type: Number,
+      default: 1,
+      min: [1, "Team size must be at least 1"],
+    },
+
     status: {
       type: String,
       enum: ["Pending", "Approved", "Rejected"],

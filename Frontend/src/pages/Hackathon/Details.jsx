@@ -5,13 +5,17 @@ import { FaArrowLeft, FaMapMarkerAlt, FaTrophy, FaUsers, FaCalendarAlt, FaLaptop
 import MainLayout from "../../layouts/MainLayout";
 import Loader from "../../components/common/Loader";
 import { getHackathonById } from "../../services/hackathonService";
+import { useAuth } from "../../context/AuthContext";
 
 function Details() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const [hackathon, setHackathon] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const isNonParticipant = user && ["admin", "organizer", "judge"].includes(user.role);
 
   const fetchHackathon = async () => {
     try {
@@ -175,13 +179,15 @@ function Details() {
         </div>
 
         {/* Register Button */}
-        <button
-          onClick={() => navigate(`/register/${hackathon._id}`)}
-          className="primary-btn"
-          style={{ padding: "16px 36px", fontSize: 16 }}
-        >
-          Register Your Team
-        </button>
+        {!isNonParticipant && (
+          <button
+            onClick={() => navigate(`/register/${hackathon._id}`)}
+            className="primary-btn"
+            style={{ padding: "16px 36px", fontSize: 16 }}
+          >
+            Register Your Team
+          </button>
+        )}
 
       </div>
     </MainLayout>
