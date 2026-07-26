@@ -2,7 +2,6 @@ node_modules
 .env
 
 
-MySubmissions.jsx
 MyHackathons.jsx
 Registrations.jsx
 Submissions.jsx
