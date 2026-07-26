@@ -2,7 +2,7 @@ node_modules
 .env
 
 
-EditSubmission.jsx
+
 Register.jsx
 CreateUser.jsx
 Profile.jsx
