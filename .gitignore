@@ -1,9 +1,6 @@
 node_modules
 .env
 
-
-Login.jsx
-Signup.jsx
 NotFound.jsx
 HackathonCard.jsx
 Listing.jsx

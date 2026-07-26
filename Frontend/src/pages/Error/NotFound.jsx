@@ -4,6 +4,7 @@ import { FaHome } from "react-icons/fa";
 function NotFound() {
   return (
     <div className="auth-page">
+      
       <div className="text-center">
 
         <h1 className="gradient-text" style={{ fontSize: 96, fontWeight: 900, lineHeight: 1 }}>
