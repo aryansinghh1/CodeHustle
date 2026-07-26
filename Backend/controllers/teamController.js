@@ -3,7 +3,7 @@ import Hackathon from "../models/Hackathon.js";
 import asyncHandler from "../utils/asyncHandler.js";
 
 export const createTeam = asyncHandler(async (req, res) => {
-  const { teamName, hackathon, teamSize } = req.body;
+  const { teamName, hackathon, teamSize, memberNames } = req.body;
 
   if (hackathon && teamSize) {
     const targetHackathon = await Hackathon.findById(hackathon);
@@ -15,10 +15,18 @@ export const createTeam = asyncHandler(async (req, res) => {
     }
   }
 
+  let formattedMemberNames = [];
+  if (Array.isArray(memberNames)) {
+    formattedMemberNames = memberNames.map((n) => String(n).trim()).filter(Boolean);
+  } else if (typeof memberNames === "string") {
+    formattedMemberNames = memberNames.split(",").map((n) => n.trim()).filter(Boolean);
+  }
+
   const team = await Team.create({
     teamName,
     leader: req.user._id,
     members: [req.user._id],
+    memberNames: formattedMemberNames,
     hackathon,
     teamSize: teamSize ? Number(teamSize) : 1,
   });

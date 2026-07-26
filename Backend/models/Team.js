@@ -21,6 +21,13 @@ const teamSchema = new mongoose.Schema(
       },
     ],
 
+    memberNames: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
+
     hackathon: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Hackathon",
