@@ -9,6 +9,7 @@ function EmptyState({
   actionTo,
 }) {
   return (
+    
     <div className="empty-box">
       <div className="empty-icon">
         {icon || <FaInbox />}

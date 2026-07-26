@@ -1,7 +1,6 @@
 node_modules
 .env
 
-Loader.jsx
 EmptyState.jsx
 Hero.jsx
 TrustedBy.jsx
