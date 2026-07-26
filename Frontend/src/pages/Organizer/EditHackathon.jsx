@@ -121,6 +121,7 @@ function EditHackathon() {
           </form>
         </div>
       </div>
+      
     </MainLayout>
   );
 }
