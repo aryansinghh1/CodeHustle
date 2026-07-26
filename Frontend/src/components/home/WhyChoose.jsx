@@ -31,11 +31,11 @@ function WhyChoose() {
 
       <div className="text-center">
 
-        <h2 className="text-4xl font-bold">
+        <h2 className="text-4xl font-extrabold tracking-tight text-slate-900">
           Why Choose CodeHustle?
         </h2>
 
-        <p className="mt-4 text-gray-500 max-w-2xl mx-auto">
+        <p className="mt-4 text-slate-500 max-w-2xl mx-auto text-lg leading-8">
           Everything you need to organize, participate, and evaluate hackathons
           in one modern platform.
         </p>
@@ -49,25 +49,25 @@ function WhyChoose() {
             key={index}
             className="
               rounded-3xl
-              bg-white
-              border
-              border-gray-200
+              bg-white/85
+              border border-slate-200/80
+              backdrop-blur-sm
               p-10
-              shadow-lg
+              shadow-[0_18px_50px_rgba(15,23,42,0.07)]
               hover:-translate-y-2
-              hover:shadow-xl
+              hover:shadow-[0_24px_60px_rgba(37,99,235,0.10)]
               duration-300
             "
           >
-            <div className="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center text-blue-600">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-50 to-slate-100 flex items-center justify-center text-blue-600 shadow-inner">
               {item.icon}
             </div>
 
-            <h3 className="text-2xl font-semibold mt-6">
+            <h3 className="text-2xl font-bold mt-6 text-slate-900">
               {item.title}
             </h3>
 
-            <p className="text-gray-500 mt-4 leading-7">
+            <p className="text-slate-500 mt-4 leading-7">
               {item.description}
             </p>
           </div>

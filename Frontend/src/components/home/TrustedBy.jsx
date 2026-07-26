@@ -13,7 +13,7 @@ function TrustedBy() {
 
       <div className="text-center">
 
-        <p className="text-gray-500 uppercase tracking-[4px] text-sm">
+        <p className="text-slate-500 uppercase tracking-[4px] text-sm font-semibold">
           Trusted by students from
         </p>
 
@@ -26,14 +26,15 @@ function TrustedBy() {
             key={company}
             className="
               rounded-2xl
-              border
-              border-gray-200
-              bg-white
+              border border-slate-200/80
+              bg-white/80
+              backdrop-blur-sm
               shadow-sm
               py-6
               text-center
               font-semibold
-              hover:shadow-lg
+              text-slate-600
+              hover:shadow-lg hover:shadow-slate-200/70
               hover:-translate-y-1
               duration-300
             "

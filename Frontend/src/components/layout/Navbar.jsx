@@ -39,14 +39,14 @@ function Navbar() {
   };
 
   const navLinkClass = ({ isActive }) =>
-    `transition duration-200 font-medium ${
+    `rounded-full px-4 py-2 transition duration-200 font-medium ${
       isActive
-        ? "text-blue-600"
-        : "text-gray-700 hover:text-blue-600"
+        ? "bg-blue-50 text-blue-700 shadow-sm"
+        : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
     }`;
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 border-b border-gray-200">
+    <header className="sticky top-0 z-50 border-b border-white/60 bg-white/75 backdrop-blur-2xl shadow-[0_10px_40px_rgba(15,23,42,0.06)]">
       <div className="max-w-7xl mx-auto h-20 px-6 flex items-center justify-between">
 
         {/* Logo */}
@@ -55,7 +55,7 @@ function Navbar() {
           to="/"
           className="flex items-center gap-3"
         >
-          <div className="w-11 h-11 rounded-xl bg-[#2b2b2b] text-white flex items-center justify-center shadow-md">
+          <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-600 to-slate-900 text-white flex items-center justify-center shadow-lg shadow-blue-500/25">
             <FaCode />
           </div>
 
@@ -64,7 +64,7 @@ function Navbar() {
               CodeHustle
             </h1>
 
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-slate-500 tracking-[0.24em] uppercase">
               Hackathon Platform
             </p>
           </div>
@@ -116,7 +116,7 @@ function Navbar() {
             <>
               <Link
                 to="/login"
-                className="px-5 py-2 rounded-xl border border-gray-300 hover:bg-gray-100 transition"
+                className="px-5 py-2 rounded-full border border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:bg-slate-50 transition"
               >
                 Login
               </Link>
@@ -131,16 +131,16 @@ function Navbar() {
           ) : (
             <>
               <div className="flex items-center gap-2 text-gray-700">
-                <FaUserCircle size={26} />
+                <FaUserCircle size={26} className="text-slate-500" />
 
-                <span className="font-medium">
+                <span className="font-semibold text-slate-700">
                   {user.name}
                 </span>
               </div>
 
               <button
                 onClick={handleLogout}
-                className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl transition"
+                className="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2 rounded-full transition shadow-lg shadow-slate-900/15"
               >
                 Logout
               </button>
@@ -152,7 +152,7 @@ function Navbar() {
         {/* Mobile Menu Button */}
 
         <button
-          className="md:hidden"
+          className="md:hidden rounded-full p-2 text-slate-700 hover:bg-slate-100"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? (
@@ -167,7 +167,7 @@ function Navbar() {
       {/* Mobile Menu */}
 
       {menuOpen && (
-        <div className="md:hidden bg-white border-t shadow-lg">
+        <div className="md:hidden bg-white/95 border-t border-slate-200 shadow-2xl">
 
           <div className="flex flex-col p-6 gap-5">
 
