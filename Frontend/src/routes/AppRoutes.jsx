@@ -25,6 +25,7 @@ import Leaderboard from "../pages/Leaderboard/Leaderboard";
 import AdminDashboard from "../pages/Admin/Dashboard";
 import Users from "../pages/Admin/Users";
 import CreateUser from "../pages/Admin/CreateUser";
+import Profile from "../pages/Profile/Profile";
 
 function AppRoutes() {
   return (
@@ -77,7 +78,7 @@ function AppRoutes() {
 
       <Route path="/admin/create-user" element={<CreateUser />} />
 
-      
+      <Route path="/profile" element={<Profile />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
