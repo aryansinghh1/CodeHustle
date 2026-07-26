@@ -1,11 +1,7 @@
 node_modules
 .env
 
-TrustedBy.jsx
-Stats.jsx
-WhyChoose.jsx
-CTA.jsx
-Home.jsx
+
 Login.jsx
 Signup.jsx
 NotFound.jsx
