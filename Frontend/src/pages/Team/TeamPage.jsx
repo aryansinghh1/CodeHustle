@@ -40,6 +40,7 @@ function TeamPage() {
 
   return (
     <MainLayout>
+      
       <div className="container section-spacing">
         <div className="page-header">
           <h1>My Teams</h1>

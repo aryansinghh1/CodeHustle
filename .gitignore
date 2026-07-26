@@ -2,8 +2,6 @@ node_modules
 .env
 
 
-
-ReviewSubmission.jsx
 TeamPage.jsx
 MyRegistrations.jsx
 MySubmissions.jsx
