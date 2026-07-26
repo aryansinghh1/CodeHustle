@@ -1,6 +1,7 @@
 import Submission from "../models/Submission.js";
 import Team from "../models/Team.js";
 import Hackathon from "../models/Hackathon.js";
+import Registration from "../models/Registration.js";
 import asyncHandler from "../utils/asyncHandler.js";
 
 export const createSubmission = asyncHandler(async (req, res) => {
@@ -19,6 +20,27 @@ export const createSubmission = asyncHandler(async (req, res) => {
     demoVideo,
   } = req.body;
 
+  if (!team || !hackathon) {
+    return res.status(400).json({
+      success: false,
+      message: "Team and Hackathon are required.",
+    });
+  }
+
+  // Verify that team registration exists and is approved for this hackathon
+  const validRegistration = await Registration.findOne({
+    hackathon,
+    team,
+    status: "Approved",
+  });
+
+  if (!validRegistration) {
+    return res.status(403).json({
+      success: false,
+      message: "You can only submit a project for a hackathon where your team registration has been approved.",
+    });
+  }
+
   const existingSubmission = await Submission.findOne({
     team,
     hackathon,
@@ -27,7 +49,7 @@ export const createSubmission = asyncHandler(async (req, res) => {
   if (existingSubmission) {
     return res.status(400).json({
       success: false,
-      message: "Submission already exists.",
+      message: "A submission for this team and hackathon already exists.",
     });
   }
 

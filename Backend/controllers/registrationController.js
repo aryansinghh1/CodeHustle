@@ -24,15 +24,23 @@ export const registerHackathon = asyncHandler(async (req, res) => {
     });
   }
 
-  const existingRegistration = await Registration.findOne({
-    hackathon: hackathonId,
-    team: teamId,
+  // Find all teams where user is leader or member
+  const userTeams = await Team.find({
+    $or: [{ leader: req.user._id }, { members: req.user._id }],
   });
 
-  if (existingRegistration) {
+  const userTeamIds = userTeams.map((t) => t._id);
+
+  const existingUserRegistration = await Registration.findOne({
+    hackathon: hackathonId,
+    team: { $in: userTeamIds },
+  }).populate("team", "teamName");
+
+  if (existingUserRegistration) {
+    const registeredTeamName = existingUserRegistration.team?.teamName || "another team";
     return res.status(400).json({
       success: false,
-      message: "Team already registered.",
+      message: `You are already registered for this hackathon with team "${registeredTeamName}". A participant cannot register multiple teams in the same hackathon.`,
     });
   }
 

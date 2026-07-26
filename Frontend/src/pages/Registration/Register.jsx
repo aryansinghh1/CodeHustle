@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
-import { FaUsers } from "react-icons/fa";
+import { FaUsers, FaExclamationTriangle } from "react-icons/fa";
 
 import MainLayout from "../../layouts/MainLayout";
+import Loader from "../../components/common/Loader";
 import { getMyTeams } from "../../services/teamService";
-import { registerHackathon } from "../../services/registrationService";
+import { registerHackathon, getMyRegistrations } from "../../services/registrationService";
 
 function Register() {
   const { hackathonId } = useParams();
@@ -13,11 +14,35 @@ function Register() {
 
   const [teams, setTeams] = useState([]);
   const [selectedTeam, setSelectedTeam] = useState("");
+  const [alreadyRegisteredReg, setAlreadyRegisteredReg] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => { fetchTeams(); }, []);
+  useEffect(() => {
+    fetchData();
+  }, [hackathonId]);
 
-  const fetchTeams = async () => {
-    try { const res = await getMyTeams(); setTeams(res.data.teams); } catch (err) { console.log(err); }
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const [tRes, rRes] = await Promise.all([
+        getMyTeams(),
+        getMyRegistrations(),
+      ]);
+      setTeams(tRes.data.teams || []);
+
+      const regs = rRes.data.registrations || [];
+      const existing = regs.find((r) => {
+        const hId = typeof r.hackathon === "object" ? r.hackathon._id : r.hackathon;
+        return hId === hackathonId;
+      });
+      if (existing) {
+        setAlreadyRegisteredReg(existing);
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleRegister = async () => {
@@ -29,6 +54,14 @@ function Register() {
     } catch (err) { toast.error(err.response?.data?.message || "Registration Failed"); }
   };
 
+  if (loading) {
+    return (
+      <MainLayout>
+        <Loader text="Loading team registration details..." />
+      </MainLayout>
+    );
+  }
+
   return (
     <MainLayout>
       <div className="container section-spacing" style={{ maxWidth: 540 }}>
@@ -38,25 +71,45 @@ function Register() {
           <p>Select your team to register for this hackathon</p>
         </div>
 
-        <div className="form-card text-center flex flex-col items-center">
-          <div className="empty-icon" style={{ margin: "0 auto 20px" }}>
-            <FaUsers />
+        {alreadyRegisteredReg ? (
+          <div className="form-card text-center" style={{ background: "rgba(245, 158, 11, 0.08)", border: "1px solid var(--warning)" }}>
+            <FaExclamationTriangle size={32} style={{ color: "var(--warning)", margin: "0 auto 12px" }} />
+            <h2 className="text-lg font-bold" style={{ color: "var(--slate-900)" }}>
+              Already Registered
+            </h2>
+            <p className="text-sm text-slate-800" style={{ marginTop: 8, lineHeight: 1.5 }}>
+              You are already registered for this hackathon with team{" "}
+              <strong>"{alreadyRegisteredReg.team?.teamName || "your team"}"</strong> (Status:{" "}
+              <span className="badge badge-blue">{alreadyRegisteredReg.status}</span>).
+            </p>
+            <p className="text-xs text-muted" style={{ marginTop: 8 }}>
+              Participants are restricted to 1 team registration per hackathon.
+            </p>
+            <button onClick={() => navigate("/participant/my-registrations")} className="primary-btn" style={{ width: "100%", marginTop: 20 }}>
+              View My Registrations
+            </button>
           </div>
+        ) : (
+          <div className="form-card text-center flex flex-col items-center">
+            <div className="empty-icon" style={{ margin: "0 auto 20px" }}>
+              <FaUsers />
+            </div>
 
-          <div className="form-group" style={{ width: "100%", textAlign: "left" }}>
-            <label className="form-label">Select Team</label>
-            <select className="input" value={selectedTeam} onChange={(e) => setSelectedTeam(e.target.value)}>
-              <option value="">Choose a team...</option>
-              {teams.map((team) => (
-                <option key={team._id} value={team._id}>{team.teamName}</option>
-              ))}
-            </select>
+            <div className="form-group" style={{ width: "100%", textAlign: "left" }}>
+              <label className="form-label">Select Team</label>
+              <select className="input" value={selectedTeam} onChange={(e) => setSelectedTeam(e.target.value)}>
+                <option value="">Choose a team...</option>
+                {teams.map((team) => (
+                  <option key={team._id} value={team._id}>{team.teamName}</option>
+                ))}
+              </select>
+            </div>
+
+            <button onClick={handleRegister} className="primary-btn" style={{ width: "100%", marginTop: 24 }}>
+              Register for Hackathon
+            </button>
           </div>
-
-          <button onClick={handleRegister} className="primary-btn" style={{ width: "100%", marginTop: 24 }}>
-            Register for Hackathon
-          </button>
-        </div>
+        )}
         
       </div>
     </MainLayout>
