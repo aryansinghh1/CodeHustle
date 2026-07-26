@@ -69,6 +69,7 @@ function Dashboard() {
         </div>
 
       </div>
+      
     </MainLayout>
   );
 }
