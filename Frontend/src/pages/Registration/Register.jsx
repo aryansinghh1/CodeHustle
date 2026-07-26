@@ -57,7 +57,6 @@ function Register() {
             Register for Hackathon
           </button>
         </div>
-        
       </div>
     </MainLayout>
   );
