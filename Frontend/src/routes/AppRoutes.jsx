@@ -26,6 +26,7 @@ import AdminDashboard from "../pages/Admin/Dashboard";
 import Users from "../pages/Admin/Users";
 import CreateUser from "../pages/Admin/CreateUser";
 import Profile from "../pages/Profile/Profile";
+import ProtectedRoute from "./ProtectedRoute";
 
 function AppRoutes() {
   return (
@@ -102,11 +103,25 @@ function AppRoutes() {
         }
       />
 
-      <Route path="/admin/users" element={<Users />} />
+      <Route
+        path="/admin/users"
+        element={
+          <ProtectedRoute role="admin">
+            <Users />
+          </ProtectedRoute>
+        }
+      />
 
       <Route path="/admin/create-user" element={<CreateUser />} />
 
-      <Route path="/profile" element={<Profile />} />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
