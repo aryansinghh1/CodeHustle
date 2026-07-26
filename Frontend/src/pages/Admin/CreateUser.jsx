@@ -62,6 +62,7 @@ function CreateUser() {
             <button className="primary-btn" style={{ width: "100%", marginTop: 8 }}>Create User</button>
           </form>
         </div>
+        
       </div>
     </MainLayout>
   );
