@@ -1,7 +1,7 @@
 node_modules
 .env
 
-EditHackathon.jsx
+
 CreateSubmission.jsx
 EditSubmission.jsx
 Register.jsx
