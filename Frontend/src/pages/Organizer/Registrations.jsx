@@ -71,6 +71,7 @@ function Registrations() {
             ))}
           </div>
         )}
+        
       </div>
     </MainLayout>
   );
