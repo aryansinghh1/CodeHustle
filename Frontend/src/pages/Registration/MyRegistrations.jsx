@@ -56,6 +56,7 @@ function MyRegistrations() {
           </div>
         )}
       </div>
+      
     </MainLayout>
   );
 }
