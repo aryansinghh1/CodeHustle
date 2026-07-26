@@ -154,6 +154,7 @@ function Details() {
         </div>
 
         {/* Rules */}
+        
         <div className="data-card" style={{ marginBottom: 24 }}>
           <h3 className="text-base font-bold" style={{ color: "var(--slate-900)", marginBottom: 12 }}>Rules</h3>
           <ul className="flex flex-col gap-2" style={{ paddingLeft: 20 }}>
