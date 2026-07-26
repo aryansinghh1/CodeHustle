@@ -20,6 +20,7 @@ import CreateHackathon from "../pages/Organizer/CreateHackathon";
 import MyHackathons from "../pages/Organizer/MyHackathons";
 import EditHackathon from "../pages/Organizer/EditHackathon";
 import Registrations from "../pages/Organizer/Registrations";
+import OrganizerSubmissions from "../pages/Organizer/Submissions";
 
 import MySubmissions from "../pages/Submission/MySubmissions";
 import CreateSubmission from "../pages/Submission/CreateSubmission";
@@ -165,6 +166,15 @@ function AppRoutes() {
         element={
           <ProtectedRoute role="organizer">
             <Registrations />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/organizer/submissions/:hackathonId"
+        element={
+          <ProtectedRoute role="organizer">
+            <OrganizerSubmissions />
           </ProtectedRoute>
         }
       />

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import { FaPlus, FaEdit, FaTrash, FaClipboardList, FaTrophy } from "react-icons/fa";
+import { FaPlus, FaEdit, FaTrash, FaClipboardList, FaTrophy, FaFolderOpen } from "react-icons/fa";
 
 import MainLayout from "../../layouts/MainLayout";
 import Loader from "../../components/common/Loader";
@@ -56,6 +56,9 @@ function MyHackathons() {
                 </div>
 
                 <div className="flex gap-2 flex-wrap" style={{ marginTop: 16 }}>
+                  <Link to={`/organizer/submissions/${h._id}`} className="primary-btn" style={{ padding: "6px 12px", fontSize: 12 }}>
+                    <FaFolderOpen size={11} /> Submissions & Reviews
+                  </Link>
                   <Link to={`/leaderboard/${h._id}`} className="secondary-btn" style={{ padding: "6px 12px", fontSize: 12 }}>
                     <FaTrophy size={11} /> Leaderboard
                   </Link>
