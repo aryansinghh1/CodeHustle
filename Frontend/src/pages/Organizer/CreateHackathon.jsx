@@ -128,7 +128,6 @@ function CreateHackathon() {
 
           </form>
         </div>
-
       </div>
     </MainLayout>
   );
