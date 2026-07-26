@@ -113,7 +113,6 @@ function CreateSubmission() {
             </div>
           </form>
         </div>
-        
       </div>
     </MainLayout>
   );
