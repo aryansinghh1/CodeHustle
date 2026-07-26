@@ -116,21 +116,19 @@ export const getParticipantDashboard = asyncHandler(async (req, res) => {
 });
 
 export const getJudgeDashboard = asyncHandler(async (req, res) => {
-  const completedReviews = await Review.countDocuments({
+  const completedReviewsCount = await Review.countDocuments({
     judge: req.user._id,
   });
 
-  // We'll implement proper judge assignment later
-  const assignedProjects = completedReviews;
-
-  const pendingReviews = 0;
+  const totalSubmissionsCount = await Submission.countDocuments();
+  const pendingReviewsCount = Math.max(0, totalSubmissionsCount - completedReviewsCount);
 
   res.status(200).json({
     success: true,
     dashboard: {
-      assignedProjects,
-      completedReviews,
-      pendingReviews,
+      assignedProjects: totalSubmissionsCount,
+      completedReviews: completedReviewsCount,
+      pendingReviews: pendingReviewsCount,
     },
   });
 });

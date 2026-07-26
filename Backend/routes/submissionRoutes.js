@@ -30,6 +30,22 @@ router.get(
   getMySubmissions
 );
 
+// Judge
+router.get(
+  "/judge",
+  authMiddleware,
+  roleMiddleware("judge"),
+  getJudgeSubmissions
+);
+
+// Organizer
+router.get(
+  "/hackathon/:id",
+  authMiddleware,
+  roleMiddleware("organizer", "admin"),
+  getHackathonSubmissions
+);
+
 router.get(
   "/:id",
   authMiddleware,
@@ -48,22 +64,6 @@ router.delete(
   authMiddleware,
   roleMiddleware("participant"),
   deleteSubmission
-);
-
-// Organizer
-router.get(
-  "/hackathon/:id",
-  authMiddleware,
-  roleMiddleware("organizer", "admin"),
-  getHackathonSubmissions
-);
-
-// Judge
-router.get(
-  "/judge",
-  authMiddleware,
-  roleMiddleware("judge"),
-  getJudgeSubmissions
 );
 
 export default router;
