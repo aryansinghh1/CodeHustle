@@ -24,6 +24,7 @@ import ReviewSubmission from "../pages/Judge/ReviewSubmission";
 import Leaderboard from "../pages/Leaderboard/Leaderboard";
 import AdminDashboard from "../pages/Admin/Dashboard";
 import Users from "../pages/Admin/Users";
+import CreateUser from "../pages/Admin/CreateUser";
 
 function AppRoutes() {
   return (
@@ -73,6 +74,10 @@ function AppRoutes() {
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
       <Route path="/admin/users" element={<Users />} />
+
+      <Route path="/admin/create-user" element={<CreateUser />} />
+
+      
 
       <Route path="*" element={<NotFound />} />
     </Routes>
