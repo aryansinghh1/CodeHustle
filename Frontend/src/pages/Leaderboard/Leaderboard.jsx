@@ -1,102 +1,73 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { FaTrophy, FaMedal } from "react-icons/fa";
 
 import MainLayout from "../../layouts/MainLayout";
+import Loader from "../../components/common/Loader";
+import EmptyState from "../../components/common/EmptyState";
 import { getLeaderboard } from "../../services/leaderboardService";
 
 function Leaderboard() {
   const { hackathonId } = useParams();
-
   const [leaderboard, setLeaderboard] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchLeaderboard();
-  }, []);
+  useEffect(() => { fetchLeaderboard(); }, []);
 
   const fetchLeaderboard = async () => {
-    try {
-      const res = await getLeaderboard(hackathonId);
-
-      setLeaderboard(res.data.leaderboard);
-    } catch (err) {
-      console.log(err);
-    }
+    try { const res = await getLeaderboard(hackathonId); setLeaderboard(res.data.leaderboard); }
+    catch (err) { console.log(err); } finally { setLoading(false); }
   };
+
+  const rankIcon = (rank) => {
+    if (rank === 1) return <FaTrophy style={{ color: "var(--warning)" }} size={16} />;
+    if (rank === 2) return <FaMedal style={{ color: "var(--slate-400)" }} size={16} />;
+    if (rank === 3) return <FaMedal style={{ color: "#d97706" }} size={16} />;
+    return <span className="text-muted font-bold">#{rank}</span>;
+  };
+
+  if (loading) return <MainLayout><Loader text="Loading leaderboard..." /></MainLayout>;
 
   return (
     <MainLayout>
-
-      <div className="max-w-7xl mx-auto py-10 px-6">
-
-        <h1 className="text-4xl font-bold mb-8">
-          Leaderboard
-        </h1>
-
-        <div className="overflow-x-auto">
-
-          <table className="w-full border rounded-xl">
-
-            <thead>
-
-              <tr className="bg-gray-100">
-
-                <th className="p-4">Rank</th>
-
-                <th>Team</th>
-
-                <th>Project</th>
-
-                <th>Average Score</th>
-
-              </tr>
-
-            </thead>
-
-            <tbody>
-
-              {leaderboard.map((team) => (
-
-                <tr
-                  key={team.submissionId}
-                  className="border-t text-center"
-                >
-
-                  <td className="p-4">
-
-                    #{team.rank}
-
-                  </td>
-
-                  <td>
-
-                    {team.teamName}
-
-                  </td>
-
-                  <td>
-
-                    {team.projectName}
-
-                  </td>
-
-                  <td>
-
-                    {team.averageScore}
-
-                  </td>
-
-                </tr>
-
-              ))}
-
-            </tbody>
-
-          </table>
-
+      <div className="container section-spacing">
+        <div className="page-header">
+          <h1>Leaderboard</h1>
+          <div className="accent-bar" />
+          <p>Rankings based on average judge scores</p>
         </div>
 
+        {leaderboard.length === 0 ? (
+          <EmptyState title="No Rankings Yet" subtitle="Scores will appear here once judges submit their reviews." />
+        ) : (
+          <div className="table-container">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th style={{ width: 80, textAlign: "center" }}>Rank</th>
+                  <th>Team</th>
+                  <th>Project</th>
+                  <th style={{ textAlign: "center" }}>Average Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                {leaderboard.map((team) => (
+                  <tr key={team.submissionId}>
+                    <td style={{ textAlign: "center" }}>
+                      <div className="flex items-center justify-center">{rankIcon(team.rank)}</div>
+                    </td>
+                    <td className="font-bold">{team.teamName}</td>
+                    <td>{team.projectName}</td>
+                    <td style={{ textAlign: "center" }}>
+                      <span className="badge badge-blue font-bold">{team.averageScore}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
-
     </MainLayout>
   );
 }

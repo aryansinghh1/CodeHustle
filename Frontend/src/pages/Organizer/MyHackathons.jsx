@@ -1,157 +1,76 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import { FaPlus, FaEdit, FaTrash, FaClipboardList } from "react-icons/fa";
 
 import MainLayout from "../../layouts/MainLayout";
-import {
-  getMyHackathons,
-  deleteHackathon,
-} from "../../services/hackathonService";
+import Loader from "../../components/common/Loader";
+import EmptyState from "../../components/common/EmptyState";
+import { getMyHackathons, deleteHackathon } from "../../services/hackathonService";
 
 function MyHackathons() {
   const [hackathons, setHackathons] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchHackathons = async () => {
-    try {
-      const res = await getMyHackathons();
-      setHackathons(res.data.hackathons);
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to load");
-    } finally {
-      setLoading(false);
-    }
+    try { const res = await getMyHackathons(); setHackathons(res.data.hackathons); }
+    catch (err) { toast.error(err.response?.data?.message || "Failed to load"); } finally { setLoading(false); }
   };
 
-  useEffect(() => {
-    fetchHackathons();
-  }, []);
+  useEffect(() => { fetchHackathons(); }, []);
 
   const handleDelete = async (id) => {
-    const confirmDelete = window.confirm(
-      "Delete this hackathon?"
-    );
-
-    if (!confirmDelete) return;
-
-    try {
-      await deleteHackathon(id);
-
-      toast.success("Hackathon Deleted");
-
-      fetchHackathons();
-    } catch (err) {
-      toast.error(
-        err.response?.data?.message || "Delete Failed"
-      );
-    }
+    if (!window.confirm("Delete this hackathon?")) return;
+    try { await deleteHackathon(id); toast.success("Hackathon Deleted"); fetchHackathons(); }
+    catch (err) { toast.error(err.response?.data?.message || "Delete Failed"); }
   };
 
-  if (loading) {
-    return (
-      <MainLayout>
-        <div className="text-center py-20">
-          Loading...
-        </div>
-      </MainLayout>
-    );
-  }
+  if (loading) return <MainLayout><Loader text="Loading your hackathons..." /></MainLayout>;
 
   return (
     <MainLayout>
-
-      <div className="max-w-7xl mx-auto px-6 py-10">
-
-        <div className="flex justify-between items-center mb-8">
-
-          <h1 className="text-4xl font-bold">
-            My Hackathons
-          </h1>
-
-          <Link
-            to="/organizer/create-hackathon"
-            className="bg-[#2b2b2b] text-white px-5 py-3 rounded-lg"
-          >
-            + Create
+      <div className="container section-spacing">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4" style={{ marginBottom: 32 }}>
+          <div className="page-header" style={{ marginBottom: 0 }}>
+            <h1>My Hackathons</h1>
+            <div className="accent-bar" />
+          </div>
+          <Link to="/organizer/create-hackathon" className="primary-btn">
+            <FaPlus size={12} /> Create Hackathon
           </Link>
-
         </div>
 
         {hackathons.length === 0 ? (
-
-          <h2>No Hackathons Created.</h2>
-
+          <EmptyState title="No Hackathons Created" subtitle="Create your first hackathon to get started." actionLabel="Create Hackathon" actionTo="/organizer/create-hackathon" />
         ) : (
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-            {hackathons.map((hackathon) => (
-
-              <div
-                key={hackathon._id}
-                className="border rounded-xl bg-white shadow p-6"
-              >
-
-                <h2 className="text-2xl font-bold">
-                  {hackathon.title}
-                </h2>
-
-                <p className="mt-3">
-                  {hackathon.theme}
-                </p>
-
-                <p className="mt-2">
-                  {hackathon.mode}
-                </p>
-
-                <p className="mt-2">
-                  Prize : ₹ {hackathon.prizePool}
-                </p>
-
-                <div className="flex gap-3 mt-6 flex-wrap">
-
-                  <Link
-                    to={`/organizer/edit-hackathon/${hackathon._id}`}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg"
-                  >
-                    Edit
-                  </Link>
-
-                  <button
-                    onClick={() =>
-                      handleDelete(hackathon._id)
-                    }
-                    className="bg-red-600 text-white px-4 py-2 rounded-lg"
-                  >
-                    Delete
-                  </button>
-
-                  <Link
-                    to={`/organizer/registrations/${hackathon._id}`}
-                    className="bg-green-600 text-white px-4 py-2 rounded-lg"
-                  >
-                    Registrations
-                  </Link>
-
-                  <Link
-                    to={`/organizer/submissions/${hackathon._id}`}
-                    className="bg-purple-600 text-white px-4 py-2 rounded-lg"
-                  >
-                    Submissions
-                  </Link>
-
+          <div className="grid grid-3 gap-4">
+            {hackathons.map((h) => (
+              <div key={h._id} className="data-card flex flex-col justify-between">
+                <div>
+                  <h2 className="text-lg font-bold" style={{ color: "var(--slate-900)" }}>{h.title}</h2>
+                  <p className="text-xs text-muted" style={{ marginTop: 4 }}>{h.theme}</p>
+                  <div className="flex items-center gap-2" style={{ marginTop: 8 }}>
+                    <span className="badge badge-blue">{h.mode}</span>
+                    <span className="text-xs font-bold" style={{ color: "var(--slate-800)" }}>₹ {h.prizePool}</span>
+                  </div>
                 </div>
 
+                <div className="flex gap-2 flex-wrap" style={{ marginTop: 16 }}>
+                  <Link to={`/organizer/edit-hackathon/${h._id}`} className="outline-btn" style={{ padding: "6px 12px", fontSize: 12 }}>
+                    <FaEdit size={11} /> Edit
+                  </Link>
+                  <button onClick={() => handleDelete(h._id)} className="danger-btn" style={{ padding: "6px 12px", fontSize: 12 }}>
+                    <FaTrash size={11} /> Delete
+                  </button>
+                  <Link to={`/organizer/registrations/${h._id}`} className="outline-btn" style={{ padding: "6px 12px", fontSize: 12 }}>
+                    <FaClipboardList size={11} /> Registrations
+                  </Link>
+                </div>
               </div>
-
             ))}
-
           </div>
-
         )}
-
       </div>
-
     </MainLayout>
   );
 }

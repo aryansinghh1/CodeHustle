@@ -1,52 +1,36 @@
 import { Link } from "react-router-dom";
+import { FaRocket, FaArrowRight, FaCode } from "react-icons/fa6";
 
 function CTA() {
   return (
-    <section className="max-w-7xl mx-auto px-6 py-24">
+    <section className="container" style={{ paddingTop: 32, paddingBottom: 48 }}>
+      <div style={{ borderRadius: 32, background: "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #172554 100%)", padding: "48px 32px", color: "#fff", textAlign: "center", boxShadow: "var(--shadow-lg)" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
+          
+          <div className="badge" style={{ background: "rgba(59,130,246,0.2)", color: "#93c5fd", border: "1px solid rgba(147,197,253,0.3)" }}>
+            <FaCode size={12} /> Start Building Today
+          </div>
 
-      <div
-        className="
-          rounded-[40px]
-          bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900
-          text-white
-          px-10
-          py-20
-          text-center
-          relative overflow-hidden
-          shadow-[0_30px_80px_rgba(15,23,42,0.22)]
-        "
-      >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.14),_transparent_36%)]" />
+          <h2 className="text-3xl font-extrabold" style={{ color: "#fff", fontSize: "clamp(1.75rem, 4vw, 2.75rem)" }}>
+            Ready To Launch Your Next Big Project?
+          </h2>
 
-        <h2 className="text-5xl font-bold">
-          Ready to Build Something Amazing?
-        </h2>
+          <p style={{ color: "var(--slate-300)", fontSize: 15, lineHeight: 1.6 }}>
+            Join thousands of student developers and engineering leaders participating in hackathons, forming teams, and claiming prizes on CodeHustle.
+          </p>
 
-        <p className="mt-6 text-slate-200 max-w-2xl mx-auto text-lg relative z-10">
-          Join thousands of developers participating in hackathons,
-          collaborating with teams, and building innovative solutions.
-        </p>
+          <div className="flex flex-wrap items-center justify-center gap-3" style={{ marginTop: 8 }}>
+            <Link to="/signup" className="primary-btn">
+              <FaRocket /> Create Free Account <FaArrowRight size={12} />
+            </Link>
 
-        <Link
-          to="/signup"
-          className="
-            inline-flex items-center justify-center
-            mt-10
-            px-8
-            py-4
-            rounded-2xl
-            bg-white
-            text-slate-900
-            font-semibold
-            hover:bg-slate-100
-            transition
-            relative z-10
-          "
-        >
-          Get Started
-        </Link>
+            <Link to="/hackathons" className="outline-btn" style={{ background: "rgba(255,255,255,0.1)", color: "#fff", borderColor: "rgba(255,255,255,0.2)" }}>
+              Explore Active Hackathons
+            </Link>
+          </div>
+
+        </div>
       </div>
-
     </section>
   );
 }

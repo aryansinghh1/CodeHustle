@@ -1,137 +1,111 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { getHackathons } from "../../services/hackathonService";
+import { FaPlus, FaTrash, FaUsers, FaCrown } from "react-icons/fa";
 
 import MainLayout from "../../layouts/MainLayout";
-
+import EmptyState from "../../components/common/EmptyState";
+import { getHackathons } from "../../services/hackathonService";
 import { createTeam, getMyTeams, deleteTeam } from "../../services/teamService";
 
 function TeamPage() {
   const [teams, setTeams] = useState([]);
   const [hackathons, setHackathons] = useState([]);
-
   const [teamName, setTeamName] = useState("");
   const [hackathonId, setHackathonId] = useState("");
 
   const fetchTeams = async () => {
-    try {
-      const res = await getMyTeams();
-      setTeams(res.data.teams);
-    } catch (err) {
-      console.log(err);
-    }
+    try { const res = await getMyTeams(); setTeams(res.data.teams); } catch (err) { console.log(err); }
   };
-
   const fetchHackathons = async () => {
-    try {
-      const res = await getHackathons();
-
-      setHackathons(res.data.hackathons);
-    } catch (err) {
-      console.log(err);
-    }
+    try { const res = await getHackathons(); setHackathons(res.data.hackathons); } catch (err) { console.log(err); }
   };
 
-  useEffect(() => {
-    fetchTeams();
-    fetchHackathons();
-  }, []);
+  useEffect(() => { fetchTeams(); fetchHackathons(); }, []);
 
   const handleCreate = async (e) => {
     e.preventDefault();
-
     try {
-      await createTeam({
-        teamName,
-        hackathon: hackathonId,
-      });
-
+      await createTeam({ teamName, hackathon: hackathonId });
       toast.success("Team Created");
-
-      setTeamName("");
-      setHackathonId("");
-
+      setTeamName(""); setHackathonId("");
       fetchTeams();
-    } catch (err) {
-      toast.error(err.response?.data?.message);
-    }
+    } catch (err) { toast.error(err.response?.data?.message); }
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this team?")) return;
-
-    try {
-      await deleteTeam(id);
-
-      toast.success("Team Deleted");
-
-      fetchTeams();
-    } catch (err) {
-      toast.error(err.response?.data?.message);
-    }
+    try { await deleteTeam(id); toast.success("Team Deleted"); fetchTeams(); }
+    catch (err) { toast.error(err.response?.data?.message); }
   };
 
   return (
     <MainLayout>
-      <div className="max-w-6xl mx-auto px-6 py-10">
-        <h1 className="text-4xl font-bold mb-8">My Teams</h1>
+      <div className="container section-spacing">
+        <div className="page-header">
+          <h1>My Teams</h1>
+          <div className="accent-bar" />
+          <p>Create and manage your hackathon teams</p>
+        </div>
 
-        <form
-          onSubmit={handleCreate}
-          className="bg-white border rounded-xl p-6 space-y-4 mb-10"
-        >
-          <input
-            type="text"
-            placeholder="Team Name"
-            value={teamName}
-            onChange={(e) => setTeamName(e.target.value)}
-            className="w-full border rounded-lg p-3"
-            required
-          />
-
-          <select
-            value={hackathonId}
-            onChange={(e) => setHackathonId(e.target.value)}
-            className="w-full border rounded-lg p-3"
-            required
-          >
-            <option value="">Select Hackathon</option>
-
-            {hackathons.map((hackathon) => (
-              <option key={hackathon._id} value={hackathon._id}>
-                {hackathon.title}
-              </option>
-            ))}
-          </select>
-
-          <button className="bg-[#2b2b2b] text-white px-6 py-3 rounded-lg">
-            Create Team
-          </button>
-        </form>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {teams.map((team) => (
-            <div
-              key={team._id}
-              className="border rounded-xl p-6 bg-white shadow"
-            >
-              <h2 className="text-2xl font-bold">{team.teamName}</h2>
-
-              <p className="mt-3">Leader : {team.leader.name}</p>
-
-              <p>Hackathon : {team.hackathon?.title}</p>
-
-              <p>Members : {team.members.length}</p>
-
-              <button
-                onClick={() => handleDelete(team._id)}
-                className="mt-5 bg-red-500 text-white px-4 py-2 rounded-lg"
-              >
-                Delete Team
+        {/* Create Team Form */}
+        <div className="form-card" style={{ marginBottom: 32 }}>
+          <h3 className="text-base font-bold" style={{ color: "var(--slate-900)", marginBottom: 16 }}>
+            <FaPlus className="inline" style={{ marginRight: 6, color: "var(--primary)" }} size={13} />
+            Create New Team
+          </h3>
+          <form onSubmit={handleCreate} className="form-grid" style={{ alignItems: "end" }}>
+            <div className="form-group">
+              <label className="form-label">Team Name</label>
+              <input type="text" placeholder="e.g. Code Warriors" value={teamName}
+                onChange={(e) => setTeamName(e.target.value)} className="input" required />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Hackathon</label>
+              <select value={hackathonId} onChange={(e) => setHackathonId(e.target.value)} className="input" required>
+                <option value="">Select Hackathon</option>
+                {hackathons.map((h) => <option key={h._id} value={h._id}>{h.title}</option>)}
+              </select>
+            </div>
+            <div className="full-width">
+              <button className="primary-btn">
+                <FaPlus size={12} /> Create Team
               </button>
             </div>
-          ))}
+          </form>
         </div>
+
+        {/* Teams List */}
+        {teams.length === 0 ? (
+          <EmptyState title="No Teams Yet" subtitle="Create your first team above to get started." />
+        ) : (
+          <div className="grid grid-2 gap-4">
+            {teams.map((team) => (
+              <div key={team._id} className="data-card">
+                <h2 className="text-lg font-bold flex items-center gap-2" style={{ color: "var(--slate-900)" }}>
+                  <FaUsers style={{ color: "var(--primary)" }} size={16} />
+                  {team.teamName}
+                </h2>
+
+                <div className="flex flex-col gap-1" style={{ marginTop: 12 }}>
+                  <p className="text-xs text-muted flex items-center gap-1">
+                    <FaCrown style={{ color: "var(--warning)" }} size={11} />
+                    Leader: <span className="font-bold" style={{ color: "var(--slate-800)" }}>{team.leader.name}</span>
+                  </p>
+                  <p className="text-xs text-muted">
+                    Hackathon: <span className="font-semibold" style={{ color: "var(--slate-800)" }}>{team.hackathon?.title}</span>
+                  </p>
+                  <p className="text-xs text-muted">
+                    Members: <span className="badge badge-blue">{team.members.length}</span>
+                  </p>
+                </div>
+
+                <button onClick={() => handleDelete(team._id)} className="danger-btn" style={{ marginTop: 16 }}>
+                  <FaTrash size={11} /> Delete Team
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </MainLayout>
   );

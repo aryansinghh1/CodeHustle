@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { FaRocket, FaClipboardList, FaProjectDiagram, FaCheckCircle, FaClock, FaPlus, FaListAlt } from "react-icons/fa";
+
 import MainLayout from "../../layouts/MainLayout";
+import Loader from "../../components/common/Loader";
 import { getOrganizerDashboard } from "../../services/dashboardService";
 
 function Dashboard() {
   const [dashboard, setDashboard] = useState({
-    myHackathons: 0,
-    registrations: 0,
-    submissions: 0,
-    completedHackathons: 0,
-    upcomingHackathons: 0,
+    myHackathons: 0, registrations: 0, submissions: 0, completedHackathons: 0, upcomingHackathons: 0,
   });
-
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => { fetchDashboard(); }, []);
 
   const fetchDashboard = async () => {
     try {
@@ -25,75 +25,56 @@ function Dashboard() {
     }
   };
 
-  useEffect(() => {
-    fetchDashboard();
-  }, []);
+  if (loading) return <MainLayout><Loader text="Loading organizer dashboard..." /></MainLayout>;
 
-  if (loading) {
-    return (
-      <MainLayout>
-        <div className="text-center py-20 text-2xl">
-          Loading Dashboard...
-        </div>
-      </MainLayout>
-    );
-  }
+  const stats = [
+    { icon: <FaRocket style={{ color: "var(--primary)" }} />, label: "My Hackathons", value: dashboard.myHackathons },
+    { icon: <FaClipboardList style={{ color: "var(--purple)" }} />, label: "Registrations", value: dashboard.registrations },
+    { icon: <FaProjectDiagram style={{ color: "var(--success)" }} />, label: "Submissions", value: dashboard.submissions },
+    { icon: <FaCheckCircle style={{ color: "var(--warning)" }} />, label: "Completed", value: dashboard.completedHackathons },
+    { icon: <FaClock style={{ color: "var(--slate-500)" }} />, label: "Upcoming", value: dashboard.upcomingHackathons },
+  ];
 
   return (
     <MainLayout>
-      <div className="max-w-7xl mx-auto px-6 py-10">
+      <div className="container section-spacing">
 
-        <h1 className="text-4xl font-bold mb-10">
-          Organizer Dashboard
-        </h1>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
-
-          <Card title="My Hackathons" value={dashboard.myHackathons} />
-          <Card title="Registrations" value={dashboard.registrations} />
-          <Card title="Submissions" value={dashboard.submissions} />
-          <Card title="Completed" value={dashboard.completedHackathons} />
-          <Card title="Upcoming" value={dashboard.upcomingHackathons} />
-
+        <div className="page-header">
+          <h1>Organizer Dashboard</h1>
+          <div className="accent-bar" />
+          <p>Manage your hackathons and track engagement</p>
         </div>
 
-        <div className="mt-12">
+        <div className="grid grid-5 gap-3" style={{ marginBottom: 36 }}>
+          {stats.map((stat, idx) => (
+            <div key={idx} className="stat-card">
+              <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
+                <div>
+                  <div className="text-2xl font-extrabold" style={{ color: "var(--slate-900)" }}>{stat.value}</div>
+                  <div className="text-xs text-muted font-bold" style={{ marginTop: 4 }}>{stat.label}</div>
+                </div>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: "var(--slate-50)", border: "1px solid var(--slate-200)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>
+                  {stat.icon}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
 
-          <h2 className="text-2xl font-bold mb-5">
-            Quick Actions
-          </h2>
-
-          <div className="flex flex-wrap gap-4">
-
-            <Link
-              to="/organizer/create-hackathon"
-              className="bg-[#2b2b2b] text-white px-6 py-3 rounded-lg"
-            >
-              Create Hackathon
+        <div>
+          <h2 className="text-xl font-bold" style={{ color: "var(--slate-900)", marginBottom: 16 }}>Quick Actions</h2>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/organizer/create-hackathon" className="primary-btn">
+              <FaPlus size={12} /> Create Hackathon
             </Link>
-
-            <Link
-              to="/organizer/my-hackathons"
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg"
-            >
-              My Hackathons
+            <Link to="/organizer/my-hackathons" className="secondary-btn">
+              <FaListAlt size={12} /> My Hackathons
             </Link>
-
           </div>
-
         </div>
 
       </div>
     </MainLayout>
-  );
-}
-
-function Card({ title, value }) {
-  return (
-    <div className="bg-white border rounded-xl p-6 shadow">
-      <p className="text-gray-500">{title}</p>
-      <h2 className="text-4xl font-bold mt-3">{value}</h2>
-    </div>
   );
 }
 

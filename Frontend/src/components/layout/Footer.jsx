@@ -1,33 +1,29 @@
+import { FaCode, FaHeart } from "react-icons/fa";
+
 function Footer() {
   return (
-    <footer className="border-t border-slate-200/80 mt-20 bg-white/60 backdrop-blur-sm">
-
-      <div className="max-w-7xl mx-auto py-12 px-6">
-
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-
-          <div>
-
-            <h2 className="text-xl font-bold text-slate-900">
-              CodeHustle
-            </h2>
-
-            <p className="text-slate-500 mt-2">
-              Build. Compete. Innovate.
-            </p>
-
+    <footer className="footer-wrap">
+      <div className="container flex flex-row justify-between items-center gap-4">
+        
+        {/* Left Side: Logo */}
+        <div className="flex items-center gap-2">
+          <div className="nav-logo-icon" style={{ width: 36, height: 36, fontSize: 16 }}>
+            <FaCode />
           </div>
+          <span className="text-lg font-extrabold" style={{ color: "var(--slate-900)" }}>
+            CodeHustle
+          </span>
+        </div>
 
-          <div className="text-slate-500 text-sm font-medium">
-
-            © 2026 CodeHustle. All Rights Reserved.
-
+        {/* Right Side: Remaining Information */}
+        <div className="text-right text-xs text-muted font-semibold flex flex-col items-end gap-1">
+          <div>© 2026 CodeHustle. All rights reserved.</div>
+          <div className="flex items-center gap-1">
+            Built with <FaHeart style={{ color: "var(--danger)" }} size={11} /> for hackathon builders across India.
           </div>
-
         </div>
 
       </div>
-
     </footer>
   );
 }

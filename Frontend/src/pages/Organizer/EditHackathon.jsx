@@ -3,231 +3,123 @@ import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import MainLayout from "../../layouts/MainLayout";
-import {
-  getHackathonById,
-  updateHackathon,
-} from "../../services/hackathonService";
+import Loader from "../../components/common/Loader";
+import { getHackathonById, updateHackathon } from "../../services/hackathonService";
 
 function EditHackathon() {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const [loading, setLoading] = useState(true);
 
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    theme: "",
-    mode: "Online",
-    venue: "",
-    startDate: "",
-    endDate: "",
-    registrationDeadline: "",
-    bannerImage: "",
-    prizePool: "",
-    maxTeamSize: "",
-    rules: "",
-    judgingCriteria: "",
+    title: "", description: "", theme: "", mode: "Online", venue: "",
+    startDate: "", endDate: "", registrationDeadline: "", bannerImage: "",
+    prizePool: "", maxTeamSize: "", rules: "", judgingCriteria: "",
   });
 
-  useEffect(() => {
-    fetchHackathon();
-  }, []);
+  useEffect(() => { fetchHackathon(); }, []);
 
   const fetchHackathon = async () => {
     try {
       const res = await getHackathonById(id);
-
-      const hackathon = res.data.hackathon;
-
+      const h = res.data.hackathon;
       setFormData({
-        title: hackathon.title,
-        description: hackathon.description,
-        theme: hackathon.theme,
-        mode: hackathon.mode,
-        venue: hackathon.venue,
-        startDate: hackathon.startDate.slice(0, 10),
-        endDate: hackathon.endDate.slice(0, 10),
-        registrationDeadline:
-          hackathon.registrationDeadline.slice(0, 10),
-        bannerImage: hackathon.bannerImage,
-        prizePool: hackathon.prizePool,
-        maxTeamSize: hackathon.maxTeamSize,
-        rules: hackathon.rules.join(", "),
-        judgingCriteria:
-          hackathon.judgingCriteria.join(", "),
+        title: h.title, description: h.description, theme: h.theme, mode: h.mode,
+        venue: h.venue, startDate: h.startDate.slice(0, 10), endDate: h.endDate.slice(0, 10),
+        registrationDeadline: h.registrationDeadline.slice(0, 10), bannerImage: h.bannerImage,
+        prizePool: h.prizePool, maxTeamSize: h.maxTeamSize, rules: h.rules.join(", "),
+        judgingCriteria: h.judgingCriteria.join(", "),
       });
-    } catch (err) {
-      toast.error("Unable to load hackathon");
-    } finally {
-      setLoading(false);
-    }
+    } catch (err) { toast.error("Unable to load hackathon"); } finally { setLoading(false); }
   };
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const handleChange = (e) => { setFormData({ ...formData, [e.target.name]: e.target.value }); };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       await updateHackathon(id, {
-        ...formData,
-        maxTeamSize: Number(formData.maxTeamSize),
-        rules: formData.rules
-          .split(",")
-          .map((item) => item.trim()),
-        judgingCriteria: formData.judgingCriteria
-          .split(",")
-          .map((item) => item.trim()),
+        ...formData, maxTeamSize: Number(formData.maxTeamSize),
+        rules: formData.rules.split(",").map((i) => i.trim()),
+        judgingCriteria: formData.judgingCriteria.split(",").map((i) => i.trim()),
       });
-
       toast.success("Hackathon Updated");
-
       navigate("/organizer/my-hackathons");
-    } catch (err) {
-      toast.error(
-        err.response?.data?.message ||
-          "Update Failed"
-      );
-    }
+    } catch (err) { toast.error(err.response?.data?.message || "Update Failed"); }
   };
 
-  if (loading) {
-    return (
-      <MainLayout>
-        <div className="text-center py-20">
-          Loading...
-        </div>
-      </MainLayout>
-    );
-  }
+  if (loading) return <MainLayout><Loader text="Loading hackathon..." /></MainLayout>;
 
   return (
     <MainLayout>
-      <div className="max-w-4xl mx-auto py-10 px-6">
+      <div className="container section-spacing" style={{ maxWidth: 880 }}>
+        <div className="page-header">
+          <h1>Edit Hackathon</h1>
+          <div className="accent-bar" />
+        </div>
 
-        <h1 className="text-4xl font-bold mb-8">
-          Edit Hackathon
-        </h1>
-
-        <form
-          onSubmit={handleSubmit}
-          className="grid md:grid-cols-2 gap-6"
-        >
-          <input
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-            required
-          />
-
-          <input
-            name="theme"
-            value={formData.theme}
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-            required
-          />
-
-          <textarea
-            rows={4}
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            className="border p-3 rounded-lg md:col-span-2"
-          />
-
-          <select
-            name="mode"
-            value={formData.mode}
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-          >
-            <option>Online</option>
-            <option>Offline</option>
-          </select>
-
-          <input
-            name="venue"
-            value={formData.venue}
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-          />
-
-          <input
-            type="date"
-            name="registrationDeadline"
-            value={formData.registrationDeadline}
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-          />
-
-          <input
-            type="date"
-            name="startDate"
-            value={formData.startDate}
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-          />
-
-          <input
-            type="date"
-            name="endDate"
-            value={formData.endDate}
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-          />
-
-          <input
-            name="bannerImage"
-            value={formData.bannerImage}
-            onChange={handleChange}
-            className="border p-3 rounded-lg md:col-span-2"
-          />
-
-          <input
-            name="prizePool"
-            value={formData.prizePool}
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-          />
-
-          <input
-            type="number"
-            name="maxTeamSize"
-            value={formData.maxTeamSize}
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-          />
-
-          <textarea
-            rows={3}
-            name="rules"
-            value={formData.rules}
-            onChange={handleChange}
-            className="border p-3 rounded-lg md:col-span-2"
-          />
-
-          <textarea
-            rows={3}
-            name="judgingCriteria"
-            value={formData.judgingCriteria}
-            onChange={handleChange}
-            className="border p-3 rounded-lg md:col-span-2"
-          />
-
-          <button className="bg-[#2b2b2b] text-white py-3 rounded-lg md:col-span-2">
-            Update Hackathon
-          </button>
-
-        </form>
-
+        <div className="form-card">
+          <form onSubmit={handleSubmit} className="form-grid">
+            <div className="form-group">
+              <label className="form-label">Title</label>
+              <input name="title" value={formData.title} onChange={handleChange} className="input" required />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Theme</label>
+              <input name="theme" value={formData.theme} onChange={handleChange} className="input" required />
+            </div>
+            <div className="form-group full-width">
+              <label className="form-label">Description</label>
+              <textarea rows={4} name="description" value={formData.description} onChange={handleChange} className="input" />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Mode</label>
+              <select name="mode" value={formData.mode} onChange={handleChange} className="input">
+                <option>Online</option>
+                <option>Offline</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label className="form-label">Venue</label>
+              <input name="venue" value={formData.venue} onChange={handleChange} className="input" />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Registration Deadline</label>
+              <input type="date" name="registrationDeadline" value={formData.registrationDeadline} onChange={handleChange} className="input" />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Start Date</label>
+              <input type="date" name="startDate" value={formData.startDate} onChange={handleChange} className="input" />
+            </div>
+            <div className="form-group">
+              <label className="form-label">End Date</label>
+              <input type="date" name="endDate" value={formData.endDate} onChange={handleChange} className="input" />
+            </div>
+            <div className="form-group full-width">
+              <label className="form-label">Banner Image URL</label>
+              <input name="bannerImage" value={formData.bannerImage} onChange={handleChange} className="input" />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Prize Pool</label>
+              <input name="prizePool" value={formData.prizePool} onChange={handleChange} className="input" />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Max Team Size</label>
+              <input type="number" name="maxTeamSize" value={formData.maxTeamSize} onChange={handleChange} className="input" />
+            </div>
+            <div className="form-group full-width">
+              <label className="form-label">Rules (comma separated)</label>
+              <textarea rows={3} name="rules" value={formData.rules} onChange={handleChange} className="input" />
+            </div>
+            <div className="form-group full-width">
+              <label className="form-label">Judging Criteria (comma separated)</label>
+              <textarea rows={3} name="judgingCriteria" value={formData.judgingCriteria} onChange={handleChange} className="input" />
+            </div>
+            <div className="full-width">
+              <button className="primary-btn" style={{ width: "100%", marginTop: 12 }}>Update Hackathon</button>
+            </div>
+          </form>
+        </div>
       </div>
     </MainLayout>
   );

@@ -1,89 +1,61 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { FaTimes } from "react-icons/fa";
 
 import MainLayout from "../../layouts/MainLayout";
-import {
-  getMyRegistrations,
-  cancelRegistration,
-} from "../../services/registrationService";
+import EmptyState from "../../components/common/EmptyState";
+import { getMyRegistrations, cancelRegistration } from "../../services/registrationService";
 
 function MyRegistrations() {
   const [registrations, setRegistrations] = useState([]);
 
   const fetchRegistrations = async () => {
-    try {
-      const res = await getMyRegistrations();
-      setRegistrations(res.data.registrations);
-    } catch (err) {
-      console.log(err);
-    }
+    try { const res = await getMyRegistrations(); setRegistrations(res.data.registrations); }
+    catch (err) { console.log(err); }
   };
 
-  useEffect(() => {
-    fetchRegistrations();
-  }, []);
+  useEffect(() => { fetchRegistrations(); }, []);
 
   const handleCancel = async (id) => {
     if (!window.confirm("Cancel registration?")) return;
+    try { await cancelRegistration(id); toast.success("Registration Cancelled"); fetchRegistrations(); }
+    catch (err) { toast.error(err.response?.data?.message || "Failed"); }
+  };
 
-    try {
-      await cancelRegistration(id);
-
-      toast.success("Registration Cancelled");
-
-      fetchRegistrations();
-    } catch (err) {
-      toast.error(
-        err.response?.data?.message || "Failed"
-      );
-    }
+  const statusBadge = (status) => {
+    const map = { approved: "badge-green", pending: "badge-amber", rejected: "badge-red" };
+    return map[status?.toLowerCase()] || "badge-slate";
   };
 
   return (
     <MainLayout>
-
-      <div className="max-w-6xl mx-auto py-10">
-
-        <h1 className="text-4xl font-bold mb-8">
-          My Registrations
-        </h1>
-
-        <div className="space-y-5">
-
-          {registrations.map((registration) => (
-
-            <div
-              key={registration._id}
-              className="border rounded-xl p-5 bg-white"
-            >
-
-              <h2 className="text-2xl font-bold">
-                {registration.hackathon.title}
-              </h2>
-
-              <p>
-                Team : {registration.team.teamName}
-              </p>
-
-              <p>
-                Status : {registration.status}
-              </p>
-
-              <button
-                onClick={() => handleCancel(registration._id)}
-                className="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg"
-              >
-                Cancel
-              </button>
-
-            </div>
-
-          ))}
-
+      <div className="container section-spacing">
+        <div className="page-header">
+          <h1>My Registrations</h1>
+          <div className="accent-bar" />
         </div>
 
+        {registrations.length === 0 ? (
+          <EmptyState title="No Registrations" subtitle="Register for a hackathon to see it here." actionLabel="Browse Hackathons" actionTo="/hackathons" />
+        ) : (
+          <div className="flex flex-col gap-3">
+            {registrations.map((r) => (
+              <div key={r._id} className="data-card flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-lg font-bold" style={{ color: "var(--slate-900)" }}>{r.hackathon.title}</h2>
+                  <p className="text-xs text-muted" style={{ marginTop: 4 }}>
+                    Team: <span className="font-semibold" style={{ color: "var(--slate-800)" }}>{r.team.teamName}</span>
+                  </p>
+                  <span className={`badge ${statusBadge(r.status)}`} style={{ marginTop: 8 }}>{r.status}</span>
+                </div>
+                <button onClick={() => handleCancel(r._id)} className="danger-btn">
+                  <FaTimes size={11} /> Cancel
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-
     </MainLayout>
   );
 }

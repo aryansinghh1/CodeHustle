@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { FaProjectDiagram, FaClock, FaCheckCircle, FaEye } from "react-icons/fa";
 
 import MainLayout from "../../layouts/MainLayout";
+import Loader from "../../components/common/Loader";
 import { getJudgeDashboard } from "../../services/dashboardService";
 
 function Dashboard() {
   const [dashboard, setDashboard] = useState({
-    assignedProjects: 0,
-    pendingReviews: 0,
-    completedReviews: 0,
+    assignedProjects: 0, pendingReviews: 0, completedReviews: 0,
   });
-
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => { fetchDashboard(); }, []);
 
   const fetchDashboard = async () => {
     try {
       const res = await getJudgeDashboard();
-
       setDashboard(res.data.dashboard);
     } catch (err) {
       console.log(err);
@@ -25,76 +25,51 @@ function Dashboard() {
     }
   };
 
-  useEffect(() => {
-    fetchDashboard();
-  }, []);
+  if (loading) return <MainLayout><Loader text="Loading judge dashboard..." /></MainLayout>;
 
-  if (loading) {
-    return (
-      <MainLayout>
-        <div className="text-center py-20">
-          Loading...
-        </div>
-      </MainLayout>
-    );
-  }
+  const stats = [
+    { icon: <FaProjectDiagram style={{ color: "var(--primary)" }} />, label: "Assigned Projects", value: dashboard.assignedProjects },
+    { icon: <FaClock style={{ color: "var(--warning)" }} />, label: "Pending Reviews", value: dashboard.pendingReviews },
+    { icon: <FaCheckCircle style={{ color: "var(--success)" }} />, label: "Completed Reviews", value: dashboard.completedReviews },
+  ];
 
   return (
     <MainLayout>
+      <div className="container section-spacing">
 
-      <div className="max-w-7xl mx-auto py-10 px-6">
-
-        <h1 className="text-4xl font-bold mb-8">
-          Judge Dashboard
-        </h1>
-
-        <div className="grid md:grid-cols-3 gap-6">
-
-          <Card
-            title="Assigned Projects"
-            value={dashboard.assignedProjects}
-          />
-
-          <Card
-            title="Pending Reviews"
-            value={dashboard.pendingReviews}
-          />
-
-          <Card
-            title="Completed Reviews"
-            value={dashboard.completedReviews}
-          />
-
+        <div className="page-header">
+          <h1>Judge Dashboard</h1>
+          <div className="accent-bar" />
+          <p>Review and evaluate project submissions</p>
         </div>
 
-        <div className="mt-10">
+        <div className="grid grid-3 gap-4" style={{ marginBottom: 36 }}>
+          {stats.map((stat, idx) => (
+            <div key={idx} className="stat-card">
+              <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
+                <div>
+                  <div className="text-3xl font-extrabold" style={{ color: "var(--slate-900)" }}>{stat.value}</div>
+                  <div className="text-xs text-muted font-bold" style={{ marginTop: 4 }}>{stat.label}</div>
+                </div>
+                <div style={{ width: 44, height: 44, borderRadius: 14, background: "var(--slate-50)", border: "1px solid var(--slate-200)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>
+                  {stat.icon}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
 
-          <Link
-            to="/judge/submissions"
-            className="bg-[#2b2b2b] text-white px-6 py-3 rounded-lg"
-          >
-            View Assigned Projects
-          </Link>
-
+        <div>
+          <h2 className="text-xl font-bold" style={{ color: "var(--slate-900)", marginBottom: 16 }}>Quick Actions</h2>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/judge/submissions" className="primary-btn">
+              <FaEye size={13} /> View Assigned Projects
+            </Link>
+          </div>
         </div>
 
       </div>
-
     </MainLayout>
-  );
-}
-
-function Card({ title, value }) {
-  return (
-    <div className="bg-white border rounded-xl shadow p-6">
-
-      <p>{title}</p>
-
-      <h2 className="text-4xl font-bold mt-3">
-        {value}
-      </h2>
-
-    </div>
   );
 }
 

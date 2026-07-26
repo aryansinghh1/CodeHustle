@@ -1,80 +1,37 @@
-import {
-  FaUsers,
-  FaTrophy,
-  FaLaptopCode,
-} from "react-icons/fa";
+import { FaLaptopCode, FaUsers, FaTrophy, FaShieldHalved, FaChartLine, FaScaleBalanced } from "react-icons/fa6";
 
 const features = [
-  {
-    icon: <FaLaptopCode size={28} />,
-    title: "Build Amazing Projects",
-    description:
-      "Transform innovative ideas into real-world applications with your team.",
-  },
-  {
-    icon: <FaUsers size={28} />,
-    title: "Collaborate Easily",
-    description:
-      "Create teams, invite members, and manage everything from one place.",
-  },
-  {
-    icon: <FaTrophy size={28} />,
-    title: "Compete & Win",
-    description:
-      "Showcase your skills and climb the leaderboard to win exciting prizes.",
-  },
+  { icon: <FaLaptopCode size={22} style={{ color: "var(--primary)" }} />, title: "Build Amazing Projects", description: "Turn concepts into production-grade applications with real-time feedback and structured milestones." },
+  { icon: <FaUsers size={22} style={{ color: "var(--purple)" }} />, title: "Seamless Collaboration", description: "Assemble balanced teams, invite teammates with simple links, and manage roles seamlessly." },
+  { icon: <FaTrophy size={22} style={{ color: "var(--warning)" }} />, title: "Compete & Win Prizes", description: "Participate in nationwide prize pools, showcase project demos, and earn verified digital recognition." },
+  { icon: <FaScaleBalanced size={22} style={{ color: "var(--success)" }} />, title: "Transparent Rubrics", description: "Judges score with predefined multi-criteria rubrics for objective and fair project ranking." },
+  { icon: <FaChartLine size={22} style={{ color: "#0284c7" }} />, title: "Live Leaderboards", description: "Watch scores compute automatically as judges review submissions, providing instant visibility." },
+  { icon: <FaShieldHalved size={22} style={{ color: "var(--danger)" }} />, title: "Role-Based Security", description: "Dedicated dashboards for participants, hackathon organizers, judges, and administrators." },
 ];
 
 function WhyChoose() {
   return (
-    <section className="max-w-7xl mx-auto px-6 py-24">
-
-      <div className="text-center">
-
-        <h2 className="text-4xl font-extrabold tracking-tight text-slate-900">
-          Why Choose CodeHustle?
-        </h2>
-
-        <p className="mt-4 text-slate-500 max-w-2xl mx-auto text-lg leading-8">
-          Everything you need to organize, participate, and evaluate hackathons
-          in one modern platform.
+    <section className="container" style={{ paddingTop: 32, paddingBottom: 32 }}>
+      <div className="text-center" style={{ maxWidth: 600, margin: "0 auto 36px" }}>
+        <span className="badge badge-blue" style={{ marginBottom: 8 }}>Platform Advantages</span>
+        <h2 className="text-3xl font-extrabold" style={{ color: "var(--slate-900)" }}>Why Choose CodeHustle?</h2>
+        <p className="text-muted text-sm" style={{ marginTop: 4 }}>
+          Built from the ground up for seamless hackathon management, hack-team formation, and transparent scoring.
         </p>
-
       </div>
 
-      <div className="grid md:grid-cols-3 gap-8 mt-16">
-
+      <div className="grid grid-3 gap-6">
         {features.map((item, index) => (
-          <div
-            key={index}
-            className="
-              rounded-3xl
-              bg-white/85
-              border border-slate-200/80
-              backdrop-blur-sm
-              p-10
-              shadow-[0_18px_50px_rgba(15,23,42,0.07)]
-              hover:-translate-y-2
-              hover:shadow-[0_24px_60px_rgba(37,99,235,0.10)]
-              duration-300
-            "
-          >
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-50 to-slate-100 flex items-center justify-center text-blue-600 shadow-inner">
+          <div key={index} className="data-card">
+            <div style={{ width: 44, height: 44, borderRadius: 14, background: "var(--slate-50)", border: "1px solid var(--slate-200)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
               {item.icon}
             </div>
 
-            <h3 className="text-2xl font-bold mt-6 text-slate-900">
-              {item.title}
-            </h3>
-
-            <p className="text-slate-500 mt-4 leading-7">
-              {item.description}
-            </p>
+            <h3 className="text-lg font-bold" style={{ color: "var(--slate-900)", marginBottom: 8 }}>{item.title}</h3>
+            <p className="text-muted text-xs" style={{ lineHeight: 1.6 }}>{item.description}</p>
           </div>
         ))}
-
       </div>
-
     </section>
   );
 }

@@ -7,60 +7,33 @@ import { createHackathon } from "../../services/hackathonService";
 
 function CreateHackathon() {
   const navigate = useNavigate();
-
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    theme: "",
-    mode: "Online",
-    venue: "",
-    startDate: "",
-    endDate: "",
-    registrationDeadline: "",
-    bannerImage: "",
-    prizePool: "",
-    maxTeamSize: "",
-    rules: "",
-    judgingCriteria: "",
-  });
-
   const [loading, setLoading] = useState(false);
 
+  const [formData, setFormData] = useState({
+    title: "", description: "", theme: "", mode: "Online", venue: "",
+    startDate: "", endDate: "", registrationDeadline: "", bannerImage: "",
+    prizePool: "", maxTeamSize: "", rules: "", judgingCriteria: "",
+  });
+
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       setLoading(true);
-
       const payload = {
         ...formData,
         maxTeamSize: Number(formData.maxTeamSize),
-        rules: formData.rules
-          .split(",")
-          .map((rule) => rule.trim())
-          .filter(Boolean),
-        judgingCriteria: formData.judgingCriteria
-          .split(",")
-          .map((item) => item.trim())
-          .filter(Boolean),
+        rules: formData.rules.split(",").map((r) => r.trim()).filter(Boolean),
+        judgingCriteria: formData.judgingCriteria.split(",").map((i) => i.trim()).filter(Boolean),
       };
-
       await createHackathon(payload);
-
       toast.success("Hackathon Created Successfully");
-
       navigate("/organizer/dashboard");
     } catch (err) {
-      toast.error(
-        err.response?.data?.message || "Failed to create hackathon"
-      );
+      toast.error(err.response?.data?.message || "Failed to create hackathon");
     } finally {
       setLoading(false);
     }
@@ -68,130 +41,93 @@ function CreateHackathon() {
 
   return (
     <MainLayout>
-      <div className="max-w-4xl mx-auto py-10 px-6">
+      <div className="container section-spacing" style={{ maxWidth: 880 }}>
 
-        <h1 className="text-4xl font-bold mb-8">
-          Create Hackathon
-        </h1>
+        <div className="page-header">
+          <h1>Create Hackathon</h1>
+          <div className="accent-bar" />
+          <p>Set up a new hackathon event for participants</p>
+        </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="grid md:grid-cols-2 gap-6"
-        >
+        <div className="form-card">
+          <form onSubmit={handleSubmit} className="form-grid">
 
-          <input
-            name="title"
-            placeholder="Title"
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-            required
-          />
+            <div className="form-group">
+              <label className="form-label">Title</label>
+              <input name="title" placeholder="Hackathon name" onChange={handleChange} className="input" required />
+            </div>
 
-          <input
-            name="theme"
-            placeholder="Theme"
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-            required
-          />
+            <div className="form-group">
+              <label className="form-label">Theme</label>
+              <input name="theme" placeholder="e.g. FinTech, HealthCare" onChange={handleChange} className="input" required />
+            </div>
 
-          <textarea
-            name="description"
-            placeholder="Description"
-            onChange={handleChange}
-            className="border p-3 rounded-lg md:col-span-2"
-            rows={4}
-            required
-          />
+            <div className="form-group full-width">
+              <label className="form-label">Description</label>
+              <textarea name="description" placeholder="Describe your hackathon..." onChange={handleChange} className="input" rows={4} required />
+            </div>
 
-          <select
-            name="mode"
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-          >
-            <option>Online</option>
-            <option>Offline</option>
-          </select>
+            <div className="form-group">
+              <label className="form-label">Mode</label>
+              <select name="mode" onChange={handleChange} className="input">
+                <option>Online</option>
+                <option>Offline</option>
+              </select>
+            </div>
 
-          <input
-            name="venue"
-            placeholder="Venue"
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-          />
+            <div className="form-group">
+              <label className="form-label">Venue</label>
+              <input name="venue" placeholder="Location or Online" onChange={handleChange} className="input" />
+            </div>
 
-          <input
-            type="date"
-            name="registrationDeadline"
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-            required
-          />
+            <div className="form-group">
+              <label className="form-label">Registration Deadline</label>
+              <input type="date" name="registrationDeadline" onChange={handleChange} className="input" required />
+            </div>
 
-          <input
-            type="date"
-            name="startDate"
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-            required
-          />
+            <div className="form-group">
+              <label className="form-label">Start Date</label>
+              <input type="date" name="startDate" onChange={handleChange} className="input" required />
+            </div>
 
-          <input
-            type="date"
-            name="endDate"
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-            required
-          />
+            <div className="form-group">
+              <label className="form-label">End Date</label>
+              <input type="date" name="endDate" onChange={handleChange} className="input" required />
+            </div>
 
-          <input
-            name="bannerImage"
-            placeholder="Banner Image URL"
-            onChange={handleChange}
-            className="border p-3 rounded-lg md:col-span-2"
-          />
+            <div className="form-group full-width">
+              <label className="form-label">Banner Image URL</label>
+              <input name="bannerImage" placeholder="https://..." onChange={handleChange} className="input" />
+            </div>
 
-          <input
-            name="prizePool"
-            placeholder="Prize Pool"
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-            required
-          />
+            <div className="form-group">
+              <label className="form-label">Prize Pool</label>
+              <input name="prizePool" placeholder="₹50,000" onChange={handleChange} className="input" required />
+            </div>
 
-          <input
-            type="number"
-            name="maxTeamSize"
-            placeholder="Maximum Team Size"
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-            required
-          />
+            <div className="form-group">
+              <label className="form-label">Max Team Size</label>
+              <input type="number" name="maxTeamSize" placeholder="4" onChange={handleChange} className="input" required />
+            </div>
 
-          <textarea
-            name="rules"
-            placeholder="Rules (comma separated)"
-            onChange={handleChange}
-            className="border p-3 rounded-lg md:col-span-2"
-            rows={3}
-          />
+            <div className="form-group full-width">
+              <label className="form-label">Rules (comma separated)</label>
+              <textarea name="rules" placeholder="Rule 1, Rule 2, Rule 3" onChange={handleChange} className="input" rows={3} />
+            </div>
 
-          <textarea
-            name="judgingCriteria"
-            placeholder="Judging Criteria (comma separated)"
-            onChange={handleChange}
-            className="border p-3 rounded-lg md:col-span-2"
-            rows={3}
-          />
+            <div className="form-group full-width">
+              <label className="form-label">Judging Criteria (comma separated)</label>
+              <textarea name="judgingCriteria" placeholder="Innovation, Technical Complexity, UI/UX" onChange={handleChange} className="input" rows={3} />
+            </div>
 
-          <button
-            disabled={loading}
-            className="bg-[#2b2b2b] text-white py-3 rounded-lg md:col-span-2"
-          >
-            {loading ? "Creating..." : "Create Hackathon"}
-          </button>
+            <div className="full-width">
+              <button disabled={loading} className="primary-btn" style={{ width: "100%", marginTop: 12 }}>
+                {loading ? "Creating..." : "Create Hackathon"}
+              </button>
+            </div>
 
-        </form>
+          </form>
+        </div>
 
       </div>
     </MainLayout>

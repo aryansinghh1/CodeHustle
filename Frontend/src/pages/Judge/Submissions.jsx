@@ -1,72 +1,51 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { FaEye } from "react-icons/fa";
 
 import MainLayout from "../../layouts/MainLayout";
+import EmptyState from "../../components/common/EmptyState";
 import { getJudgeSubmissions } from "../../services/submissionService";
 
 function Submissions() {
   const [submissions, setSubmissions] = useState([]);
 
-  useEffect(() => {
-    fetchSubmissions();
-  }, []);
+  useEffect(() => { fetchSubmissions(); }, []);
 
   const fetchSubmissions = async () => {
-    try {
-      const res = await getJudgeSubmissions();
-      setSubmissions(res.data.submissions);
-    } catch (err) {
-      console.log(err);
-    }
+    try { const res = await getJudgeSubmissions(); setSubmissions(res.data.submissions); }
+    catch (err) { console.log(err); }
   };
 
   return (
     <MainLayout>
-
-      <div className="max-w-7xl mx-auto py-10 px-6">
-
-        <h1 className="text-4xl font-bold mb-8">
-          Assigned Projects
-        </h1>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-          {submissions.map((submission) => (
-
-            <div
-              key={submission._id}
-              className="bg-white border rounded-xl shadow p-6"
-            >
-
-              <h2 className="text-2xl font-bold">
-                {submission.projectName}
-              </h2>
-
-              <p className="mt-3">
-                Team : {submission.team.teamName}
-              </p>
-
-              <p>
-                Hackathon :
-                {" "}
-                {submission.hackathon.title}
-              </p>
-
-              <Link
-                to={`/judge/review/${submission._id}`}
-                className="inline-block mt-5 bg-[#2b2b2b] text-white px-5 py-2 rounded-lg"
-              >
-                Review Project
-              </Link>
-
-            </div>
-
-          ))}
-
+      <div className="container section-spacing">
+        <div className="page-header">
+          <h1>Assigned Projects</h1>
+          <div className="accent-bar" />
+          <p>Review and evaluate project submissions</p>
         </div>
 
+        {submissions.length === 0 ? (
+          <EmptyState title="No Assigned Projects" subtitle="You don't have any projects to review yet." />
+        ) : (
+          <div className="grid grid-3 gap-4">
+            {submissions.map((s) => (
+              <div key={s._id} className="data-card flex flex-col justify-between">
+                <div>
+                  <h2 className="text-lg font-bold" style={{ color: "var(--slate-900)" }}>{s.projectName}</h2>
+                  <div className="flex flex-col gap-1" style={{ marginTop: 10 }}>
+                    <p className="text-xs text-muted">Team: <span className="font-semibold" style={{ color: "var(--slate-800)" }}>{s.team.teamName}</span></p>
+                    <p className="text-xs text-muted">Hackathon: <span className="font-semibold" style={{ color: "var(--slate-800)" }}>{s.hackathon.title}</span></p>
+                  </div>
+                </div>
+                <Link to={`/judge/review/${s._id}`} className="primary-btn" style={{ width: "100%", marginTop: 16 }}>
+                  <FaEye size={12} /> Review Project
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-
     </MainLayout>
   );
 }

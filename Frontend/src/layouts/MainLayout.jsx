@@ -5,11 +5,9 @@ function MainLayout({ children }) {
   return (
     <>
       <Navbar />
-
-      <main className="min-h-screen">
+      <main style={{ minHeight: "calc(100vh - 180px)" }}>
         {children}
       </main>
-
       <Footer />
     </>
   );

@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { FaArrowLeft, FaMapMarkerAlt, FaTrophy, FaUsers, FaCalendarAlt, FaLaptopCode } from "react-icons/fa";
+
 import MainLayout from "../../layouts/MainLayout";
+import Loader from "../../components/common/Loader";
 import { getHackathonById } from "../../services/hackathonService";
 
 function Details() {
@@ -28,7 +31,7 @@ function Details() {
   if (loading) {
     return (
       <MainLayout>
-        <div className="text-center py-20 text-2xl">Loading...</div>
+        <Loader text="Loading hackathon details..." />
       </MainLayout>
     );
   }
@@ -36,105 +39,149 @@ function Details() {
   if (!hackathon) {
     return (
       <MainLayout>
-        <div className="text-center py-20 text-2xl">Hackathon Not Found</div>
+        <div className="container text-center section-spacing">
+          <h2 className="text-2xl font-bold" style={{ color: "var(--slate-800)" }}>Hackathon Not Found</h2>
+          <button onClick={() => navigate(-1)} className="outline-btn" style={{ marginTop: 24 }}>
+            <FaArrowLeft size={12} /> Go Back
+          </button>
+        </div>
       </MainLayout>
     );
   }
 
   return (
     <MainLayout>
-      <div className="max-w-6xl mx-auto px-6 py-10">
-        <button
-          onClick={() => navigate(-1)}
-          className="mb-6 border px-4 py-2 rounded-lg hover:bg-gray-100"
-        >
-          ← Back
+      <div className="container section-spacing" style={{ maxWidth: 1000 }}>
+
+        <button onClick={() => navigate(-1)} className="outline-btn" style={{ marginBottom: 24 }}>
+          <FaArrowLeft size={12} /> Back
         </button>
 
-        <img
-          src={
-            hackathon.bannerImage ||
-            "https://placehold.co/1200x400?text=Hackathon"
-          }
-          alt={hackathon.title}
-          className="w-full h-96 object-cover rounded-xl"
-        />
+        {/* Banner Card */}
+        <div className="data-card" style={{ padding: 0, overflow: "hidden", marginBottom: 24 }}>
+          <img
+            src={hackathon.bannerImage || "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80"}
+            alt={hackathon.title}
+            style={{ width: "100%", height: 280, objectFit: "cover" }}
+          />
 
-        <h1 className="text-5xl font-bold mt-8">{hackathon.title}</h1>
+          <div style={{ padding: 28 }}>
+            <div className="flex gap-2" style={{ marginBottom: 12 }}>
+              <span className="badge badge-blue">{hackathon.mode}</span>
+              <span className="badge badge-green">{hackathon.status}</span>
+            </div>
 
-        <p className="mt-5 text-lg text-gray-600">{hackathon.description}</p>
+            <h1 className="text-3xl font-extrabold" style={{ color: "var(--slate-900)" }}>
+              {hackathon.title}
+            </h1>
 
-        <div className="grid md:grid-cols-2 gap-8 mt-10">
-          <div className="space-y-4">
-            <p>
-              <strong>Theme:</strong> {hackathon.theme}
-            </p>
-
-            <p>
-              <strong>Mode:</strong> {hackathon.mode}
-            </p>
-
-            <p>
-              <strong>Venue:</strong> {hackathon.venue}
-            </p>
-
-            <p>
-              <strong>Prize Pool:</strong> ₹ {hackathon.prizePool}
-            </p>
-
-            <p>
-              <strong>Maximum Team Size:</strong> {hackathon.maxTeamSize}
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            <p>
-              <strong>Registration Deadline:</strong>{" "}
-              {new Date(hackathon.registrationDeadline).toLocaleDateString()}
-            </p>
-
-            <p>
-              <strong>Start Date:</strong>{" "}
-              {new Date(hackathon.startDate).toLocaleDateString()}
-            </p>
-
-            <p>
-              <strong>End Date:</strong>{" "}
-              {new Date(hackathon.endDate).toLocaleDateString()}
-            </p>
-
-            <p>
-              <strong>Status:</strong> {hackathon.status}
+            <p className="text-muted text-sm" style={{ marginTop: 12, lineHeight: 1.6 }}>
+              {hackathon.description}
             </p>
           </div>
         </div>
 
-        <div className="mt-12">
-          <h2 className="text-3xl font-bold mb-4">Rules</h2>
+        {/* Info Grid */}
+        <div className="grid grid-2 gap-4" style={{ marginBottom: 24 }}>
 
-          <ul className="list-disc ml-6 space-y-2">
+          <div className="data-card">
+            <h3 className="text-base font-bold" style={{ color: "var(--slate-900)", marginBottom: 16 }}>Event Details</h3>
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center gap-3">
+                <FaLaptopCode style={{ color: "var(--primary)" }} />
+                <div>
+                  <p className="text-xs text-muted font-bold">Theme</p>
+                  <p className="text-sm font-semibold">{hackathon.theme}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <FaMapMarkerAlt style={{ color: "var(--primary)" }} />
+                <div>
+                  <p className="text-xs text-muted font-bold">Venue</p>
+                  <p className="text-sm font-semibold">{hackathon.venue || "Online"}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <FaTrophy style={{ color: "var(--success)" }} />
+                <div>
+                  <p className="text-xs text-muted font-bold">Prize Pool</p>
+                  <p className="text-sm font-semibold">₹ {hackathon.prizePool}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <FaUsers style={{ color: "var(--purple)" }} />
+                <div>
+                  <p className="text-xs text-muted font-bold">Max Team Size</p>
+                  <p className="text-sm font-semibold">{hackathon.maxTeamSize} members</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="data-card">
+            <h3 className="text-base font-bold" style={{ color: "var(--slate-900)", marginBottom: 16 }}>Important Dates</h3>
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center gap-3">
+                <FaCalendarAlt style={{ color: "var(--danger)" }} />
+                <div>
+                  <p className="text-xs text-muted font-bold">Registration Deadline</p>
+                  <p className="text-sm font-semibold">
+                    {new Date(hackathon.registrationDeadline).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <FaCalendarAlt style={{ color: "var(--success)" }} />
+                <div>
+                  <p className="text-xs text-muted font-bold">Start Date</p>
+                  <p className="text-sm font-semibold">
+                    {new Date(hackathon.startDate).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <FaCalendarAlt style={{ color: "var(--slate-400)" }} />
+                <div>
+                  <p className="text-xs text-muted font-bold">End Date</p>
+                  <p className="text-sm font-semibold">
+                    {new Date(hackathon.endDate).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Rules */}
+        <div className="data-card" style={{ marginBottom: 24 }}>
+          <h3 className="text-base font-bold" style={{ color: "var(--slate-900)", marginBottom: 12 }}>Rules</h3>
+          <ul className="flex flex-col gap-2" style={{ paddingLeft: 20 }}>
             {hackathon.rules.map((rule, index) => (
-              <li key={index}>{rule}</li>
+              <li key={index} className="text-sm text-muted" style={{ lineHeight: 1.5 }}>{rule}</li>
             ))}
           </ul>
         </div>
 
-        <div className="mt-12">
-          <h2 className="text-3xl font-bold mb-4">Judging Criteria</h2>
-
-          <ul className="list-disc ml-6 space-y-2">
+        {/* Judging Criteria */}
+        <div className="data-card" style={{ marginBottom: 32 }}>
+          <h3 className="text-base font-bold" style={{ color: "var(--slate-900)", marginBottom: 12 }}>Judging Criteria</h3>
+          <ul className="flex flex-col gap-2" style={{ paddingLeft: 20 }}>
             {hackathon.judgingCriteria.map((criteria, index) => (
-              <li key={index}>{criteria}</li>
+              <li key={index} className="text-sm text-muted" style={{ lineHeight: 1.5 }}>{criteria}</li>
             ))}
           </ul>
         </div>
 
+        {/* Register Button */}
         <button
           onClick={() => navigate(`/register/${hackathon._id}`)}
-          className="mt-12 bg-[#2b2b2b] text-white px-8 py-4 rounded-lg hover:bg-black"
+          className="primary-btn"
+          style={{ padding: "16px 36px", fontSize: 16 }}
         >
-          Register Team
+          Register Your Team
         </button>
+
       </div>
     </MainLayout>
   );

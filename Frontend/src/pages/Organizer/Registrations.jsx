@@ -1,135 +1,77 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import { FaCheck, FaTimes } from "react-icons/fa";
 
 import MainLayout from "../../layouts/MainLayout";
-
-import {
-  getHackathonRegistrations,
-  approveRegistration,
-  rejectRegistration,
-} from "../../services/registrationService";
+import Loader from "../../components/common/Loader";
+import EmptyState from "../../components/common/EmptyState";
+import { getHackathonRegistrations, approveRegistration, rejectRegistration } from "../../services/registrationService";
 
 function Registrations() {
   const { id } = useParams();
-
   const [registrations, setRegistrations] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchRegistrations = async () => {
-    try {
-      const res = await getHackathonRegistrations(id);
-
-      setRegistrations(res.data.registrations);
-    } catch (err) {
-      toast.error("Unable to load registrations");
-    } finally {
-      setLoading(false);
-    }
+    try { const res = await getHackathonRegistrations(id); setRegistrations(res.data.registrations); }
+    catch (err) { toast.error("Unable to load registrations"); } finally { setLoading(false); }
   };
 
-  useEffect(() => {
-    fetchRegistrations();
-  }, []);
+  useEffect(() => { fetchRegistrations(); }, []);
 
-  const handleApprove = async (registrationId) => {
-    try {
-      await approveRegistration(registrationId);
-
-      toast.success("Registration Approved");
-
-      fetchRegistrations();
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Failed");
-    }
+  const handleApprove = async (rid) => {
+    try { await approveRegistration(rid); toast.success("Approved"); fetchRegistrations(); }
+    catch (err) { toast.error(err.response?.data?.message || "Failed"); }
   };
 
-  const handleReject = async (registrationId) => {
-    try {
-      await rejectRegistration(registrationId);
-
-      toast.success("Registration Rejected");
-
-      fetchRegistrations();
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Failed");
-    }
+  const handleReject = async (rid) => {
+    try { await rejectRegistration(rid); toast.success("Rejected"); fetchRegistrations(); }
+    catch (err) { toast.error(err.response?.data?.message || "Failed"); }
   };
 
-  if (loading) {
-    return (
-      <MainLayout>
-        <div className="text-center py-20">
-          Loading...
-        </div>
-      </MainLayout>
-    );
-  }
+  if (loading) return <MainLayout><Loader text="Loading registrations..." /></MainLayout>;
+
+  const statusBadge = (status) => {
+    const map = { approved: "badge-green", pending: "badge-amber", rejected: "badge-red" };
+    return map[status?.toLowerCase()] || "badge-slate";
+  };
 
   return (
     <MainLayout>
-
-      <div className="max-w-7xl mx-auto py-10 px-6">
-
-        <h1 className="text-4xl font-bold mb-8">
-          Registrations
-        </h1>
+      <div className="container section-spacing">
+        <div className="page-header">
+          <h1>Registrations</h1>
+          <div className="accent-bar" />
+          <p>Review and manage team registrations</p>
+        </div>
 
         {registrations.length === 0 ? (
-          <h2>No registrations found.</h2>
+          <EmptyState title="No Registrations" subtitle="No teams have registered for this hackathon yet." />
         ) : (
-          <div className="space-y-6">
-
-            {registrations.map((registration) => (
-
-              <div
-                key={registration._id}
-                className="bg-white border rounded-xl shadow p-6"
-              >
-
-                <h2 className="text-2xl font-bold">
-                  {registration.team.teamName}
-                </h2>
-
-                <p className="mt-2">
-                  Hackathon : {registration.hackathon.title}
-                </p>
-
-                <p className="mt-2">
-                  Status : {registration.status}
-                </p>
-
-                <div className="flex gap-3 mt-6">
-
-                  <button
-                    onClick={() =>
-                      handleApprove(registration._id)
-                    }
-                    className="bg-green-600 text-white px-5 py-2 rounded-lg"
-                  >
-                    Approve
-                  </button>
-
-                  <button
-                    onClick={() =>
-                      handleReject(registration._id)
-                    }
-                    className="bg-red-600 text-white px-5 py-2 rounded-lg"
-                  >
-                    Reject
-                  </button>
-
+          <div className="flex flex-col gap-3">
+            {registrations.map((r) => (
+              <div key={r._id} className="data-card flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-lg font-bold" style={{ color: "var(--slate-900)" }}>{r.team.teamName}</h2>
+                  <p className="text-xs text-muted" style={{ marginTop: 4 }}>
+                    Hackathon: <span className="font-semibold" style={{ color: "var(--slate-800)" }}>{r.hackathon.title}</span>
+                  </p>
+                  <span className={`badge ${statusBadge(r.status)}`} style={{ marginTop: 8 }}>{r.status}</span>
                 </div>
-
+                <div className="flex gap-2">
+                  <button onClick={() => handleApprove(r._id)} className="success-btn">
+                    <FaCheck size={11} /> Approve
+                  </button>
+                  <button onClick={() => handleReject(r._id)} className="danger-btn">
+                    <FaTimes size={11} /> Reject
+                  </button>
+                </div>
               </div>
-
             ))}
-
           </div>
         )}
-
       </div>
-
     </MainLayout>
   );
 }

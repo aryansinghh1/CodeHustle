@@ -1,65 +1,38 @@
+import { FaRocket, FaUsers, FaCode, FaGavel } from "react-icons/fa6";
+
 function Stats() {
+  const stats = [
+    { number: "500+", label: "Hackathons Hosted", icon: <FaRocket style={{ color: "var(--primary)" }} />, subtext: "Across India & Remote" },
+    { number: "20,000+", label: "Active Participants", icon: <FaUsers style={{ color: "var(--purple)" }} />, subtext: "Builders & Creators" },
+    { number: "8,500+", label: "Projects Submitted", icon: <FaCode style={{ color: "var(--success)" }} />, subtext: "Production-ready solutions" },
+    { number: "150+", label: "Expert Judges", icon: <FaGavel style={{ color: "var(--warning)" }} />, subtext: "Industry leaders & mentors" },
+  ];
 
-    const stats = [
+  return (
+    <section className="container" style={{ paddingTop: 24, paddingBottom: 24 }}>
+      <div className="grid grid-4 gap-4">
+        {stats.map((item, index) => (
+          <div key={index} className="stat-card">
+            <div>
+              <div className="flex items-center justify-between" style={{ marginBottom: 14 }}>
+                <div style={{ width: 40, height: 40, borderRadius: 12, background: "var(--slate-50)", border: "1px solid var(--slate-200)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>
+                  {item.icon}
+                </div>
+                <span className="badge badge-blue">Live Stats</span>
+              </div>
 
-        {
-            number:"500+",
-            label:"Hackathons"
-        },
-
-        {
-            number:"20K+",
-            label:"Participants"
-        },
-
-        {
-            number:"8K+",
-            label:"Projects"
-        },
-
-        {
-            number:"100+",
-            label:"Judges"
-        }
-
-    ];
-
-    return(
-
-        <section className="max-w-7xl mx-auto px-6 py-20">
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-
-                {stats.map((item,index)=>(
-
-                    <div
-                    key={index}
-                    className="rounded-3xl border border-white/70 bg-white/80 backdrop-blur-xl shadow-[0_18px_50px_rgba(15,23,42,0.08)] p-10 hover:-translate-y-2 hover:shadow-[0_24px_60px_rgba(37,99,235,0.12)] duration-300">
-
-                        <div className="h-1.5 w-14 rounded-full bg-gradient-to-r from-blue-600 to-slate-900 mb-6" />
-
-                        <h2 className="text-5xl font-extrabold tracking-tight text-slate-900">
-
-                            {item.number}
-
-                        </h2>
-
-                        <p className="mt-3 text-slate-500 font-medium">
-
-                            {item.label}
-
-                        </p>
-
-                    </div>
-
-                ))}
-
+              <h3 className="text-3xl font-extrabold" style={{ color: "var(--slate-900)" }}>{item.number}</h3>
+              <p className="text-sm font-bold" style={{ color: "var(--slate-800)", marginTop: 6 }}>{item.label}</p>
             </div>
 
-        </section>
-
-    )
-
+            <p className="text-xs text-muted font-semibold" style={{ marginTop: 12, paddingTop: 10, borderTop: "1px solid var(--slate-100)" }}>
+              {item.subtext}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 }
 
 export default Stats;
