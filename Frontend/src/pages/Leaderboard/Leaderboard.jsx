@@ -66,6 +66,7 @@ function Leaderboard() {
               </tbody>
             </table>
           </div>
+          
         )}
       </div>
     </MainLayout>
