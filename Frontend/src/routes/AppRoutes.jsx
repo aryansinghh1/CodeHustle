@@ -46,9 +46,23 @@ function AppRoutes() {
 
       <Route path="/my-registrations" element={<MyRegistrations />} />
 
-      <Route path="/participant/dashboard" element={<ParticipantDashboard />} />
+      <Route
+        path="/participant/dashboard"
+        element={
+          <ProtectedRoute role="participant">
+            <ParticipantDashboard />
+          </ProtectedRoute>
+        }
+      />
 
-      <Route path="/organizer/dashboard" element={<OrganizerDashboard />} />
+      <Route
+        path="/organizer/dashboard"
+        element={
+          <ProtectedRoute role="organizer">
+            <OrganizerDashboard />
+          </ProtectedRoute>
+        }
+      />
 
       <Route path="/organizer/create-hackathon" element={<CreateHackathon />} />
 
@@ -64,7 +78,14 @@ function AppRoutes() {
 
       <Route path="/submission/edit/:id" element={<EditSubmission />} />
 
-      <Route path="/judge/dashboard" element={<JudgeDashboard />} />
+      <Route
+        path="/judge/dashboard"
+        element={
+          <ProtectedRoute role="judge">
+            <JudgeDashboard />
+          </ProtectedRoute>
+        }
+      />
 
       <Route path="/judge/submissions" element={<JudgeSubmissions />} />
 
@@ -72,7 +93,14 @@ function AppRoutes() {
 
       <Route path="/leaderboard/:hackathonId" element={<Leaderboard />} />
 
-      <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      <Route
+        path="/admin/dashboard"
+        element={
+          <ProtectedRoute role="admin">
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
 
       <Route path="/admin/users" element={<Users />} />
 
