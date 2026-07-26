@@ -3,6 +3,7 @@ import { FaRocket, FaArrowRight, FaCode } from "react-icons/fa6";
 
 function CTA() {
   return (
+    
     <section className="container" style={{ paddingTop: 32, paddingBottom: 48 }}>
       <div style={{ borderRadius: 32, background: "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #172554 100%)", padding: "48px 32px", color: "#fff", textAlign: "center", boxShadow: "var(--shadow-lg)" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>

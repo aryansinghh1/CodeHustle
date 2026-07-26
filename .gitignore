@@ -1,7 +1,6 @@
 node_modules
 .env
 
-Hero.jsx
 TrustedBy.jsx
 Stats.jsx
 WhyChoose.jsx

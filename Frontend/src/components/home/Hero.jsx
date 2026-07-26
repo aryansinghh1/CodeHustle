@@ -3,6 +3,7 @@ import { FaArrowRight, FaRocket, FaTrophy, FaUsers, FaCode, FaClock } from "reac
 
 function Hero() {
   return (
+    
     <section className="container section-spacing" style={{ paddingTop: 36, paddingBottom: 48 }}>
       <div className="grid grid-2 items-center" style={{ gap: 40 }}>
         

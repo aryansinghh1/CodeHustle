@@ -9,6 +9,7 @@ function Stats() {
   ];
 
   return (
+    
     <section className="container" style={{ paddingTop: 24, paddingBottom: 24 }}>
       <div className="grid grid-4 gap-4">
         {stats.map((item, index) => (

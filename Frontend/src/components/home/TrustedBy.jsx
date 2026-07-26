@@ -11,6 +11,7 @@ function TrustedBy() {
   ];
 
   return (
+    
     <section className="container" style={{ paddingTop: 20, paddingBottom: 20 }}>
       <div className="data-card text-center" style={{ padding: "20px 24px" }}>
         <p className="text-xs font-bold text-muted" style={{ textTransform: "uppercase", letterSpacing: "0.2em", marginBottom: 16 }}>

@@ -11,6 +11,7 @@ const features = [
 
 function WhyChoose() {
   return (
+    
     <section className="container" style={{ paddingTop: 32, paddingBottom: 32 }}>
       <div className="text-center" style={{ maxWidth: 600, margin: "0 auto 36px" }}>
         <span className="badge badge-blue" style={{ marginBottom: 8 }}>Platform Advantages</span>
