@@ -1,7 +1,6 @@
 node_modules
 .env
 
-MainLayout.jsx
 Navbar.jsx
 Footer.jsx
 Loader.jsx
