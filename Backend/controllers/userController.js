@@ -166,3 +166,13 @@ export const createUserByAdmin = asyncHandler(async (req, res) => {
     user,
   });
 });
+
+export const getJudges = asyncHandler(async (req, res) => {
+  const judges = await User.find({ role: "judge" }).select("_id name email");
+
+  res.status(200).json({
+    success: true,
+    count: judges.length,
+    judges,
+  });
+});

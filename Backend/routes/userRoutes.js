@@ -12,6 +12,7 @@ import {
   blockUser,
   unblockUser,
   deleteUser,
+  getJudges,
 } from "../controllers/userController.js";
 
 const router = express.Router();
@@ -20,6 +21,7 @@ const router = express.Router();
 router.get("/profile", authMiddleware, getProfile);
 router.put("/profile", authMiddleware, updateProfile);
 
+router.get("/judges", authMiddleware, roleMiddleware("organizer", "admin"), getJudges);
 
 router.get("/", authMiddleware, roleMiddleware("admin"), getAllUsers);
 

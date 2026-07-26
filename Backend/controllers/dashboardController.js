@@ -120,13 +120,19 @@ export const getJudgeDashboard = asyncHandler(async (req, res) => {
     judge: req.user._id,
   });
 
-  const totalSubmissionsCount = await Submission.countDocuments();
-  const pendingReviewsCount = Math.max(0, totalSubmissionsCount - completedReviewsCount);
+  const assignedHackathons = await Hackathon.find({ judges: req.user._id });
+  const hackathonIds = assignedHackathons.map((h) => h._id);
+
+  const totalAssignedProjects = await Submission.countDocuments({
+    hackathon: { $in: hackathonIds },
+  });
+
+  const pendingReviewsCount = Math.max(0, totalAssignedProjects - completedReviewsCount);
 
   res.status(200).json({
     success: true,
     dashboard: {
-      assignedProjects: totalSubmissionsCount,
+      assignedProjects: totalAssignedProjects,
       completedReviews: completedReviewsCount,
       pendingReviews: pendingReviewsCount,
     },

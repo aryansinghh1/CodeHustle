@@ -1,19 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import MainLayout from "../../layouts/MainLayout";
 import { createHackathon } from "../../services/hackathonService";
+import { getJudges } from "../../services/userService";
 
 function CreateHackathon() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [availableJudges, setAvailableJudges] = useState([]);
+  const [selectedJudges, setSelectedJudges] = useState([]);
 
   const [formData, setFormData] = useState({
     title: "", description: "", theme: "", mode: "Online", venue: "",
     startDate: "", endDate: "", registrationDeadline: "", bannerImage: "",
     prizePool: "", maxTeamSize: "", rules: "", judgingCriteria: "",
   });
+
+  useEffect(() => {
+    fetchJudges();
+  }, []);
+
+  const fetchJudges = async () => {
+    try {
+      const res = await getJudges();
+      setAvailableJudges(res.data.judges || []);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const toggleJudge = (judgeId) => {
+    if (selectedJudges.includes(judgeId)) {
+      setSelectedJudges(selectedJudges.filter((id) => id !== judgeId));
+    } else {
+      setSelectedJudges([...selectedJudges, judgeId]);
+    }
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,6 +52,7 @@ function CreateHackathon() {
         maxTeamSize: Number(formData.maxTeamSize),
         rules: formData.rules.split(",").map((r) => r.trim()).filter(Boolean),
         judgingCriteria: formData.judgingCriteria.split(",").map((i) => i.trim()).filter(Boolean),
+        judges: selectedJudges,
       };
       await createHackathon(payload);
       toast.success("Hackathon Created Successfully");
@@ -118,6 +143,27 @@ function CreateHackathon() {
             <div className="form-group full-width">
               <label className="form-label">Judging Criteria (comma separated)</label>
               <textarea name="judgingCriteria" placeholder="Innovation, Technical Complexity, UI/UX" onChange={handleChange} className="input" rows={3} />
+            </div>
+
+            {/* Select Judges Section */}
+            <div className="form-group full-width">
+              <label className="form-label">Assign Judges to Hackathon</label>
+              {availableJudges.length === 0 ? (
+                <p className="text-xs text-muted">No judge accounts available yet. Admin can create judge accounts.</p>
+              ) : (
+                <div className="flex flex-wrap gap-3" style={{ marginTop: 6 }}>
+                  {availableJudges.map((j) => (
+                    <label key={j._id} className="flex items-center gap-2 text-sm font-semibold" style={{ background: "var(--slate-50)", padding: "8px 14px", borderRadius: 8, border: "1px solid var(--slate-200)", cursor: "pointer" }}>
+                      <input
+                        type="checkbox"
+                        checked={selectedJudges.includes(j._id)}
+                        onChange={() => toggleJudge(j._id)}
+                      />
+                      <span>{j.name} ({j.email})</span>
+                    </label>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="full-width">

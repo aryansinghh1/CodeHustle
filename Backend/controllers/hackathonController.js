@@ -16,6 +16,7 @@ export const createHackathon = asyncHandler(async (req, res) => {
     maxTeamSize,
     rules,
     judgingCriteria,
+    judges,
   } = req.body;
 
   const registrationDate = new Date(registrationDeadline);
@@ -62,6 +63,7 @@ export const createHackathon = asyncHandler(async (req, res) => {
     maxTeamSize,
     rules,
     judgingCriteria,
+    judges: judges || [],
 
     organizer: req.user._id,
   });
@@ -169,6 +171,7 @@ export const updateHackathon = asyncHandler(async (req, res) => {
     "maxTeamSize",
     "rules",
     "judgingCriteria",
+    "judges",
   ];
 
   allowedFields.forEach((field) => {

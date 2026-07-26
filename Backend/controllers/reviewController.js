@@ -15,28 +15,40 @@ export const createReview = asyncHandler(async (req, res) => {
     feedback,
   } = req.body;
 
-  const existingReview = await Review.findOne({
+  let review = await Review.findOne({
     judge: req.user._id,
     submission,
   });
 
-  if (existingReview) {
-    return res.status(400).json({
-      success: false,
-      message: "You have already reviewed this submission.",
+  if (review) {
+    review.innovation = Number(innovation);
+    review.technicalComplexity = Number(technicalComplexity);
+    review.userInterface = Number(userInterface);
+    review.functionality = Number(functionality);
+    review.scalability = Number(scalability);
+    review.documentation = Number(documentation);
+    review.presentation = Number(presentation);
+    review.feedback = feedback;
+
+    await review.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Review updated successfully.",
+      review,
     });
   }
 
-  const review = await Review.create({
+  review = await Review.create({
     judge: req.user._id,
     submission,
-    innovation,
-    technicalComplexity,
-    userInterface,
-    functionality,
-    scalability,
-    documentation,
-    presentation,
+    innovation: Number(innovation),
+    technicalComplexity: Number(technicalComplexity),
+    userInterface: Number(userInterface),
+    functionality: Number(functionality),
+    scalability: Number(scalability),
+    documentation: Number(documentation),
+    presentation: Number(presentation),
     feedback,
   });
 

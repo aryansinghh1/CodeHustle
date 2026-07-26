@@ -17,3 +17,6 @@ export const deleteUser = (id) =>
 
 export const createUser = (data) =>
   api.post("/users/create-user", data);
+
+export const getJudges = () =>
+  api.get("/users/judges");

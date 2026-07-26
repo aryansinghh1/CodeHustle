@@ -1,5 +1,6 @@
 import Submission from "../models/Submission.js";
 import Team from "../models/Team.js";
+import Hackathon from "../models/Hackathon.js";
 import asyncHandler from "../utils/asyncHandler.js";
 
 export const createSubmission = asyncHandler(async (req, res) => {
@@ -145,7 +146,12 @@ export const getHackathonSubmissions = asyncHandler(async (req, res) => {
 });
 
 export const getJudgeSubmissions = asyncHandler(async (req, res) => {
-  const submissions = await Submission.find()
+  const assignedHackathons = await Hackathon.find({ judges: req.user._id });
+  const hackathonIds = assignedHackathons.map((h) => h._id);
+
+  const submissions = await Submission.find({
+    hackathon: { $in: hackathonIds },
+  })
     .populate("team")
     .populate("hackathon");
 
