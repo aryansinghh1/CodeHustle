@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import { FaPlus, FaEdit, FaTrash, FaClipboardList } from "react-icons/fa";
+import { FaPlus, FaEdit, FaTrash, FaClipboardList, FaTrophy } from "react-icons/fa";
 
 import MainLayout from "../../layouts/MainLayout";
 import Loader from "../../components/common/Loader";
@@ -56,15 +56,18 @@ function MyHackathons() {
                 </div>
 
                 <div className="flex gap-2 flex-wrap" style={{ marginTop: 16 }}>
+                  <Link to={`/leaderboard/${h._id}`} className="secondary-btn" style={{ padding: "6px 12px", fontSize: 12 }}>
+                    <FaTrophy size={11} /> Leaderboard
+                  </Link>
                   <Link to={`/organizer/edit-hackathon/${h._id}`} className="outline-btn" style={{ padding: "6px 12px", fontSize: 12 }}>
                     <FaEdit size={11} /> Edit
+                  </Link>
+                  <Link to={`/organizer/registrations/${h._id}`} className="outline-btn" style={{ padding: "6px 12px", fontSize: 12 }}>
+                    <FaClipboardList size={11} /> Registrations
                   </Link>
                   <button onClick={() => handleDelete(h._id)} className="danger-btn" style={{ padding: "6px 12px", fontSize: 12 }}>
                     <FaTrash size={11} /> Delete
                   </button>
-                  <Link to={`/organizer/registrations/${h._id}`} className="outline-btn" style={{ padding: "6px 12px", fontSize: 12 }}>
-                    <FaClipboardList size={11} /> Registrations
-                  </Link>
                 </div>
               </div>
             ))}

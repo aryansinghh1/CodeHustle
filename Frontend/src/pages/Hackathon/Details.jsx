@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaArrowLeft, FaMapMarkerAlt, FaTrophy, FaUsers, FaCalendarAlt, FaLaptopCode } from "react-icons/fa";
 
 import MainLayout from "../../layouts/MainLayout";
@@ -178,16 +178,26 @@ function Details() {
           </ul>
         </div>
 
-        {/* Register Button */}
-        {!isNonParticipant && (
-          <button
-            onClick={() => navigate(`/register/${hackathon._id}`)}
-            className="primary-btn"
-            style={{ padding: "16px 36px", fontSize: 16 }}
+        {/* Actions Bar */}
+        <div className="flex items-center gap-3 flex-wrap">
+          {!isNonParticipant && (
+            <button
+              onClick={() => navigate(`/register/${hackathon._id}`)}
+              className="primary-btn"
+              style={{ padding: "14px 32px", fontSize: 15 }}
+            >
+              Register Your Team
+            </button>
+          )}
+
+          <Link
+            to={`/leaderboard/${hackathon._id}`}
+            className="secondary-btn"
+            style={{ padding: "14px 28px", fontSize: 15 }}
           >
-            Register Your Team
-          </button>
-        )}
+            <FaTrophy /> View Leaderboard
+          </Link>
+        </div>
 
       </div>
     </MainLayout>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
-import { FaCheck, FaTimes } from "react-icons/fa";
+import { FaCheck, FaTimes, FaTrophy } from "react-icons/fa";
 
 import MainLayout from "../../layouts/MainLayout";
 import Loader from "../../components/common/Loader";
@@ -40,10 +40,15 @@ function Registrations() {
   return (
     <MainLayout>
       <div className="container section-spacing">
-        <div className="page-header">
-          <h1>Registrations</h1>
-          <div className="accent-bar" />
-          <p>Review and manage team registrations</p>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4" style={{ marginBottom: 32 }}>
+          <div className="page-header" style={{ marginBottom: 0 }}>
+            <h1>Registrations</h1>
+            <div className="accent-bar" />
+            <p>Review and manage team registrations</p>
+          </div>
+          <Link to={`/leaderboard/${id}`} className="secondary-btn">
+            <FaTrophy size={12} /> View Leaderboard
+          </Link>
         </div>
 
         {registrations.length === 0 ? (
