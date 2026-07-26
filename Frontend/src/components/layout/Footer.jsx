@@ -2,6 +2,7 @@ import { FaCode, FaHeart } from "react-icons/fa";
 
 function Footer() {
   return (
+    
     <footer className="footer-wrap">
       <div className="container flex flex-row justify-between items-center gap-4">
         

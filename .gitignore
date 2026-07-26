@@ -1,7 +1,6 @@
 node_modules
 .env
 
-Navbar.jsx
 Footer.jsx
 Loader.jsx
 EmptyState.jsx
