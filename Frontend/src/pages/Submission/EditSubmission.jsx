@@ -106,6 +106,7 @@ function EditSubmission() {
           </form>
         </div>
       </div>
+      
     </MainLayout>
   );
 }
