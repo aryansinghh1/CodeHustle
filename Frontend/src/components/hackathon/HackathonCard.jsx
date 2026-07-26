@@ -6,6 +6,7 @@ function HackathonCard({ hackathon }) {
     <div className="data-card flex flex-col justify-between" style={{ padding: 0, overflow: "hidden" }}>
 
       <div>
+        
         <div style={{ height: 160, width: "100%", overflow: "hidden", background: "var(--slate-100)" }}>
           <img
             src={

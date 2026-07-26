@@ -1,7 +1,6 @@
 node_modules
 .env
 
-NotFound.jsx
 HackathonCard.jsx
 Listing.jsx
 Details.jsx
