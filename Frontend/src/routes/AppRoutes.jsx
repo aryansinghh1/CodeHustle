@@ -37,7 +37,7 @@ import CreateUser from "../pages/Admin/CreateUser";
 
 import Profile from "../pages/Profile/Profile";
 
-import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from "./ProtectedRoutes";
 
 function AppRoutes() {
   return (
