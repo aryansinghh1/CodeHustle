@@ -32,6 +32,7 @@ function Stats() {
           </div>
         ))}
       </div>
+      
     </section>
   );
 }
