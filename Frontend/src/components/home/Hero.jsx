@@ -1,7 +1,30 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowRight, FaRocket, FaTrophy, FaUsers, FaCode, FaClock } from "react-icons/fa6";
+import { getHackathons } from "../../services/hackathonService";
 
 function Hero() {
+  const [latestHackathon, setLatestHackathon] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchLatestHackathon = async () => {
+      try {
+        setLoading(true);
+        const res = await getHackathons({ limit: 1 });
+        if (res.data?.hackathons && res.data.hackathons.length > 0) {
+          setLatestHackathon(res.data.hackathons[0]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch latest hackathon for Hero:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLatestHackathon();
+  }, []);
+
   return (
     
     <section className="container section-spacing" style={{ paddingTop: 36, paddingBottom: 48 }}>
@@ -73,30 +96,37 @@ function Hero() {
 
         </div>
 
-        {/* Right Column — Simulated Live Interactive Card */}
+        {/* Right Column — Latest Created Hackathon Card */}
         <div className="flex justify-center">
           <div className="data-card" style={{ padding: 20, width: "100%", maxWidth: 440, borderRadius: 24, background: "rgba(255, 255, 255, 0.92)" }}>
             
             {/* Header Badge */}
             <div className="flex items-center justify-between" style={{ marginBottom: 14 }}>
-              <span className="badge badge-green">
-                ● LIVE NOW
+              <span className={`badge ${latestHackathon?.status === "Ongoing" ? "badge-green" : latestHackathon?.status === "Completed" ? "badge-gray" : "badge-blue"}`}>
+                ● {latestHackathon ? (latestHackathon.status || "Upcoming").toUpperCase() : "LATEST HACKATHON"}
               </span>
               <span className="text-xs text-muted font-semibold flex items-center gap-1">
-                <FaClock size={11} /> Ends in 18h 42m
+                <FaClock size={11} /> {latestHackathon?.startDate ? new Date(latestHackathon.startDate).toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "Featured"}
               </span>
             </div>
 
             {/* Hackathon Preview Title & Image Banner */}
-            <div style={{ position: "relative", borderRadius: 16, overflow: "hidden" }}>
+            <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", background: "var(--slate-100)", minHeight: 160 }}>
               <img
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"
-                alt="Hackathon Showcase"
+                src={
+                  latestHackathon?.bannerImage ||
+                  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"
+                }
+                alt={latestHackathon?.title || "Hackathon Showcase"}
                 style={{ width: "100%", height: 160, objectFit: "cover" }}
               />
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(15,23,42,0.85), transparent)", padding: 14, display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
-                <span className="text-xs font-bold" style={{ color: "#93c5fd", textTransform: "uppercase" }}>Global AI Challenge 2026</span>
-                <h3 className="text-sm font-bold" style={{ color: "#fff", marginTop: 2 }}>Next-Gen Intelligent Agents</h3>
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(15,23,42,0.88), transparent)", padding: 14, display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                <span className="text-xs font-bold" style={{ color: "#93c5fd", textTransform: "uppercase" }}>
+                  {latestHackathon?.theme || "Featured Challenge"}
+                </span>
+                <h3 className="text-sm font-bold" style={{ color: "#fff", marginTop: 2, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                  {latestHackathon?.title || "Next-Gen Intelligent Agents"}
+                </h3>
               </div>
             </div>
 
@@ -104,44 +134,37 @@ function Hero() {
             <div className="grid grid-3 text-center" style={{ gap: 8, padding: 10, background: "var(--slate-50)", borderRadius: 12, border: "1px solid var(--slate-200)", marginTop: 14 }}>
               <div>
                 <p className="text-xs text-muted">Prize Pool</p>
-                <p className="text-xs font-extrabold" style={{ color: "var(--primary)" }}>₹ 2,50,000</p>
+                <p className="text-xs font-extrabold" style={{ color: "var(--primary)" }}>
+                  {latestHackathon?.prizePool ? (String(latestHackathon.prizePool).startsWith("₹") || String(latestHackathon.prizePool).startsWith("$") ? latestHackathon.prizePool : `₹ ${latestHackathon.prizePool}`) : "₹ 2,50,000"}
+                </p>
               </div>
               <div>
-                <p className="text-xs text-muted">Teams</p>
-                <p className="text-xs font-extrabold" style={{ color: "var(--slate-800)" }}>142 Active</p>
+                <p className="text-xs text-muted">Mode</p>
+                <p className="text-xs font-extrabold" style={{ color: "var(--slate-800)" }}>
+                  {latestHackathon?.mode || "Online"}
+                </p>
               </div>
               <div>
-                <p className="text-xs text-muted">Submissions</p>
-                <p className="text-xs font-extrabold" style={{ color: "var(--slate-800)" }}>89 Done</p>
+                <p className="text-xs text-muted">Max Team</p>
+                <p className="text-xs font-extrabold" style={{ color: "var(--slate-800)" }}>
+                  {latestHackathon?.maxTeamSize ? `${latestHackathon.maxTeamSize} Members` : "4 Members"}
+                </p>
               </div>
             </div>
 
-            {/* Leaderboard Pill */}
-            <div className="flex items-center justify-between" style={{ padding: 10, background: "rgba(37,99,235,0.06)", borderRadius: 12, border: "1px solid rgba(37,99,235,0.15)", marginTop: 12 }}>
-              <div className="flex items-center gap-2">
-                <div style={{ width: 28, height: 28, borderRadius: 8, background: "var(--primary)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 11 }}>
-                  #1
-                </div>
-                <div>
-                  <p className="text-xs font-bold" style={{ color: "var(--slate-900)" }}>Team CyberSamurai</p>
-                  <p className="text-xs text-muted">Score 96.5</p>
-                </div>
-              </div>
-              <span className="badge badge-blue">Top Rank</span>
-            </div>
+            {/* Description / Summary if available */}
+            {latestHackathon?.description && (
+              <p className="text-xs text-muted" style={{ marginTop: 12, lineHeight: 1.4, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                {latestHackathon.description}
+              </p>
+            )}
 
-            {/* Prize Distributed Badge */}
-            <div className="flex items-center gap-3" style={{ padding: 10, background: "var(--success-light)", borderRadius: 12, border: "1px solid rgba(16,185,129,0.2)", marginTop: 12 }}>
-              <FaTrophy style={{ color: "var(--success)", fontSize: 18 }} />
-              <div>
-                <p className="text-xs font-bold" style={{ color: "var(--slate-900)" }}>₹ 10,00,000+ Awarded</p>
-                <p className="text-xs text-muted">Total prize money distributed</p>
-              </div>
-            </div>
-
-          
-            <Link to="/hackathons" className="secondary-btn" style={{ width: "100%", marginTop: 14, padding: "10px", fontSize: 13 }}>
-              Join This Hackathon
+            <Link 
+              to={latestHackathon ? `/hackathons/${latestHackathon._id}` : "/hackathons"} 
+              className="secondary-btn" 
+              style={{ width: "100%", marginTop: 14, padding: "10px", fontSize: 13 }}
+            >
+              {latestHackathon ? "View Hackathon Details" : "Explore All Hackathons"}
               <FaArrowRight size={11} />
             </Link>
 
@@ -154,3 +177,4 @@ function Hero() {
 }
 
 export default Hero;
+
