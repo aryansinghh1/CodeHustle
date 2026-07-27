@@ -3,9 +3,6 @@ node_modules
 Frontend/dist/
 
 
-# Components - Layout
-Frontend/src/components/layout/Footer.jsx
-Frontend/src/components/layout/Footer.css
 
 # Pages - Home & Error
 Frontend/src/pages/Home/Home.jsx

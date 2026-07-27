@@ -23,7 +23,6 @@ function Footer() {
             Built with <FaHeart className="footer-heart-icon" size={11} /> for hackathon builders across India.
           </div>
         </div>
-
       </div>
     </footer>
   );

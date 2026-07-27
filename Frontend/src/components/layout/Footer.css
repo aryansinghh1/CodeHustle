@@ -1,0 +1,13 @@
+.footer-logo-icon {
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+}
+
+.footer-brand-title {
+  color: var(--slate-900);
+}
+
+.footer-heart-icon {
+  color: var(--danger);
+}
