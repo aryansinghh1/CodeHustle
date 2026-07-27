@@ -1,0 +1,48 @@
+.trustedby-section {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.trustedby-card {
+  padding: 20px 24px;
+}
+
+.trustedby-subtitle {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 16px;
+}
+
+.trustedby-pill {
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--slate-200);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-700);
+}
+
+.trustedby-google {
+  color: #ea4335;
+}
+
+.trustedby-microsoft {
+  color: #00a4ef;
+}
+
+.trustedby-aws {
+  color: #ff9900;
+}
+
+.trustedby-github {
+  color: #181717;
+}
+
+.trustedby-cloudflare {
+  color: #f38020;
+}
+
+.trustedby-opensource {
+  color: #6366f1;
+}

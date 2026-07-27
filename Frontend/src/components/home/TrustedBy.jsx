@@ -30,6 +30,7 @@ function TrustedBy() {
           ))}
         </div>
       </div>
+      
     </section>
   );
 }

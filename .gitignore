@@ -6,8 +6,6 @@ Frontend/dist/
 
 # Components - Home
 
-Frontend/src/components/home/TrustedBy.jsx
-Frontend/src/components/home/TrustedBy.css
 Frontend/src/components/home/WhyChoose.jsx
 Frontend/src/components/home/WhyChoose.css
 
