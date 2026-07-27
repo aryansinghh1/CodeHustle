@@ -5,9 +5,6 @@ Frontend/dist/
 
 
 
-Frontend/src/pages/Hackathon/Details.jsx
-Frontend/src/pages/Hackathon/Details.css
-
 # Pages - Admin
 Frontend/src/pages/Admin/Dashboard.jsx
 Frontend/src/pages/Admin/Dashboard.css

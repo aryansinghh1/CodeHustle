@@ -1,0 +1,85 @@
+.details-not-found-title {
+  color: var(--slate-800);
+}
+
+.details-not-found-btn {
+  margin-top: 24px;
+}
+
+.details-container {
+  max-width: 1000px;
+}
+
+.details-back-btn {
+  margin-bottom: 24px;
+}
+
+.details-banner-card {
+  padding: 0;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.details-banner-img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+}
+
+.details-banner-content {
+  padding: 28px;
+}
+
+.details-badges-row {
+  margin-bottom: 12px;
+}
+
+.details-title {
+  color: var(--slate-900);
+}
+
+.details-desc {
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+.details-info-grid {
+  margin-bottom: 24px;
+}
+
+.details-card-title {
+  color: var(--slate-900);
+  margin-bottom: 16px;
+}
+
+.details-icon-primary { color: var(--primary); }
+.details-icon-success { color: var(--success); }
+.details-icon-purple { color: var(--purple); }
+.details-icon-danger { color: var(--danger); }
+.details-icon-slate { color: var(--slate-400); }
+
+.details-rules-card {
+  margin-bottom: 24px;
+}
+
+.details-rules-list {
+  padding-left: 20px;
+}
+
+.details-list-item {
+  line-height: 1.5;
+}
+
+.details-judging-card {
+  margin-bottom: 32px;
+}
+
+.details-action-btn-primary {
+  padding: 14px 32px;
+  font-size: 15px;
+}
+
+.details-action-btn-secondary {
+  padding: 14px 28px;
+  font-size: 15px;
+}

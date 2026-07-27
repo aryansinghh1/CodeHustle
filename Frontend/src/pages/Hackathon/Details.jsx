@@ -197,7 +197,6 @@ function Details() {
             <FaTrophy /> View Leaderboard
           </Link>
         </div>
-
       </div>
     </MainLayout>
   );
