@@ -5,6 +5,7 @@ import { FaBan, FaCheckCircle, FaTrash } from "react-icons/fa";
 import MainLayout from "../../layouts/MainLayout";
 import Loader from "../../components/common/Loader";
 import { getAllUsers, blockUser, unblockUser, deleteUser } from "../../services/userService";
+import "./Users.css";
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -73,7 +74,7 @@ function Users() {
                           <FaCheckCircle size={10} /> Unblock
                         </button>
                       ) : (
-                        <button onClick={() => handleBlock(user._id)} className="outline-btn" style={{ padding: "6px 12px", fontSize: 12, color: "var(--warning)", borderColor: "var(--warning)" }}>
+                        <button onClick={() => handleBlock(user._id)} className="outline-btn admin-block-btn">
                           <FaBan size={10} /> Block
                         </button>
                       )}

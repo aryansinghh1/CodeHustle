@@ -7,6 +7,7 @@ import MainLayout from "../../layouts/MainLayout";
 import Loader from "../../components/common/Loader";
 import EmptyState from "../../components/common/EmptyState";
 import { getMyHackathons, deleteHackathon } from "../../services/hackathonService";
+import "./MyHackathons.css";
 
 function MyHackathons() {
   const [hackathons, setHackathons] = useState([]);
@@ -30,8 +31,8 @@ function MyHackathons() {
   return (
     <MainLayout>
       <div className="container section-spacing">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4" style={{ marginBottom: 32 }}>
-          <div className="page-header" style={{ marginBottom: 0 }}>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 myhackathons-header-row">
+          <div className="page-header myhackathons-page-header">
             <h1>My Hackathons</h1>
             <div className="accent-bar" />
           </div>
@@ -47,28 +48,28 @@ function MyHackathons() {
             {hackathons.map((h) => (
               <div key={h._id} className="data-card flex flex-col justify-between">
                 <div>
-                  <h2 className="text-lg font-bold" style={{ color: "var(--slate-900)" }}>{h.title}</h2>
-                  <p className="text-xs text-muted" style={{ marginTop: 4 }}>{h.theme}</p>
-                  <div className="flex items-center gap-2" style={{ marginTop: 8 }}>
+                  <h2 className="text-lg font-bold myhackathons-card-title">{h.title}</h2>
+                  <p className="text-xs text-muted myhackathons-card-theme">{h.theme}</p>
+                  <div className="flex items-center gap-2 myhackathons-meta-row">
                     <span className="badge badge-blue">{h.mode}</span>
-                    <span className="text-xs font-bold" style={{ color: "var(--slate-800)" }}>₹ {h.prizePool}</span>
+                    <span className="text-xs font-bold myhackathons-prize">₹ {h.prizePool}</span>
                   </div>
                 </div>
 
-                <div className="flex gap-2 flex-wrap" style={{ marginTop: 16 }}>
-                  <Link to={`/organizer/submissions/${h._id}`} className="primary-btn" style={{ padding: "6px 12px", fontSize: 12 }}>
+                <div className="flex gap-2 flex-wrap myhackathons-actions-row">
+                  <Link to={`/organizer/submissions/${h._id}`} className="primary-btn myhackathons-btn-sm">
                     <FaFolderOpen size={11} /> Submissions & Reviews
                   </Link>
-                  <Link to={`/leaderboard/${h._id}`} className="secondary-btn" style={{ padding: "6px 12px", fontSize: 12 }}>
+                  <Link to={`/leaderboard/${h._id}`} className="secondary-btn myhackathons-btn-sm">
                     <FaTrophy size={11} /> Leaderboard
                   </Link>
-                  <Link to={`/organizer/edit-hackathon/${h._id}`} className="outline-btn" style={{ padding: "6px 12px", fontSize: 12 }}>
+                  <Link to={`/organizer/edit-hackathon/${h._id}`} className="outline-btn myhackathons-btn-sm">
                     <FaEdit size={11} /> Edit
                   </Link>
-                  <Link to={`/organizer/registrations/${h._id}`} className="outline-btn" style={{ padding: "6px 12px", fontSize: 12 }}>
+                  <Link to={`/organizer/registrations/${h._id}`} className="outline-btn myhackathons-btn-sm">
                     <FaClipboardList size={11} /> Registrations
                   </Link>
-                  <button onClick={() => handleDelete(h._id)} className="danger-btn" style={{ padding: "6px 12px", fontSize: 12 }}>
+                  <button onClick={() => handleDelete(h._id)} className="danger-btn myhackathons-btn-sm">
                     <FaTrash size={11} /> Delete
                   </button>
                 </div>

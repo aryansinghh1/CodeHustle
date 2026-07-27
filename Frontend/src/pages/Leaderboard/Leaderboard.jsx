@@ -6,6 +6,7 @@ import MainLayout from "../../layouts/MainLayout";
 import Loader from "../../components/common/Loader";
 import EmptyState from "../../components/common/EmptyState";
 import { getLeaderboard } from "../../services/leaderboardService";
+import "./Leaderboard.css";
 
 function Leaderboard() {
   const { hackathonId } = useParams();
@@ -20,9 +21,9 @@ function Leaderboard() {
   };
 
   const rankIcon = (rank) => {
-    if (rank === 1) return <FaTrophy style={{ color: "var(--warning)" }} size={16} />;
-    if (rank === 2) return <FaMedal style={{ color: "var(--slate-400)" }} size={16} />;
-    if (rank === 3) return <FaMedal style={{ color: "#d97706" }} size={16} />;
+    if (rank === 1) return <FaTrophy className="lb-rank-gold" size={16} />;
+    if (rank === 2) return <FaMedal className="lb-rank-silver" size={16} />;
+    if (rank === 3) return <FaMedal className="lb-rank-bronze" size={16} />;
     return <span className="text-muted font-bold">#{rank}</span>;
   };
 
@@ -44,21 +45,21 @@ function Leaderboard() {
             <table className="table">
               <thead>
                 <tr>
-                  <th style={{ width: 80, textAlign: "center" }}>Rank</th>
+                  <th className="lb-rank-col">Rank</th>
                   <th>Team</th>
                   <th>Project</th>
-                  <th style={{ textAlign: "center" }}>Average Score</th>
+                  <th className="lb-center-align">Average Score</th>
                 </tr>
               </thead>
               <tbody>
                 {leaderboard.map((team) => (
                   <tr key={team.submissionId}>
-                    <td style={{ textAlign: "center" }}>
+                    <td className="lb-center-align">
                       <div className="flex items-center justify-center">{rankIcon(team.rank)}</div>
                     </td>
                     <td className="font-bold">{team.teamName}</td>
                     <td>{team.projectName}</td>
-                    <td style={{ textAlign: "center" }}>
+                    <td className="lb-center-align">
                       <span className="badge badge-blue font-bold">{team.averageScore}</span>
                     </td>
                   </tr>

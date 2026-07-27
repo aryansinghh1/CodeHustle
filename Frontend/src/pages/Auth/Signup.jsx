@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { FaCode } from "react-icons/fa";
 
 import { signup } from "../../services/authService";
+import "./Signup.css";
 
 function Signup() {
   const navigate = useNavigate();
@@ -41,15 +42,15 @@ function Signup() {
     <div className="auth-page">
       <div className="auth-card">
 
-        <div className="flex items-center justify-center gap-2" style={{ marginBottom: 24 }}>
+        <div className="flex items-center justify-center gap-2 signup-brand-wrapper">
           <div className="nav-logo-icon">
             <FaCode />
           </div>
-          <span className="text-xl font-bold" style={{ color: "var(--slate-900)" }}>CodeHustle</span>
+          <span className="text-xl font-bold signup-brand-title">CodeHustle</span>
         </div>
 
-        <h1 className="text-2xl font-bold text-center" style={{ color: "var(--slate-900)" }}>Create Account</h1>
-        <p className="text-muted text-xs text-center" style={{ marginTop: 4, marginBottom: 24 }}>Join thousands of developers competing in hackathons</p>
+        <h1 className="text-2xl font-bold text-center signup-heading">Create Account</h1>
+        <p className="text-muted text-xs text-center signup-subheading">Join thousands of developers competing in hackathons</p>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
@@ -92,15 +93,15 @@ function Signup() {
             />
           </div>
 
-          <button disabled={loading} className="primary-btn" style={{ width: "100%", marginTop: 8 }}>
+          <button disabled={loading} className="primary-btn signup-submit-btn">
             {loading ? "Creating Account..." : "Create Account"}
           </button>
 
         </form>
 
-        <p className="text-center text-xs text-muted" style={{ marginTop: 24 }}>
+        <p className="text-center text-xs text-muted signup-footer-text">
           Already have an account?
-          <Link to="/login" className="font-bold" style={{ color: "var(--primary)", marginLeft: 6 }}>Sign in</Link>
+          <Link to="/login" className="font-bold signup-link">Sign in</Link>
         </p>
 
       </div>

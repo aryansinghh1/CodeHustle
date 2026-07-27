@@ -7,6 +7,7 @@ import Loader from "../../components/common/Loader";
 import EmptyState from "../../components/common/EmptyState";
 import { getJudgeSubmissions } from "../../services/submissionService";
 import { getMyReviews } from "../../services/reviewService";
+import "./Submissions.css";
 
 function Submissions() {
   const [submissions, setSubmissions] = useState([]);
@@ -65,33 +66,30 @@ function Submissions() {
   return (
     <MainLayout>
       <div className="container section-spacing">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4" style={{ marginBottom: 28 }}>
-          <div className="page-header" style={{ marginBottom: 0 }}>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 judge-subs-header-row">
+          <div className="page-header judge-subs-page-header">
             <h1>Assigned Projects</h1>
             <div className="accent-bar" />
             <p>Review and evaluate project submissions</p>
           </div>
 
           {/* Filter Tabs */}
-          <div className="flex gap-2 p-1" style={{ background: "var(--slate-100)", borderRadius: 12 }}>
+          <div className="flex gap-2 p-1 judge-subs-filter-tabs">
             <button
               onClick={() => setFilter("all")}
-              className={filter === "all" ? "primary-btn" : "outline-btn"}
-              style={{ padding: "6px 14px", fontSize: 12, border: "none" }}
+              className={`${filter === "all" ? "primary-btn" : "outline-btn"} judge-subs-tab-btn`}
             >
               All ({submissions.length})
             </button>
             <button
               onClick={() => setFilter("pending")}
-              className={filter === "pending" ? "primary-btn" : "outline-btn"}
-              style={{ padding: "6px 14px", fontSize: 12, border: "none" }}
+              className={`${filter === "pending" ? "primary-btn" : "outline-btn"} judge-subs-tab-btn`}
             >
               Pending ({pendingCount})
             </button>
             <button
               onClick={() => setFilter("reviewed")}
-              className={filter === "reviewed" ? "primary-btn" : "outline-btn"}
-              style={{ padding: "6px 14px", fontSize: 12, border: "none" }}
+              className={`${filter === "reviewed" ? "primary-btn" : "outline-btn"} judge-subs-tab-btn`}
             >
               Reviewed ({reviewedCount})
             </button>
@@ -124,7 +122,7 @@ function Submissions() {
               return (
                 <div key={s._id} className="data-card flex flex-col justify-between">
                   <div>
-                    <div className="flex items-center justify-between gap-2" style={{ marginBottom: 8 }}>
+                    <div className="flex items-center justify-between gap-2 judge-subs-meta-row">
                       <span className="badge badge-blue">{s.hackathon?.title}</span>
                       {isReviewed ? (
                         <span className="badge badge-green flex items-center gap-1 font-bold">
@@ -137,16 +135,16 @@ function Submissions() {
                       )}
                     </div>
 
-                    <h2 className="text-lg font-bold" style={{ color: "var(--slate-900)", marginTop: 4 }}>
+                    <h2 className="text-lg font-bold judge-subs-project-title">
                       {s.projectName}
                     </h2>
 
-                    <div className="flex flex-col gap-1" style={{ marginTop: 10 }}>
+                    <div className="flex flex-col gap-1 judge-subs-team-info">
                       <p className="text-xs text-muted">
-                        Team: <span className="font-semibold" style={{ color: "var(--slate-800)" }}>{s.team?.teamName}</span>
+                        Team: <span className="font-semibold judge-subs-team-name">{s.team?.teamName}</span>
                       </p>
                       {isReviewed && review.feedback && (
-                        <p className="text-xs text-slate-800" style={{ marginTop: 6, background: "var(--slate-50)", padding: 6, borderRadius: 6, border: "1px solid var(--slate-200)", lineHeight: 1.4 }}>
+                        <p className="text-xs text-slate-800 judge-subs-feedback-preview">
                           "{review.feedback}"
                         </p>
                       )}
@@ -154,11 +152,11 @@ function Submissions() {
                   </div>
 
                   {isReviewed ? (
-                    <Link to={`/judge/review/${s._id}`} className="outline-btn" style={{ width: "100%", marginTop: 16 }}>
+                    <Link to={`/judge/review/${s._id}`} className="outline-btn judge-subs-action-btn">
                       <FaEdit size={12} /> Edit Review
                     </Link>
                   ) : (
-                    <Link to={`/judge/review/${s._id}`} className="primary-btn" style={{ width: "100%", marginTop: 16 }}>
+                    <Link to={`/judge/review/${s._id}`} className="primary-btn judge-subs-action-btn">
                       <FaStar size={12} /> Review Project
                     </Link>
                   )}

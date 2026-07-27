@@ -6,6 +6,7 @@ import MainLayout from "../../layouts/MainLayout";
 import Loader from "../../components/common/Loader";
 import { getParticipantDashboard } from "../../services/dashboardService";
 import { useAuth } from "../../context/AuthContext";
+import "./Dashboard.css";
 
 function Dashboard() {
   const { user } = useAuth();
@@ -32,14 +33,13 @@ function Dashboard() {
   if (loading) return <MainLayout><Loader text="Loading your dashboard..." /></MainLayout>;
 
   const stats = [
-    { icon: <FaUsers style={{ color: "var(--primary)" }} />, label: "My Teams", value: dashboard.myTeams },
-    { icon: <FaClipboardList style={{ color: "var(--purple)" }} />, label: "Registered", value: dashboard.registeredHackathons },
-    { icon: <FaProjectDiagram style={{ color: "var(--success)" }} />, label: "Submissions", value: dashboard.submissions },
-    { icon: <FaStar style={{ color: "var(--warning)" }} />, label: "Reviews", value: dashboard.reviewsReceived },
+    { icon: <FaUsers className="part-icon-primary" />, label: "My Teams", value: dashboard.myTeams },
+    { icon: <FaClipboardList className="part-icon-purple" />, label: "Registered", value: dashboard.registeredHackathons },
+    { icon: <FaProjectDiagram className="part-icon-success" />, label: "Submissions", value: dashboard.submissions },
+    { icon: <FaStar className="part-icon-warning" />, label: "Reviews", value: dashboard.reviewsReceived },
   ];
 
   return (
-    
     <MainLayout>
       <div className="container section-spacing">
 
@@ -49,15 +49,15 @@ function Dashboard() {
           <p>Here's an overview of your hackathon journey</p>
         </div>
 
-        <div className="grid grid-4 gap-4" style={{ marginBottom: 36 }}>
+        <div className="grid grid-4 gap-4 part-stats-grid">
           {stats.map((stat, idx) => (
             <div key={idx} className="stat-card">
-              <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
+              <div className="flex items-center justify-between part-stat-header">
                 <div>
-                  <div className="text-3xl font-extrabold" style={{ color: "var(--slate-900)" }}>{stat.value}</div>
-                  <div className="text-xs text-muted font-bold" style={{ marginTop: 4 }}>{stat.label}</div>
+                  <div className="text-3xl font-extrabold part-stat-val">{stat.value}</div>
+                  <div className="text-xs text-muted font-bold part-stat-lbl">{stat.label}</div>
                 </div>
-                <div style={{ width: 44, height: 44, borderRadius: 14, background: "var(--slate-50)", border: "1px solid var(--slate-200)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>
+                <div className="part-stat-icon-wrapper">
                   {stat.icon}
                 </div>
               </div>
@@ -66,7 +66,7 @@ function Dashboard() {
         </div>
 
         <div>
-          <h2 className="text-xl font-bold" style={{ color: "var(--slate-900)", marginBottom: 16 }}>Quick Actions</h2>
+          <h2 className="text-xl font-bold part-section-title">Quick Actions</h2>
           <div className="flex flex-wrap gap-3">
             <Link to="/hackathons" className="secondary-btn">
               <FaSearch size={13} /> Browse Hackathons

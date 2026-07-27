@@ -22,6 +22,7 @@ import {
 import MainLayout from "../../layouts/MainLayout";
 import api from "../../services/axios";
 import { useAuth } from "../../context/AuthContext";
+import "./Profile.css";
 
 function Profile() {
   const { updateUser: updateAuthUser } = useAuth();
@@ -197,26 +198,19 @@ function Profile() {
               <div className="profile-header-content">
                 <div className="flex items-end gap-6 flex-wrap">
                   <div className="profile-avatar-wrapper">
-                    {user?.profileImage ? (
+                    <div className="profile-avatar-placeholder">
+                      {user?.name ? user.name.charAt(0).toUpperCase() : <FaUserCircle />}
+                    </div>
+                    {user?.profileImage && (
                       <img
                         src={user.profileImage}
                         alt={user.name}
                         className="profile-avatar-img"
                         onError={(e) => {
-                          e.target.onerror = null;
                           e.target.style.display = "none";
-                          e.target.nextSibling.style.display = "flex";
                         }}
                       />
-                    ) : null}
-                    <div
-                      className="profile-avatar-placeholder"
-                      style={{
-                        display: user?.profileImage ? "none" : "flex",
-                      }}
-                    >
-                      {user?.name ? user.name.charAt(0).toUpperCase() : <FaUserCircle />}
-                    </div>
+                    )}
                   </div>
 
                   <div className="profile-user-info">
@@ -226,17 +220,10 @@ function Profile() {
                         <button
                           type="button"
                           onClick={() => handleEditClick(true)}
-                          className="text-muted"
-                          style={{
-                            fontSize: "14px",
-                            padding: "4px",
-                            borderRadius: "50%",
-                            cursor: "pointer",
-                            transition: "all 0.2s ease",
-                          }}
+                          className="text-muted profile-edit-name-btn"
                           title="Click to edit name"
                         >
-                          <FaPen style={{ color: "var(--primary)" }} />
+                          <FaPen className="profile-pen-icon" />
                         </button>
                       </h1>
                       <span className={getRoleBadgeClass(user?.role)}>
@@ -246,14 +233,14 @@ function Profile() {
 
                     <div className="profile-user-meta">
                       <span className="profile-meta-item">
-                        <FaEnvelope style={{ color: "var(--primary)" }} />
+                        <FaEnvelope className="profile-pen-icon" />
                         {user?.email}
-                        <FaCheckCircle style={{ color: "var(--success)", fontSize: "12px" }} title="Verified User" />
+                        <FaCheckCircle className="profile-meta-verified-icon" title="Verified User" />
                       </span>
 
                       {user?.college && (
                         <span className="profile-meta-item">
-                          <FaGraduationCap style={{ color: "var(--purple)" }} />
+                          <FaGraduationCap className="part-icon-purple" />
                           {user.college}
                         </span>
                       )}
@@ -273,7 +260,7 @@ function Profile() {
               {/* About Me Section */}
               <div className="profile-section-card full-width">
                 <h3 className="profile-section-title">
-                  <FaUser style={{ color: "var(--primary)" }} />
+                  <FaUser className="profile-pen-icon" />
                   About Me
                 </h3>
                 {user?.bio ? (
@@ -288,7 +275,7 @@ function Profile() {
               {/* Skills Section */}
               <div className="profile-section-card">
                 <h3 className="profile-section-title">
-                  <FaCode style={{ color: "var(--purple)" }} />
+                  <FaCode className="part-icon-purple" />
                   Skills & Expertise
                 </h3>
                 {skillList.length > 0 ? (
@@ -309,7 +296,7 @@ function Profile() {
               {/* Social Links Section */}
               <div className="profile-section-card">
                 <h3 className="profile-section-title">
-                  <FaLink style={{ color: "var(--success)" }} />
+                  <FaLink className="part-icon-success" />
                   Social & Portfolio
                 </h3>
                 <div className="social-links-grid">
@@ -322,10 +309,10 @@ function Profile() {
                     >
                       <FaGithub size={18} />
                       GitHub Profile
-                      <FaExternalLinkAlt size={10} style={{ opacity: 0.6 }} />
+                      <FaExternalLinkAlt size={10} className="profile-external-icon" />
                     </a>
                   ) : (
-                    <span className="social-btn" style={{ opacity: 0.5, cursor: "not-allowed" }}>
+                    <span className="social-btn profile-social-disabled">
                       <FaGithub size={18} />
                       No GitHub Added
                     </span>
@@ -340,10 +327,10 @@ function Profile() {
                     >
                       <FaLinkedin size={18} />
                       LinkedIn Profile
-                      <FaExternalLinkAlt size={10} style={{ opacity: 0.6 }} />
+                      <FaExternalLinkAlt size={10} className="profile-external-icon" />
                     </a>
                   ) : (
-                    <span className="social-btn" style={{ opacity: 0.5, cursor: "not-allowed" }}>
+                    <span className="social-btn profile-social-disabled">
                       <FaLinkedin size={18} />
                       No LinkedIn Added
                     </span>
@@ -354,7 +341,7 @@ function Profile() {
               {/* Account Details Section */}
               <div className="profile-section-card full-width">
                 <h3 className="profile-section-title">
-                  <FaShieldAlt style={{ color: "var(--warning)" }} />
+                  <FaShieldAlt className="part-icon-warning" />
                   Account Status
                 </h3>
                 <div className="flex items-center gap-6 flex-wrap">
@@ -378,7 +365,7 @@ function Profile() {
             <div className="edit-header-banner">
               <div>
                 <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-                  <FaEdit style={{ color: "var(--primary)" }} />
+                  <FaEdit className="profile-pen-icon" />
                   Edit Profile
                 </h2>
                 <p className="text-muted text-sm">Update your personal details, name, and social links</p>
@@ -394,13 +381,16 @@ function Profile() {
               {/* Profile Image URL & Live Preview */}
               <div className="form-group full-width">
                 <label className="form-label flex items-center gap-2">
-                  <FaImage style={{ color: "var(--primary)" }} />
+                  <FaImage className="profile-pen-icon" />
                   Profile Image URL
                 </label>
 
                 {formData.profileImage && (
                   <div className="avatar-preview-box">
-                    <div className="profile-avatar-wrapper" style={{ width: 60, height: 60 }}>
+                    <div className="profile-avatar-wrapper profile-avatar-preview-wrapper">
+                      <div className="profile-avatar-placeholder">
+                        {formData.name ? formData.name.charAt(0).toUpperCase() : <FaUserCircle />}
+                      </div>
                       <img
                         src={formData.profileImage}
                         alt="Preview"
@@ -431,7 +421,7 @@ function Profile() {
                 {/* Full Name */}
                 <div className="form-group">
                   <label className="form-label flex items-center gap-1">
-                    <FaUser style={{ color: "var(--primary)" }} />
+                    <FaUser className="profile-pen-icon" />
                     Full Name *
                   </label>
                   <input
@@ -494,7 +484,7 @@ function Profile() {
                     className="input"
                     placeholder="React, Node.js, Python, MongoDB, Docker"
                   />
-                  <span className="text-xs text-muted" style={{ marginTop: 2 }}>
+                  <span className="text-xs text-muted profile-skill-help-text">
                     Separate skills with commas (e.g. JavaScript, Tailwind, Express)
                   </span>
                 </div>
@@ -531,7 +521,7 @@ function Profile() {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center gap-4 justify-end" style={{ marginTop: 12 }}>
+              <div className="flex items-center gap-4 justify-end profile-edit-actions-row">
                 <button
                   type="button"
                   onClick={handleCancelEdit}
@@ -545,7 +535,7 @@ function Profile() {
                 <button type="submit" className="primary-btn" disabled={saving}>
                   {saving ? (
                     <>
-                      <div className="loader-spinner" style={{ width: 16, height: 16 }} />
+                      <div className="loader-spinner profile-saving-spinner" />
                       Saving Changes...
                     </>
                   ) : (

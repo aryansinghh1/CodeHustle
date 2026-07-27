@@ -5,6 +5,7 @@ import { FaRocket, FaClipboardList, FaProjectDiagram, FaCheckCircle, FaClock, Fa
 import MainLayout from "../../layouts/MainLayout";
 import Loader from "../../components/common/Loader";
 import { getOrganizerDashboard } from "../../services/dashboardService";
+import "./Dashboard.css";
 
 function Dashboard() {
   const [dashboard, setDashboard] = useState({
@@ -28,11 +29,11 @@ function Dashboard() {
   if (loading) return <MainLayout><Loader text="Loading organizer dashboard..." /></MainLayout>;
 
   const stats = [
-    { icon: <FaRocket style={{ color: "var(--primary)" }} />, label: "My Hackathons", value: dashboard.myHackathons },
-    { icon: <FaClipboardList style={{ color: "var(--purple)" }} />, label: "Registrations", value: dashboard.registrations },
-    { icon: <FaProjectDiagram style={{ color: "var(--success)" }} />, label: "Submissions", value: dashboard.submissions },
-    { icon: <FaCheckCircle style={{ color: "var(--warning)" }} />, label: "Completed", value: dashboard.completedHackathons },
-    { icon: <FaClock style={{ color: "var(--slate-500)" }} />, label: "Upcoming", value: dashboard.upcomingHackathons },
+    { icon: <FaRocket className="organizer-icon-primary" />, label: "My Hackathons", value: dashboard.myHackathons },
+    { icon: <FaClipboardList className="organizer-icon-purple" />, label: "Registrations", value: dashboard.registrations },
+    { icon: <FaProjectDiagram className="organizer-icon-success" />, label: "Submissions", value: dashboard.submissions },
+    { icon: <FaCheckCircle className="organizer-icon-warning" />, label: "Completed", value: dashboard.completedHackathons },
+    { icon: <FaClock className="organizer-icon-slate" />, label: "Upcoming", value: dashboard.upcomingHackathons },
   ];
 
   return (
@@ -45,15 +46,15 @@ function Dashboard() {
           <p>Manage your hackathons and track engagement</p>
         </div>
 
-        <div className="grid grid-5 gap-3" style={{ marginBottom: 36 }}>
+        <div className="grid grid-5 gap-3 organizer-stats-grid">
           {stats.map((stat, idx) => (
             <div key={idx} className="stat-card">
-              <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
+              <div className="flex items-center justify-between organizer-stat-header">
                 <div>
-                  <div className="text-2xl font-extrabold" style={{ color: "var(--slate-900)" }}>{stat.value}</div>
-                  <div className="text-xs text-muted font-bold" style={{ marginTop: 4 }}>{stat.label}</div>
+                  <div className="text-2xl font-extrabold organizer-stat-val">{stat.value}</div>
+                  <div className="text-xs text-muted font-bold organizer-stat-lbl">{stat.label}</div>
                 </div>
-                <div style={{ width: 36, height: 36, borderRadius: 10, background: "var(--slate-50)", border: "1px solid var(--slate-200)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>
+                <div className="organizer-stat-icon-bg">
                   {stat.icon}
                 </div>
               </div>
@@ -62,7 +63,7 @@ function Dashboard() {
         </div>
 
         <div>
-          <h2 className="text-xl font-bold" style={{ color: "var(--slate-900)", marginBottom: 16 }}>Quick Actions</h2>
+          <h2 className="text-xl font-bold organizer-section-title">Quick Actions</h2>
           <div className="flex flex-wrap gap-3">
             <Link to="/organizer/create-hackathon" className="primary-btn">
               <FaPlus size={12} /> Create Hackathon

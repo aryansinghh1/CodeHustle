@@ -6,6 +6,7 @@ import MainLayout from "../../layouts/MainLayout";
 import Loader from "../../components/common/Loader";
 import { getHackathonById, updateHackathon } from "../../services/hackathonService";
 import { getJudges } from "../../services/userService";
+import "./EditHackathon.css";
 
 function EditHackathon() {
   const { id } = useParams();
@@ -71,7 +72,7 @@ function EditHackathon() {
 
   return (
     <MainLayout>
-      <div className="container section-spacing" style={{ maxWidth: 880 }}>
+      <div className="container section-spacing edit-hackathon-container">
         <div className="page-header">
           <h1>Edit Hackathon</h1>
           <div className="accent-bar" />
@@ -141,9 +142,9 @@ function EditHackathon() {
               {availableJudges.length === 0 ? (
                 <p className="text-xs text-muted">No judge accounts available yet. Admin can create judge accounts.</p>
               ) : (
-                <div className="flex flex-wrap gap-3" style={{ marginTop: 6 }}>
+                <div className="flex flex-wrap gap-3 edit-hackathon-judge-wrapper">
                   {availableJudges.map((j) => (
-                    <label key={j._id} className="flex items-center gap-2 text-sm font-semibold" style={{ background: "var(--slate-50)", padding: "8px 14px", borderRadius: 8, border: "1px solid var(--slate-200)", cursor: "pointer" }}>
+                    <label key={j._id} className="flex items-center gap-2 text-sm font-semibold edit-hackathon-judge-label">
                       <input
                         type="checkbox"
                         checked={selectedJudges.includes(j._id)}
@@ -156,7 +157,7 @@ function EditHackathon() {
               )}
             </div>
             <div className="full-width">
-              <button className="primary-btn" style={{ width: "100%", marginTop: 12 }}>Update Hackathon</button>
+              <button className="primary-btn edit-hackathon-submit-btn">Update Hackathon</button>
             </div>
           </form>
         </div>

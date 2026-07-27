@@ -7,6 +7,7 @@ import MainLayout from "../../layouts/MainLayout";
 import Loader from "../../components/common/Loader";
 import EmptyState from "../../components/common/EmptyState";
 import { getHackathonRegistrations, approveRegistration, rejectRegistration } from "../../services/registrationService";
+import "./Registrations.css";
 
 function Registrations() {
   const { id } = useParams();
@@ -40,8 +41,8 @@ function Registrations() {
   return (
     <MainLayout>
       <div className="container section-spacing">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4" style={{ marginBottom: 32 }}>
-          <div className="page-header" style={{ marginBottom: 0 }}>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 registrations-header-row">
+          <div className="page-header registrations-page-header">
             <h1>Registrations</h1>
             <div className="accent-bar" />
             <p>Review and manage team registrations</p>
@@ -58,11 +59,11 @@ function Registrations() {
             {registrations.map((r) => (
               <div key={r._id} className="data-card flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-lg font-bold" style={{ color: "var(--slate-900)" }}>{r.team.teamName}</h2>
-                  <p className="text-xs text-muted" style={{ marginTop: 4 }}>
-                    Hackathon: <span className="font-semibold" style={{ color: "var(--slate-800)" }}>{r.hackathon.title}</span>
+                  <h2 className="text-lg font-bold registrations-team-name">{r.team.teamName}</h2>
+                  <p className="text-xs text-muted registrations-subtitle">
+                    Hackathon: <span className="font-semibold registrations-title-text">{r.hackathon.title}</span>
                   </p>
-                  <span className={`badge ${statusBadge(r.status)}`} style={{ marginTop: 8 }}>{r.status}</span>
+                  <span className={`badge ${statusBadge(r.status)} registrations-status-badge`}>{r.status}</span>
                 </div>
                 <div className="flex gap-2">
                   <button onClick={() => handleApprove(r._id)} className="success-btn">

@@ -9,6 +9,7 @@ import EmptyState from "../../components/common/EmptyState";
 import { getHackathonSubmissions } from "../../services/submissionService";
 import { getSubmissionReviews } from "../../services/reviewService";
 import { getHackathonById } from "../../services/hackathonService";
+import "./Submissions.css";
 
 function Submissions() {
   const { hackathonId } = useParams();
@@ -75,15 +76,15 @@ function Submissions() {
     <MainLayout>
       <div className="container section-spacing">
         
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4" style={{ marginBottom: 28 }}>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 submissions-header-row">
           <div>
-            <Link to="/organizer/my-hackathons" className="outline-btn" style={{ marginBottom: 16, padding: "6px 12px", fontSize: 12 }}>
+            <Link to="/organizer/my-hackathons" className="outline-btn submissions-back-btn">
               <FaArrowLeft size={11} /> Back to My Hackathons
             </Link>
-            <h1 className="text-2xl font-extrabold" style={{ color: "var(--slate-900)" }}>
+            <h1 className="text-2xl font-extrabold submissions-title">
               Submissions & Judge Reviews
             </h1>
-            <p className="text-sm text-muted" style={{ marginTop: 4 }}>
+            <p className="text-sm text-muted submissions-subtitle">
               {hackathon?.title} • Total Submissions: {submissions.length}
             </p>
           </div>
@@ -107,17 +108,17 @@ function Submissions() {
                 : null;
 
               return (
-                <div key={s._id} className="data-card" style={{ padding: 24 }}>
+                <div key={s._id} className="data-card submissions-card">
                   {/* Submission Header */}
-                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2" style={{ paddingBottom: 16, borderBottom: "1px solid var(--slate-100)" }}>
+                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 submissions-card-header">
                     <div>
-                      <span className="badge badge-blue" style={{ marginBottom: 8 }}>{s.team?.teamName || "Team"}</span>
-                      <h2 className="text-xl font-bold" style={{ color: "var(--slate-900)" }}>{s.projectName}</h2>
+                      <span className="badge badge-blue submissions-badge-team">{s.team?.teamName || "Team"}</span>
+                      <h2 className="text-xl font-bold submissions-project-name">{s.projectName}</h2>
                     </div>
                     {avgScore !== null ? (
-                      <div className="flex items-center gap-2" style={{ background: "rgba(37,99,235,0.08)", padding: "8px 16px", borderRadius: 12 }}>
-                        <FaStar style={{ color: "var(--warning)" }} />
-                        <span className="text-sm font-bold" style={{ color: "var(--slate-800)" }}>Avg Score: {avgScore} / 70</span>
+                      <div className="flex items-center gap-2 submissions-avg-box">
+                        <FaStar className="submissions-star-icon" />
+                        <span className="text-sm font-bold submissions-avg-score">Avg Score: {avgScore} / 70</span>
                         <span className="text-xs text-muted">({reviews.length} {reviews.length === 1 ? "review" : "reviews"})</span>
                       </div>
                     ) : (
@@ -126,23 +127,23 @@ function Submissions() {
                   </div>
 
                   {/* Submission Info */}
-                  <div style={{ marginTop: 16 }}>
+                  <div className="submissions-body">
                     {s.problemStatement && (
-                      <div style={{ marginBottom: 10 }}>
+                      <div className="submissions-section-mb10">
                         <p className="text-xs font-bold text-muted uppercase">Problem Statement</p>
-                        <p className="text-sm" style={{ marginTop: 2, color: "var(--slate-800)" }}>{s.problemStatement}</p>
+                        <p className="text-sm submissions-text-slate">{s.problemStatement}</p>
                       </div>
                     )}
 
                     {s.solution && (
-                      <div style={{ marginBottom: 12 }}>
+                      <div className="submissions-section-mb12">
                         <p className="text-xs font-bold text-muted uppercase">Solution</p>
-                        <p className="text-sm" style={{ marginTop: 2, color: "var(--slate-800)" }}>{s.solution}</p>
+                        <p className="text-sm submissions-text-slate">{s.solution}</p>
                       </div>
                     )}
 
                     {s.techStack && s.techStack.length > 0 && (
-                      <div className="flex items-center gap-2 flex-wrap" style={{ marginBottom: 16 }}>
+                      <div className="flex items-center gap-2 flex-wrap submissions-tech-row">
                         <span className="text-xs font-bold text-muted uppercase"><FaCode className="inline" /> Tech Stack:</span>
                         {s.techStack.map((tech, idx) => (
                           <span key={idx} className="badge badge-blue">{tech}</span>
@@ -150,14 +151,14 @@ function Submissions() {
                       </div>
                     )}
 
-                    <div className="flex gap-3 flex-wrap" style={{ marginBottom: 20 }}>
+                    <div className="flex gap-3 flex-wrap submissions-links-row">
                       {s.githubRepo && (
-                        <a href={s.githubRepo} target="_blank" rel="noopener noreferrer" className="outline-btn" style={{ padding: "6px 12px", fontSize: 12 }}>
+                        <a href={s.githubRepo} target="_blank" rel="noopener noreferrer" className="outline-btn submissions-btn-sm">
                           <FaGithub /> GitHub Repo
                         </a>
                       )}
                       {s.liveDemo && (
-                        <a href={s.liveDemo} target="_blank" rel="noopener noreferrer" className="secondary-btn" style={{ padding: "6px 12px", fontSize: 12 }}>
+                        <a href={s.liveDemo} target="_blank" rel="noopener noreferrer" className="secondary-btn submissions-btn-sm">
                           <FaExternalLinkAlt /> Live Demo
                         </a>
                       )}
@@ -165,27 +166,27 @@ function Submissions() {
                   </div>
 
                   {/* Judge Reviews Section */}
-                  <div style={{ paddingTop: 16, borderTop: "1px dashed var(--slate-200)" }}>
-                    <h3 className="text-sm font-bold flex items-center gap-2" style={{ color: "var(--slate-900)", marginBottom: 14 }}>
-                      <FaComments style={{ color: "var(--primary)" }} />
+                  <div className="submissions-reviews-wrapper">
+                    <h3 className="text-sm font-bold flex items-center gap-2 submissions-reviews-title">
+                      <FaComments className="submissions-comments-icon" />
                       Judge Evaluations & Remarks ({reviews.length})
                     </h3>
 
                     {reviews.length === 0 ? (
-                      <p className="text-xs text-muted font-semibold" style={{ background: "var(--slate-50)", padding: 12, borderRadius: 8 }}>
+                      <p className="text-xs text-muted font-semibold submissions-no-reviews">
                         No judge reviews submitted for this project yet.
                       </p>
                     ) : (
                       <div className="flex flex-col gap-4">
                         {reviews.map((r) => (
-                          <div key={r._id} style={{ background: "rgba(248, 250, 252, 0.9)", border: "1px solid var(--slate-200)", borderRadius: 12, padding: 16 }}>
-                            <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
+                          <div key={r._id} className="submissions-review-card">
+                            <div className="flex items-center justify-between submissions-review-top">
                               <div className="flex items-center gap-2">
-                                <div style={{ width: 28, height: 28, borderRadius: "50%", background: "var(--primary-light)", color: "var(--primary)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>
+                                <div className="submissions-judge-avatar">
                                   <FaUser />
                                 </div>
                                 <div>
-                                  <p className="text-xs font-bold" style={{ color: "var(--slate-900)" }}>{r.judge?.name || "Judge"}</p>
+                                  <p className="text-xs font-bold submissions-judge-name">{r.judge?.name || "Judge"}</p>
                                   <p className="text-xs text-muted">{r.judge?.email}</p>
                                 </div>
                               </div>
@@ -193,20 +194,20 @@ function Submissions() {
                             </div>
 
                             {/* Score Breakdown Grid */}
-                            <div className="grid grid-4 gap-2" style={{ marginBottom: 12, background: "#fff", padding: 10, borderRadius: 8, border: "1px solid var(--slate-100)" }}>
+                            <div className="grid grid-4 gap-2 submissions-breakdown-grid">
                               {criteriaList.map((c) => (
                                 <div key={c.key}>
                                   <p className="text-xs text-muted font-semibold">{c.label}</p>
-                                  <p className="text-xs font-bold" style={{ color: "var(--slate-900)" }}>{r[c.key]} / 10</p>
+                                  <p className="text-xs font-bold submissions-breakdown-val">{r[c.key]} / 10</p>
                                 </div>
                               ))}
                             </div>
 
                             {/* Remarks / Feedback */}
                             {r.feedback && (
-                              <div style={{ marginTop: 8 }}>
+                              <div className="submissions-remarks-box">
                                 <p className="text-xs font-bold text-muted uppercase">Judge Remarks & Feedback:</p>
-                                <p className="text-xs text-slate-800" style={{ marginTop: 2, background: "#fff", padding: 8, borderRadius: 6, border: "1px solid var(--slate-200)", lineHeight: 1.5 }}>
+                                <p className="text-xs text-slate-800 submissions-remarks-text">
                                   "{r.feedback}"
                                 </p>
                               </div>

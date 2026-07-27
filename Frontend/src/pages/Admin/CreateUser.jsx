@@ -5,6 +5,7 @@ import { FaUserPlus } from "react-icons/fa";
 
 import MainLayout from "../../layouts/MainLayout";
 import { createUser } from "../../services/userService";
+import "./CreateUser.css";
 
 function CreateUser() {
   const navigate = useNavigate();
@@ -26,15 +27,15 @@ function CreateUser() {
 
   return (
     <MainLayout>
-      <div className="container section-spacing" style={{ maxWidth: 540 }}>
+      <div className="container section-spacing create-user-container">
         <div className="page-header text-center">
           <h1>Create User</h1>
-          <div className="accent-bar" style={{ margin: "10px auto 0" }} />
+          <div className="accent-bar create-user-accent-bar" />
           <p>Add a new organizer, judge, or admin</p>
         </div>
 
         <div className="form-card">
-          <div className="empty-icon" style={{ margin: "0 auto 20px" }}>
+          <div className="empty-icon create-user-icon">
             <FaUserPlus />
           </div>
 
@@ -59,7 +60,7 @@ function CreateUser() {
                 <option value="admin">Admin</option>
               </select>
             </div>
-            <button className="primary-btn" style={{ width: "100%", marginTop: 8 }}>Create User</button>
+            <button className="primary-btn create-user-submit-btn">Create User</button>
           </form>
         </div>
         

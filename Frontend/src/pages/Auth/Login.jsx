@@ -5,6 +5,7 @@ import { FaCode } from "react-icons/fa";
 
 import { login as loginUser } from "../../services/authService";
 import { useAuth } from "../../context/AuthContext";
+import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -50,15 +51,15 @@ function Login() {
     <div className="auth-page">
       <div className="auth-card">
 
-        <div className="flex items-center justify-center gap-2" style={{ marginBottom: 24 }}>
+        <div className="flex items-center justify-center gap-2 auth-brand-wrapper">
           <div className="nav-logo-icon">
             <FaCode />
           </div>
-          <span className="text-xl font-bold" style={{ color: "var(--slate-900)" }}>CodeHustle</span>
+          <span className="text-xl font-bold auth-brand-text">CodeHustle</span>
         </div>
 
-        <h1 className="text-2xl font-bold text-center" style={{ color: "var(--slate-900)" }}>Welcome Back</h1>
-        <p className="text-muted text-xs text-center" style={{ marginTop: 4, marginBottom: 24 }}>Sign in to continue building amazing projects</p>
+        <h1 className="text-2xl font-bold text-center auth-heading">Welcome Back</h1>
+        <p className="text-muted text-xs text-center auth-subheading">Sign in to continue building amazing projects</p>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
@@ -88,15 +89,15 @@ function Login() {
             />
           </div>
 
-          <button disabled={loading} className="primary-btn" style={{ width: "100%", marginTop: 8 }}>
+          <button disabled={loading} className="primary-btn auth-submit-btn">
             {loading ? "Signing in..." : "Sign In"}
           </button>
 
         </form>
 
-        <p className="text-center text-xs text-muted" style={{ marginTop: 24 }}>
+        <p className="text-center text-xs text-muted auth-footer-text">
           Don't have an account?
-          <Link to="/signup" className="font-bold" style={{ color: "var(--primary)", marginLeft: 6 }}>Create one</Link>
+          <Link to="/signup" className="font-bold auth-link">Create one</Link>
         </p>
 
       </div>

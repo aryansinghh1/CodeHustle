@@ -7,6 +7,7 @@ import Loader from "../../components/common/Loader";
 import EmptyState from "../../components/common/EmptyState";
 import { getMyRegistrations } from "../../services/registrationService";
 import { createSubmission } from "../../services/submissionService";
+import "./CreateSubmission.css";
 
 function CreateSubmission() {
   const navigate = useNavigate();
@@ -95,7 +96,7 @@ function CreateSubmission() {
 
   return (
     <MainLayout>
-      <div className="container section-spacing" style={{ maxWidth: 880 }}>
+      <div className="container section-spacing create-sub-container">
         <div className="page-header">
           <h1>Submit Project</h1>
           <div className="accent-bar" />
@@ -146,8 +147,7 @@ function CreateSubmission() {
                         : "Team Selected"
                       : "Select Hackathon First"
                   }
-                  className="input text-muted"
-                  style={{ background: "var(--slate-50)", cursor: "not-allowed" }}
+                  className="input text-muted create-sub-readonly-input"
                 />
               </div>
 
@@ -192,7 +192,7 @@ function CreateSubmission() {
                 <input name="screenshots" placeholder="https://..., https://..." className="input" onChange={handleChange} />
               </div>
               <div className="full-width">
-                <button className="primary-btn" style={{ width: "100%", marginTop: 12 }}>Submit Project</button>
+                <button className="primary-btn create-sub-submit-btn">Submit Project</button>
               </div>
             </form>
           </div>

@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import MainLayout from "../../layouts/MainLayout";
 import { createHackathon } from "../../services/hackathonService";
 import { getJudges } from "../../services/userService";
+import "./CreateHackathon.css";
 
 function CreateHackathon() {
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ function CreateHackathon() {
 
   return (
     <MainLayout>
-      <div className="container section-spacing" style={{ maxWidth: 880 }}>
+      <div className="container section-spacing create-hackathon-container">
 
         <div className="page-header">
           <h1>Create Hackathon</h1>
@@ -151,9 +152,9 @@ function CreateHackathon() {
               {availableJudges.length === 0 ? (
                 <p className="text-xs text-muted">No judge accounts available yet. Admin can create judge accounts.</p>
               ) : (
-                <div className="flex flex-wrap gap-3" style={{ marginTop: 6 }}>
+                <div className="flex flex-wrap gap-3 create-hackathon-judge-wrapper">
                   {availableJudges.map((j) => (
-                    <label key={j._id} className="flex items-center gap-2 text-sm font-semibold" style={{ background: "var(--slate-50)", padding: "8px 14px", borderRadius: 8, border: "1px solid var(--slate-200)", cursor: "pointer" }}>
+                    <label key={j._id} className="flex items-center gap-2 text-sm font-semibold create-hackathon-judge-label">
                       <input
                         type="checkbox"
                         checked={selectedJudges.includes(j._id)}
@@ -167,7 +168,7 @@ function CreateHackathon() {
             </div>
 
             <div className="full-width">
-              <button disabled={loading} className="primary-btn" style={{ width: "100%", marginTop: 12 }}>
+              <button disabled={loading} className="primary-btn create-hackathon-submit-btn">
                 {loading ? "Creating..." : "Create Hackathon"}
               </button>
             </div>

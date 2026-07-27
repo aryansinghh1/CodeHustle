@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import MainLayout from "../../layouts/MainLayout";
 import Loader from "../../components/common/Loader";
 import { getSubmissionById, updateSubmission } from "../../services/submissionService";
+import "./EditSubmission.css";
 
 function EditSubmission() {
   const { id } = useParams();
@@ -52,7 +53,7 @@ function EditSubmission() {
 
   return (
     <MainLayout>
-      <div className="container section-spacing" style={{ maxWidth: 880 }}>
+      <div className="container section-spacing edit-sub-container">
         <div className="page-header">
           <h1>Edit Submission</h1>
           <div className="accent-bar" />
@@ -101,7 +102,7 @@ function EditSubmission() {
               <input name="screenshots" value={formData.screenshots} onChange={handleChange} className="input" />
             </div>
             <div className="full-width">
-              <button className="primary-btn" style={{ width: "100%", marginTop: 12 }}>Update Submission</button>
+              <button className="primary-btn edit-sub-submit-btn">Update Submission</button>
             </div>
           </form>
         </div>

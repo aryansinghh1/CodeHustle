@@ -5,11 +5,12 @@ import TrustedBy from "../../components/home/TrustedBy";
 import Stats from "../../components/home/Stats";
 import WhyChoose from "../../components/home/WhyChoose";
 import CTA from "../../components/home/CTA";
+import "./Home.css";
 
 function Home() {
   return (
     <MainLayout>
-      <div className="flex flex-col" style={{ gap: 16 }}>
+      <div className="flex flex-col home-container">
         <Hero />
         <TrustedBy />
         <Stats />

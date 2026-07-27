@@ -7,6 +7,7 @@ import MainLayout from "../../layouts/MainLayout";
 import Loader from "../../components/common/Loader";
 import { createReview, getMyReviews } from "../../services/reviewService";
 import { getSubmissionById } from "../../services/submissionService";
+import "./ReviewSubmission.css";
 
 function ReviewSubmission() {
   const { id } = useParams();
@@ -106,7 +107,7 @@ function ReviewSubmission() {
 
   return (
     <MainLayout>
-      <div className="container section-spacing" style={{ maxWidth: 780 }}>
+      <div className="container section-spacing review-sub-container">
         <div className="page-header">
           <h1>Evaluate Project</h1>
           <div className="accent-bar" />
@@ -115,35 +116,35 @@ function ReviewSubmission() {
 
         {/* Project Details Overview Card */}
         {submission && (
-          <div className="data-card" style={{ marginBottom: 24 }}>
-            <h2 className="text-xl font-extrabold" style={{ color: "var(--slate-900)" }}>
+          <div className="data-card review-sub-card">
+            <h2 className="text-xl font-extrabold review-sub-title">
               {submission.projectName}
             </h2>
             
-            <div className="flex flex-wrap gap-3 text-xs text-muted" style={{ marginTop: 8, marginBottom: 16 }}>
-              <span>Team: <strong style={{ color: "var(--slate-800)" }}>{submission.team?.teamName}</strong></span>
+            <div className="flex flex-wrap gap-3 text-xs text-muted review-sub-meta">
+              <span>Team: <strong className="review-sub-meta-val">{submission.team?.teamName}</strong></span>
               <span>•</span>
-              <span>Hackathon: <strong style={{ color: "var(--slate-800)" }}>{submission.hackathon?.title}</strong></span>
+              <span>Hackathon: <strong className="review-sub-meta-val">{submission.hackathon?.title}</strong></span>
             </div>
 
             {submission.problemStatement && (
-              <div style={{ marginBottom: 12 }}>
+              <div className="review-sub-section-mb12">
                 <p className="text-xs font-bold text-muted uppercase">Problem Statement</p>
-                <p className="text-sm" style={{ marginTop: 2, color: "var(--slate-800)" }}>{submission.problemStatement}</p>
+                <p className="text-sm review-sub-meta-val">{submission.problemStatement}</p>
               </div>
             )}
 
             {submission.solution && (
-              <div style={{ marginBottom: 12 }}>
+              <div className="review-sub-section-mb12">
                 <p className="text-xs font-bold text-muted uppercase">Solution</p>
-                <p className="text-sm" style={{ marginTop: 2, color: "var(--slate-800)" }}>{submission.solution}</p>
+                <p className="text-sm review-sub-meta-val">{submission.solution}</p>
               </div>
             )}
 
             {submission.techStack && submission.techStack.length > 0 && (
-              <div style={{ marginBottom: 16 }}>
-                <p className="text-xs font-bold text-muted uppercase" style={{ marginBottom: 6 }}>
-                  <FaCode className="inline" style={{ marginRight: 4 }} /> Tech Stack
+              <div className="review-sub-section-mb16">
+                <p className="text-xs font-bold text-muted uppercase review-sub-tech-label">
+                  <FaCode className="inline review-sub-icon-margin" /> Tech Stack
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {submission.techStack.map((tech, idx) => (
@@ -153,14 +154,14 @@ function ReviewSubmission() {
               </div>
             )}
 
-            <div className="flex flex-wrap gap-3" style={{ paddingTop: 8, borderTop: "1px solid var(--slate-100)" }}>
+            <div className="flex flex-wrap gap-3 review-sub-links-row">
               {submission.githubRepo && (
-                <a href={submission.githubRepo} target="_blank" rel="noopener noreferrer" className="outline-btn" style={{ padding: "6px 14px", fontSize: 13 }}>
+                <a href={submission.githubRepo} target="_blank" rel="noopener noreferrer" className="outline-btn review-sub-link-btn">
                   <FaGithub /> GitHub Repo
                 </a>
               )}
               {submission.liveDemo && (
-                <a href={submission.liveDemo} target="_blank" rel="noopener noreferrer" className="secondary-btn" style={{ padding: "6px 14px", fontSize: 13 }}>
+                <a href={submission.liveDemo} target="_blank" rel="noopener noreferrer" className="secondary-btn review-sub-link-btn">
                   <FaExternalLinkAlt /> Live Demo
                 </a>
               )}
@@ -173,7 +174,7 @@ function ReviewSubmission() {
             {fields.map((field) => (
               <div key={field} className="form-group">
                 <label className="form-label flex items-center gap-2">
-                  <FaStar style={{ color: "var(--warning)" }} size={12} />
+                  <FaStar className="review-sub-star-icon" size={12} />
                   {formatLabel(field)}
                 </label>
                 <input
@@ -192,7 +193,7 @@ function ReviewSubmission() {
               />
             </div>
 
-            <button disabled={submitting} className="primary-btn" style={{ width: "100%", marginTop: 8 }}>
+            <button disabled={submitting} className="primary-btn review-sub-submit-btn">
               {submitting ? "Submitting Review..." : "Submit Review"}
             </button>
           </form>

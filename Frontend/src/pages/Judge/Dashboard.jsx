@@ -5,6 +5,7 @@ import { FaProjectDiagram, FaClock, FaCheckCircle, FaEye } from "react-icons/fa"
 import MainLayout from "../../layouts/MainLayout";
 import Loader from "../../components/common/Loader";
 import { getJudgeDashboard } from "../../services/dashboardService";
+import "./Dashboard.css";
 
 function Dashboard() {
   const [dashboard, setDashboard] = useState({
@@ -28,9 +29,9 @@ function Dashboard() {
   if (loading) return <MainLayout><Loader text="Loading judge dashboard..." /></MainLayout>;
 
   const stats = [
-    { icon: <FaProjectDiagram style={{ color: "var(--primary)" }} />, label: "Assigned Projects", value: dashboard.assignedProjects },
-    { icon: <FaClock style={{ color: "var(--warning)" }} />, label: "Pending Reviews", value: dashboard.pendingReviews },
-    { icon: <FaCheckCircle style={{ color: "var(--success)" }} />, label: "Completed Reviews", value: dashboard.completedReviews },
+    { icon: <FaProjectDiagram className="judge-icon-primary" />, label: "Assigned Projects", value: dashboard.assignedProjects },
+    { icon: <FaClock className="judge-icon-warning" />, label: "Pending Reviews", value: dashboard.pendingReviews },
+    { icon: <FaCheckCircle className="judge-icon-success" />, label: "Completed Reviews", value: dashboard.completedReviews },
   ];
 
   return (
@@ -43,15 +44,15 @@ function Dashboard() {
           <p>Review and evaluate project submissions</p>
         </div>
 
-        <div className="grid grid-3 gap-4" style={{ marginBottom: 36 }}>
+        <div className="grid grid-3 gap-4 judge-stats-grid">
           {stats.map((stat, idx) => (
             <div key={idx} className="stat-card">
-              <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
+              <div className="flex items-center justify-between judge-stat-header">
                 <div>
-                  <div className="text-3xl font-extrabold" style={{ color: "var(--slate-900)" }}>{stat.value}</div>
-                  <div className="text-xs text-muted font-bold" style={{ marginTop: 4 }}>{stat.label}</div>
+                  <div className="text-3xl font-extrabold judge-stat-val">{stat.value}</div>
+                  <div className="text-xs text-muted font-bold judge-stat-lbl">{stat.label}</div>
                 </div>
-                <div style={{ width: 44, height: 44, borderRadius: 14, background: "var(--slate-50)", border: "1px solid var(--slate-200)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>
+                <div className="judge-stat-icon-wrapper">
                   {stat.icon}
                 </div>
               </div>
@@ -60,7 +61,7 @@ function Dashboard() {
         </div>
 
         <div>
-          <h2 className="text-xl font-bold" style={{ color: "var(--slate-900)", marginBottom: 16 }}>Quick Actions</h2>
+          <h2 className="text-xl font-bold judge-section-title">Quick Actions</h2>
           <div className="flex flex-wrap gap-3">
             <Link to="/judge/submissions" className="primary-btn">
               <FaEye size={13} /> View Assigned Projects

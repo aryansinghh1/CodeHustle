@@ -1,4 +1,112 @@
 node_modules
 .env
+Frontend/dist/
 
+# ==========================================
+# Newly Created CSS Files & Modified JSX Files
+# (Remove or comment out line by line to commit)
+# ==========================================
 
+# Global & Layouts
+# Frontend/src/index.css
+Frontend/src/layouts/MainLayout.jsx
+Frontend/src/layouts/MainLayout.css
+
+# Components - Common & Hackathon
+Frontend/src/components/common/EmptyState.jsx
+Frontend/src/components/common/EmptyState.css
+Frontend/src/components/hackathon/HackathonCard.jsx
+Frontend/src/components/hackathon/HackathonCard.css
+Frontend/src/components/hackathon/HackathonForm.jsx
+
+# Components - Home
+Frontend/src/components/home/Hero.jsx
+Frontend/src/components/home/Hero.css
+Frontend/src/components/home/CTA.jsx
+Frontend/src/components/home/CTA.css
+Frontend/src/components/home/Stats.jsx
+Frontend/src/components/home/Stats.css
+Frontend/src/components/home/TrustedBy.jsx
+Frontend/src/components/home/TrustedBy.css
+Frontend/src/components/home/WhyChoose.jsx
+Frontend/src/components/home/WhyChoose.css
+
+# Components - Layout
+Frontend/src/components/layout/Navbar.jsx
+Frontend/src/components/layout/Navbar.css
+Frontend/src/components/layout/Footer.jsx
+Frontend/src/components/layout/Footer.css
+
+# Pages - Home & Error
+Frontend/src/pages/Home/Home.jsx
+Frontend/src/pages/Home/Home.css
+Frontend/src/pages/Error/NotFound.jsx
+Frontend/src/pages/Error/NotFound.css
+
+# Pages - Auth
+Frontend/src/pages/Auth/Login.jsx
+Frontend/src/pages/Auth/Login.css
+Frontend/src/pages/Auth/Signup.jsx
+Frontend/src/pages/Auth/Signup.css
+
+# Pages - Hackathon
+Frontend/src/pages/Hackathon/Listing.jsx
+Frontend/src/pages/Hackathon/Listing.css
+Frontend/src/pages/Hackathon/Details.jsx
+Frontend/src/pages/Hackathon/Details.css
+
+# Pages - Admin
+Frontend/src/pages/Admin/Dashboard.jsx
+Frontend/src/pages/Admin/Dashboard.css
+Frontend/src/pages/Admin/Users.jsx
+Frontend/src/pages/Admin/Users.css
+Frontend/src/pages/Admin/CreateUser.jsx
+Frontend/src/pages/Admin/CreateUser.css
+
+# Pages - Organizer
+Frontend/src/pages/Organizer/Dashboard.jsx
+Frontend/src/pages/Organizer/Dashboard.css
+Frontend/src/pages/Organizer/CreateHackathon.jsx
+Frontend/src/pages/Organizer/CreateHackathon.css
+Frontend/src/pages/Organizer/EditHackathon.jsx
+Frontend/src/pages/Organizer/EditHackathon.css
+Frontend/src/pages/Organizer/MyHackathons.jsx
+Frontend/src/pages/Organizer/MyHackathons.css
+Frontend/src/pages/Organizer/Registrations.jsx
+Frontend/src/pages/Organizer/Registrations.css
+Frontend/src/pages/Organizer/Submissions.jsx
+Frontend/src/pages/Organizer/Submissions.css
+
+# Pages - Judge
+Frontend/src/pages/Judge/Dashboard.jsx
+Frontend/src/pages/Judge/Dashboard.css
+Frontend/src/pages/Judge/Submissions.jsx
+Frontend/src/pages/Judge/Submissions.css
+Frontend/src/pages/Judge/ReviewSubmission.jsx
+Frontend/src/pages/Judge/ReviewSubmission.css
+
+# Pages - Participant & Profile
+Frontend/src/pages/Participant/Dashboard.jsx
+Frontend/src/pages/Participant/Dashboard.css
+Frontend/src/pages/Profile/Profile.jsx
+Frontend/src/pages/Profile/Profile.css
+
+# Pages - Registration
+Frontend/src/pages/Registration/Register.jsx
+Frontend/src/pages/Registration/Register.css
+Frontend/src/pages/Registration/MyRegistrations.jsx
+Frontend/src/pages/Registration/MyRegistrations.css
+
+# Pages - Submission
+Frontend/src/pages/Submission/CreateSubmission.jsx
+Frontend/src/pages/Submission/CreateSubmission.css
+Frontend/src/pages/Submission/EditSubmission.jsx
+Frontend/src/pages/Submission/EditSubmission.css
+Frontend/src/pages/Submission/MySubmissions.jsx
+Frontend/src/pages/Submission/MySubmissions.css
+
+# Pages - Leaderboard & Team
+Frontend/src/pages/Leaderboard/Leaderboard.jsx
+Frontend/src/pages/Leaderboard/Leaderboard.css
+Frontend/src/pages/Team/TeamPage.jsx
+Frontend/src/pages/Team/TeamPage.css

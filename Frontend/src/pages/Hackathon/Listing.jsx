@@ -6,6 +6,7 @@ import Loader from "../../components/common/Loader";
 import EmptyState from "../../components/common/EmptyState";
 import { getHackathons } from "../../services/hackathonService";
 import MainLayout from "../../layouts/MainLayout";
+import "./Listing.css";
 
 function Listing() {
   const [hackathons, setHackathons] = useState([]);
@@ -43,20 +44,17 @@ function Listing() {
         </div>
 
         {/* Filters Card */}
-        <div className="form-card" style={{ marginBottom: 32, padding: 20 }}>
+        <div className="form-card listing-filters-card">
           <div className="grid grid-3 gap-3">
 
-            <div style={{ position: "relative" }}>
-              <FaSearch
-                style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "var(--slate-400)", fontSize: 13 }}
-              />
+            <div className="listing-search-wrapper">
+              <FaSearch className="listing-search-icon" />
               <input
                 type="text"
                 placeholder="Search hackathons..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="input"
-                style={{ paddingLeft: 38 }}
+                className="input listing-search-input"
               />
             </div>
 

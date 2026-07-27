@@ -7,6 +7,7 @@ import MainLayout from "../../layouts/MainLayout";
 import Loader from "../../components/common/Loader";
 import { getMyTeams } from "../../services/teamService";
 import { registerHackathon, getMyRegistrations } from "../../services/registrationService";
+import "./Register.css";
 
 function Register() {
   const { hackathonId } = useParams();
@@ -64,38 +65,38 @@ function Register() {
 
   return (
     <MainLayout>
-      <div className="container section-spacing" style={{ maxWidth: 540 }}>
+      <div className="container section-spacing register-container">
         <div className="page-header text-center">
           <h1>Register Team</h1>
-          <div className="accent-bar" style={{ margin: "10px auto 0" }} />
+          <div className="accent-bar register-accent-bar" />
           <p>Select your team to register for this hackathon</p>
         </div>
 
         {alreadyRegisteredReg ? (
-          <div className="form-card text-center" style={{ background: "rgba(245, 158, 11, 0.08)", border: "1px solid var(--warning)" }}>
-            <FaExclamationTriangle size={32} style={{ color: "var(--warning)", margin: "0 auto 12px" }} />
-            <h2 className="text-lg font-bold" style={{ color: "var(--slate-900)" }}>
+          <div className="form-card text-center register-already-card">
+            <FaExclamationTriangle size={32} className="register-warning-icon" />
+            <h2 className="text-lg font-bold register-already-title">
               Already Registered
             </h2>
-            <p className="text-sm text-slate-800" style={{ marginTop: 8, lineHeight: 1.5 }}>
+            <p className="text-sm text-slate-800 register-already-desc">
               You are already registered for this hackathon with team{" "}
               <strong>"{alreadyRegisteredReg.team?.teamName || "your team"}"</strong> (Status:{" "}
               <span className="badge badge-blue">{alreadyRegisteredReg.status}</span>).
             </p>
-            <p className="text-xs text-muted" style={{ marginTop: 8 }}>
+            <p className="text-xs text-muted register-already-sub">
               Participants are restricted to 1 team registration per hackathon.
             </p>
-            <button onClick={() => navigate("/participant/my-registrations")} className="primary-btn" style={{ width: "100%", marginTop: 20 }}>
+            <button onClick={() => navigate("/participant/my-registrations")} className="primary-btn register-btn-full-mt20">
               View My Registrations
             </button>
           </div>
         ) : (
           <div className="form-card text-center flex flex-col items-center">
-            <div className="empty-icon" style={{ margin: "0 auto 20px" }}>
+            <div className="empty-icon register-icon-wrapper">
               <FaUsers />
             </div>
 
-            <div className="form-group" style={{ width: "100%", textAlign: "left" }}>
+            <div className="form-group register-form-group">
               <label className="form-label">Select Team</label>
               <select className="input" value={selectedTeam} onChange={(e) => setSelectedTeam(e.target.value)}>
                 <option value="">Choose a team...</option>
@@ -105,7 +106,7 @@ function Register() {
               </select>
             </div>
 
-            <button onClick={handleRegister} className="primary-btn" style={{ width: "100%", marginTop: 24 }}>
+            <button onClick={handleRegister} className="primary-btn register-btn-full-mt24">
               Register for Hackathon
             </button>
           </div>

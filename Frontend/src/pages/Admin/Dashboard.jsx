@@ -5,6 +5,7 @@ import { FaUsers, FaRocket, FaUsersCog, FaProjectDiagram, FaGavel, FaBuilding, F
 import MainLayout from "../../layouts/MainLayout";
 import Loader from "../../components/common/Loader";
 import { getAdminDashboard } from "../../services/dashboardService";
+import "./Dashboard.css";
 
 function Dashboard() {
   const [dashboard, setDashboard] = useState({
@@ -47,19 +48,19 @@ function Dashboard() {
           <p>Platform overview and management tools</p>
         </div>
 
-        <div className="grid grid-6 gap-3" style={{ marginBottom: 36 }}>
+        <div className="grid grid-6 gap-3 admin-stats-grid">
           {stats.map((stat, idx) => (
-            <div key={idx} className="stat-card" style={{ padding: 18 }}>
+            <div key={idx} className="stat-card admin-stat-card">
               <div>
-                <div className="text-2xl font-extrabold" style={{ color: "var(--slate-900)" }}>{stat.value}</div>
-                <div className="text-xs text-muted font-bold" style={{ marginTop: 4 }}>{stat.label}</div>
+                <div className="text-2xl font-extrabold admin-stat-value">{stat.value}</div>
+                <div className="text-xs text-muted font-bold admin-stat-label">{stat.label}</div>
               </div>
             </div>
           ))}
         </div>
 
         <div>
-          <h2 className="text-xl font-bold" style={{ color: "var(--slate-900)", marginBottom: 16 }}>Quick Actions</h2>
+          <h2 className="text-xl font-bold admin-section-title">Quick Actions</h2>
           <div className="flex flex-wrap gap-3">
             <Link to="/admin/users" className="secondary-btn">
               <FaListAlt size={13} /> Manage Users

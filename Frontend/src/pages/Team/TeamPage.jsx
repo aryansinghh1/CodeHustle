@@ -6,6 +6,7 @@ import MainLayout from "../../layouts/MainLayout";
 import EmptyState from "../../components/common/EmptyState";
 import { getHackathons } from "../../services/hackathonService";
 import { createTeam, getMyTeams, deleteTeam } from "../../services/teamService";
+import "./TeamPage.css";
 
 function TeamPage() {
   const [teams, setTeams] = useState([]);
@@ -96,14 +97,14 @@ function TeamPage() {
         </div>
 
         {/* Create Team Form */}
-        <div className="form-card" style={{ marginBottom: 32 }}>
-          <h3 className="text-base font-bold" style={{ color: "var(--slate-900)", marginBottom: 16 }}>
-            <FaPlus className="inline" style={{ marginRight: 6, color: "var(--primary)" }} size={13} />
+        <div className="form-card team-form-card">
+          <h3 className="text-base font-bold team-form-header">
+            <FaPlus className="inline team-form-header-icon" size={13} />
             Create New Team
           </h3>
           
           <form onSubmit={handleCreate} className="flex flex-col gap-4">
-            <div className="grid grid-3 gap-4" style={{ alignItems: "start" }}>
+            <div className="grid grid-3 gap-4 team-form-grid-top">
               <div className="form-group">
                 <label className="form-label">Team Name</label>
                 <input
@@ -152,16 +153,16 @@ function TeamPage() {
 
             {/* Dynamic Member Name Input Boxes */}
             {teamSize > 1 && (
-              <div style={{ background: "var(--slate-50)", padding: 16, borderRadius: 12, border: "1px solid var(--slate-200)", marginTop: 4 }}>
-                <p className="text-xs font-bold uppercase text-muted" style={{ marginBottom: 12 }}>
-                  <FaUserPlus className="inline" style={{ marginRight: 4, color: "var(--primary)" }} />
+              <div className="team-members-box">
+                <p className="text-xs font-bold uppercase text-muted team-members-title">
+                  <FaUserPlus className="inline team-icon-primary-mr4" />
                   Team Member Details ({teamSize - 1} additional {teamSize - 1 === 1 ? "member" : "members"})
                 </p>
 
                 <div className="grid grid-2 gap-3">
                   {Array.from({ length: teamSize - 1 }).map((_, index) => (
                     <div key={index} className="form-group">
-                      <label className="form-label text-xs font-bold" style={{ color: "var(--slate-800)" }}>
+                      <label className="form-label text-xs font-bold team-member-label">
                         Member {index + 2} Name
                       </label>
                       <input
@@ -179,7 +180,7 @@ function TeamPage() {
             )}
 
             <div>
-              <button className="primary-btn" style={{ marginTop: 8 }}>
+              <button className="primary-btn team-submit-btn">
                 <FaPlus size={12} /> Create Team
               </button>
             </div>
@@ -194,18 +195,18 @@ function TeamPage() {
             {teams.map((team) => (
               <div key={team._id} className="data-card flex flex-col justify-between">
                 <div>
-                  <h2 className="text-lg font-bold flex items-center gap-2" style={{ color: "var(--slate-900)" }}>
-                    <FaUsers style={{ color: "var(--primary)" }} size={16} />
+                  <h2 className="text-lg font-bold flex items-center gap-2 team-card-title">
+                    <FaUsers className="team-card-icon" size={16} />
                     {team.teamName}
                   </h2>
 
-                  <div className="flex flex-col gap-1" style={{ marginTop: 12 }}>
+                  <div className="flex flex-col gap-1 team-card-meta-group">
                     <p className="text-xs text-muted flex items-center gap-1">
-                      <FaCrown style={{ color: "var(--warning)" }} size={11} />
-                      Leader: <span className="font-bold" style={{ color: "var(--slate-800)" }}>{team.leader?.name}</span>
+                      <FaCrown className="team-card-leader-icon" size={11} />
+                      Leader: <span className="font-bold team-card-meta-val">{team.leader?.name}</span>
                     </p>
                     <p className="text-xs text-muted">
-                      Hackathon: <span className="font-semibold" style={{ color: "var(--slate-800)" }}>{team.hackathon?.title}</span>
+                      Hackathon: <span className="font-semibold team-card-meta-val">{team.hackathon?.title}</span>
                     </p>
                     <p className="text-xs text-muted">
                       Total Size: <span className="badge badge-blue">{team.teamSize || 1} Members</span>
@@ -213,11 +214,11 @@ function TeamPage() {
                   </div>
 
                   {team.memberNames && team.memberNames.length > 0 && (
-                    <div style={{ marginTop: 12, paddingTop: 10, borderTop: "1px solid var(--slate-100)" }}>
-                      <p className="text-xs font-bold text-muted uppercase" style={{ marginBottom: 4 }}>Team Members:</p>
+                    <div className="team-members-section">
+                      <p className="text-xs font-bold text-muted uppercase team-members-section-title">Team Members:</p>
                       <div className="flex flex-wrap gap-1">
                         {team.memberNames.map((name, idx) => (
-                          <span key={idx} className="badge badge-slate" style={{ fontSize: 11 }}>
+                          <span key={idx} className="badge badge-slate team-member-badge">
                             {name}
                           </span>
                         ))}
@@ -226,7 +227,7 @@ function TeamPage() {
                   )}
                 </div>
 
-                <button onClick={() => handleDelete(team._id)} className="danger-btn" style={{ marginTop: 16 }}>
+                <button onClick={() => handleDelete(team._id)} className="danger-btn team-delete-btn">
                   <FaTrash size={11} /> Delete Team
                 </button>
               </div>

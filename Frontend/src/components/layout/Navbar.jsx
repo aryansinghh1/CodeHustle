@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaCode, FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
+import "./Navbar.css";
 
 function Navbar() {
   
@@ -64,20 +65,20 @@ function Navbar() {
         <div className="nav-actions">
           {!user ? (
             <>
-              <Link to="/login" className="outline-btn" style={{ padding: "8px 18px" }}>
+              <Link to="/login" className="outline-btn nav-login-btn">
                 Login
               </Link>
-              <Link to="/signup" className="secondary-btn" style={{ padding: "8px 18px" }}>
+              <Link to="/signup" className="secondary-btn nav-signup-btn">
                 Get Started
               </Link>
             </>
           ) : (
             <>
               <div className="flex items-center gap-2">
-                <FaUserCircle size={22} style={{ color: "#64748b" }} />
+                <FaUserCircle size={22} className="nav-user-icon" />
                 <span className="font-bold text-sm">{user.name}</span>
               </div>
-              <button onClick={handleLogout} className="secondary-btn" style={{ padding: "8px 16px", fontSize: 13 }}>
+              <button onClick={handleLogout} className="secondary-btn nav-logout-btn">
                 Logout
               </button>
             </>

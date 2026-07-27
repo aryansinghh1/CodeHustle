@@ -5,6 +5,7 @@ import { FaTimes } from "react-icons/fa";
 import MainLayout from "../../layouts/MainLayout";
 import EmptyState from "../../components/common/EmptyState";
 import { getMyRegistrations, cancelRegistration } from "../../services/registrationService";
+import "./MyRegistrations.css";
 
 function MyRegistrations() {
   const [registrations, setRegistrations] = useState([]);
@@ -42,11 +43,11 @@ function MyRegistrations() {
             {registrations.map((r) => (
               <div key={r._id} className="data-card flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-lg font-bold" style={{ color: "var(--slate-900)" }}>{r.hackathon.title}</h2>
-                  <p className="text-xs text-muted" style={{ marginTop: 4 }}>
-                    Team: <span className="font-semibold" style={{ color: "var(--slate-800)" }}>{r.team.teamName}</span>
+                  <h2 className="text-lg font-bold myregs-title">{r.hackathon.title}</h2>
+                  <p className="text-xs text-muted myregs-subtitle">
+                    Team: <span className="font-semibold myregs-team-name">{r.team.teamName}</span>
                   </p>
-                  <span className={`badge ${statusBadge(r.status)}`} style={{ marginTop: 8 }}>{r.status}</span>
+                  <span className={`badge ${statusBadge(r.status)} myregs-status-badge`}>{r.status}</span>
                 </div>
                 <button onClick={() => handleCancel(r._id)} className="danger-btn">
                   <FaTimes size={11} /> Cancel

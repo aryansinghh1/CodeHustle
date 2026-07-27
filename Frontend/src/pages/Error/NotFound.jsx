@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
+import "./NotFound.css";
 
 function NotFound() {
   return (
@@ -7,19 +8,19 @@ function NotFound() {
       
       <div className="text-center">
 
-        <h1 className="gradient-text" style={{ fontSize: 96, fontWeight: 900, lineHeight: 1 }}>
+        <h1 className="gradient-text notfound-title">
           404
         </h1>
 
-        <h2 className="text-2xl font-bold" style={{ color: "var(--slate-900)", marginTop: 16 }}>
+        <h2 className="text-2xl font-bold notfound-heading">
           Page Not Found
         </h2>
 
-        <p className="text-muted text-sm" style={{ marginTop: 8, maxWidth: 360, margin: "8px auto 0" }}>
+        <p className="text-muted text-sm notfound-desc">
           The page you're looking for doesn't exist or has been moved.
         </p>
 
-        <Link to="/" className="primary-btn" style={{ marginTop: 24 }}>
+        <Link to="/" className="primary-btn notfound-btn">
           <FaHome />
           Back to Home
         </Link>
