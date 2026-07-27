@@ -5,8 +5,6 @@ Frontend/dist/
 
 
 # Pages - Home & Error
-Frontend/src/pages/Home/Home.jsx
-Frontend/src/pages/Home/Home.css
 Frontend/src/pages/Error/NotFound.jsx
 Frontend/src/pages/Error/NotFound.css
 
