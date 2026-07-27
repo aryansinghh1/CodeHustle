@@ -810,7 +810,7 @@ img {
 }
 
 .role-admin { background: rgba(239, 68, 68, 0.12); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.2); }
-.role-organizer { background: rgba(139, 92, 246, 0.12); color: #452877; border: 1px solid rgba(41, 28, 73, 0.2); }
+.role-organizer { background: rgba(139, 92, 246, 0.12); color: #1e1136; border: 1px solid rgba(41, 28, 73, 0.2); }
 .role-judge { background: rgba(245, 158, 11, 0.12); color: #d97706; border: 1px solid rgba(245, 158, 11, 0.2); }
 .role-participant { background: rgba(37, 99, 235, 0.12); color: #182b52; border: 1px solid rgba(14, 22, 39, 0.2); }
 
