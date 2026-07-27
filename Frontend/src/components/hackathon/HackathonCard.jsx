@@ -46,7 +46,6 @@ function HackathonCard({ hackathon }) {
           <FaArrowRight size={11} />
         </Link>
       </div>
-
     </div>
   );
 }

@@ -3,8 +3,7 @@ node_modules
 Frontend/dist/
 
 
-Frontend/src/components/hackathon/HackathonCard.jsx
-Frontend/src/components/hackathon/HackathonCard.css
+
 Frontend/src/components/hackathon/HackathonForm.jsx
 
 # Components - Home

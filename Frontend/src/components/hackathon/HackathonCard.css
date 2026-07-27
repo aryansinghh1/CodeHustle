@@ -1,0 +1,51 @@
+.hackathon-card-wrapper {
+  padding: 0;
+  overflow: hidden;
+}
+
+.hackathon-card-img-wrapper {
+  height: 160px;
+  width: 100%;
+  overflow: hidden;
+  background: var(--slate-100);
+}
+
+.hackathon-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hackathon-card-body {
+  padding: 20px;
+}
+
+.hackathon-card-title {
+  color: var(--slate-900);
+}
+
+.hackathon-card-desc {
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+.hackathon-card-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--slate-100);
+  margin-top: auto;
+}
+
+.hackathon-card-meta {
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.hackathon-card-prize {
+  color: var(--slate-900);
+}
+
+.hackathon-card-btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 13px;
+}
