@@ -7,6 +7,19 @@
 }
 
 .profile-pen-icon {
+  color: var(--slate-400);
+  transition: color 0.2s ease;
+}
+
+.profile-pen-icon:hover {
+  color: var(--primary);
+}
+
+.profile-meta-icon {
+  color: var(--slate-400);
+}
+
+.profile-section-icon {
   color: var(--primary);
 }
 

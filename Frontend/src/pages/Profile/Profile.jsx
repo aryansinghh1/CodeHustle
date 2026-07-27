@@ -233,7 +233,7 @@ function Profile() {
 
                     <div className="profile-user-meta">
                       <span className="profile-meta-item">
-                        <FaEnvelope className="profile-pen-icon" />
+                        <FaEnvelope className="profile-meta-icon" />
                         {user?.email}
                         <FaCheckCircle className="profile-meta-verified-icon" title="Verified User" />
                       </span>
@@ -260,7 +260,7 @@ function Profile() {
               {/* About Me Section */}
               <div className="profile-section-card full-width">
                 <h3 className="profile-section-title">
-                  <FaUser className="profile-pen-icon" />
+                  <FaUser className="profile-section-icon" />
                   About Me
                 </h3>
                 {user?.bio ? (
