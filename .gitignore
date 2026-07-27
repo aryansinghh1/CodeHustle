@@ -3,11 +3,6 @@ node_modules
 Frontend/dist/
 
 
-
-
-# Pages - Auth
-Frontend/src/pages/Auth/Login.jsx
-Frontend/src/pages/Auth/Login.css
 Frontend/src/pages/Auth/Signup.jsx
 Frontend/src/pages/Auth/Signup.css
 

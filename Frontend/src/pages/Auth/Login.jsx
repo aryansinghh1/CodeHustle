@@ -99,9 +99,7 @@ function Login() {
           Don't have an account?
           <Link to="/signup" className="font-bold auth-link">Create one</Link>
         </p>
-
       </div>
-      
     </div>
   );
 }

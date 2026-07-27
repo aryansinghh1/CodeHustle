@@ -1,0 +1,30 @@
+.auth-brand-wrapper {
+  margin-bottom: 24px;
+}
+
+.auth-brand-text {
+  color: var(--slate-900);
+}
+
+.auth-heading {
+  color: var(--slate-900);
+}
+
+.auth-subheading {
+  margin-top: 4px;
+  margin-bottom: 24px;
+}
+
+.auth-submit-btn {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.auth-footer-text {
+  margin-top: 24px;
+}
+
+.auth-link {
+  color: var(--primary);
+  margin-left: 6px;
+}
