@@ -13,6 +13,7 @@ function MainLayout({ children }) {
       <Footer />
     </>
   );
+  
 }
 
 export default MainLayout;

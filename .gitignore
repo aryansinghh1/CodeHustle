@@ -9,8 +9,7 @@ Frontend/dist/
 
 # Global & Layouts
 # Frontend/src/index.css
-Frontend/src/layouts/MainLayout.jsx
-Frontend/src/layouts/MainLayout.css
+
 
 # Components - Common & Hackathon
 Frontend/src/components/common/EmptyState.jsx
