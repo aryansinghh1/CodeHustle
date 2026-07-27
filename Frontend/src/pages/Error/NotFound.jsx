@@ -24,7 +24,6 @@ function NotFound() {
           <FaHome />
           Back to Home
         </Link>
-
       </div>
     </div>
   );

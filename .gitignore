@@ -4,9 +4,6 @@ Frontend/dist/
 
 
 
-# Pages - Home & Error
-Frontend/src/pages/Error/NotFound.jsx
-Frontend/src/pages/Error/NotFound.css
 
 # Pages - Auth
 Frontend/src/pages/Auth/Login.jsx

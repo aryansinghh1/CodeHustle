@@ -1,0 +1,19 @@
+.notfound-title {
+  font-size: 96px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.notfound-heading {
+  color: var(--slate-900);
+  margin-top: 16px;
+}
+
+.notfound-desc {
+  margin: 8px auto 0;
+  max-width: 360px;
+}
+
+.notfound-btn {
+  margin-top: 24px;
+}
