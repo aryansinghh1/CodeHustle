@@ -5,9 +5,6 @@ Frontend/dist/
 
 
 
-# Pages - Admin
-Frontend/src/pages/Admin/Dashboard.jsx
-Frontend/src/pages/Admin/Dashboard.css
 Frontend/src/pages/Admin/Users.jsx
 Frontend/src/pages/Admin/Users.css
 Frontend/src/pages/Admin/CreateUser.jsx
