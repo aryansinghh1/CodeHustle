@@ -2,18 +2,7 @@ node_modules
 .env
 Frontend/dist/
 
-# ==========================================
-# Newly Created CSS Files & Modified JSX Files
-# (Remove or comment out line by line to commit)
-# ==========================================
 
-# Global & Layouts
-# Frontend/src/index.css
-
-
-# Components - Common & Hackathon
-Frontend/src/components/common/EmptyState.jsx
-Frontend/src/components/common/EmptyState.css
 Frontend/src/components/hackathon/HackathonCard.jsx
 Frontend/src/components/hackathon/HackathonCard.css
 Frontend/src/components/hackathon/HackathonForm.jsx

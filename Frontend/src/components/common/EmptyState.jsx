@@ -23,6 +23,7 @@ function EmptyState({
           {actionLabel}
         </Link>
       )}
+      
     </div>
   );
 }
