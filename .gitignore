@@ -5,8 +5,7 @@ Frontend/dist/
 
 
 # Components - Home
-Frontend/src/components/home/CTA.jsx
-Frontend/src/components/home/CTA.css
+
 Frontend/src/components/home/Stats.jsx
 Frontend/src/components/home/Stats.css
 Frontend/src/components/home/TrustedBy.jsx
