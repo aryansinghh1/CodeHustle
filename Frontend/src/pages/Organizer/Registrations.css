@@ -1,0 +1,23 @@
+.registrations-header-row {
+  margin-bottom: 32px;
+}
+
+.registrations-page-header {
+  margin-bottom: 0;
+}
+
+.registrations-team-name {
+  color: var(--slate-900);
+}
+
+.registrations-subtitle {
+  margin-top: 4px;
+}
+
+.registrations-title-text {
+  color: var(--slate-800);
+}
+
+.registrations-status-badge {
+  margin-top: 8px;
+}

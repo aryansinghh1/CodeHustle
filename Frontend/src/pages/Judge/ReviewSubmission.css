@@ -1,0 +1,55 @@
+.review-sub-container {
+  max-width: 780px;
+}
+
+.review-sub-card {
+  margin-bottom: 24px;
+}
+
+.review-sub-title {
+  color: var(--slate-900);
+}
+
+.review-sub-meta {
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.review-sub-meta-val {
+  color: var(--slate-800);
+}
+
+.review-sub-section-mb12 {
+  margin-bottom: 12px;
+}
+
+.review-sub-section-mb16 {
+  margin-bottom: 16px;
+}
+
+.review-sub-tech-label {
+  margin-bottom: 6px;
+}
+
+.review-sub-icon-margin {
+  margin-right: 4px;
+}
+
+.review-sub-links-row {
+  padding-top: 8px;
+  border-top: 1px solid var(--slate-100);
+}
+
+.review-sub-link-btn {
+  padding: 6px 14px;
+  font-size: 13px;
+}
+
+.review-sub-star-icon {
+  color: var(--warning);
+}
+
+.review-sub-submit-btn {
+  width: 100%;
+  margin-top: 8px;
+}

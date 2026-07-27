@@ -1,0 +1,20 @@
+.lb-rank-col {
+  width: 80px;
+  text-align: center;
+}
+
+.lb-center-align {
+  text-align: center;
+}
+
+.lb-rank-gold {
+  color: var(--warning);
+}
+
+.lb-rank-silver {
+  color: var(--slate-400);
+}
+
+.lb-rank-bronze {
+  color: #d97706;
+}

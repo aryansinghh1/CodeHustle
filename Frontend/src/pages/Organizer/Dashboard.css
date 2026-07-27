@@ -1,0 +1,38 @@
+.organizer-stats-grid {
+  margin-bottom: 36px;
+}
+
+.organizer-stat-header {
+  margin-bottom: 12px;
+}
+
+.organizer-stat-val {
+  color: var(--slate-900);
+}
+
+.organizer-stat-lbl {
+  margin-top: 4px;
+}
+
+.organizer-stat-icon-bg {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.organizer-section-title {
+  color: var(--slate-900);
+  margin-bottom: 16px;
+}
+
+.organizer-icon-primary { color: var(--primary); }
+.organizer-icon-purple { color: var(--purple); }
+.organizer-icon-success { color: var(--success); }
+.organizer-icon-warning { color: var(--warning); }
+.organizer-icon-slate { color: var(--slate-500); }

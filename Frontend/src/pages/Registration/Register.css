@@ -1,0 +1,49 @@
+.register-container {
+  max-width: 540px;
+}
+
+.register-accent-bar {
+  margin: 10px auto 0;
+}
+
+.register-already-card {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid var(--warning);
+}
+
+.register-warning-icon {
+  color: var(--warning);
+  margin: 0 auto 12px;
+}
+
+.register-already-title {
+  color: var(--slate-900);
+}
+
+.register-already-desc {
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+.register-already-sub {
+  margin-top: 8px;
+}
+
+.register-btn-full-mt20 {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.register-icon-wrapper {
+  margin: 0 auto 20px;
+}
+
+.register-form-group {
+  width: 100%;
+  text-align: left;
+}
+
+.register-btn-full-mt24 {
+  width: 100%;
+  margin-top: 24px;
+}

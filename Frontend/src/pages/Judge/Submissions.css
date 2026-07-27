@@ -1,0 +1,49 @@
+.judge-subs-header-row {
+  margin-bottom: 28px;
+}
+
+.judge-subs-page-header {
+  margin-bottom: 0;
+}
+
+.judge-subs-filter-tabs {
+  background: var(--slate-100);
+  border-radius: 12px;
+}
+
+.judge-subs-tab-btn {
+  padding: 6px 14px;
+  font-size: 12px;
+  border: none;
+}
+
+.judge-subs-meta-row {
+  margin-bottom: 8px;
+}
+
+.judge-subs-project-title {
+  color: var(--slate-900);
+  margin-top: 4px;
+}
+
+.judge-subs-team-info {
+  margin-top: 10px;
+}
+
+.judge-subs-team-name {
+  color: var(--slate-800);
+}
+
+.judge-subs-feedback-preview {
+  margin-top: 6px;
+  background: var(--slate-50);
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid var(--slate-200);
+  line-height: 1.4;
+}
+
+.judge-subs-action-btn {
+  width: 100%;
+  margin-top: 16px;
+}

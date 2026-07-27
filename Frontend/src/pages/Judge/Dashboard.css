@@ -1,0 +1,36 @@
+.judge-stats-grid {
+  margin-bottom: 36px;
+}
+
+.judge-stat-header {
+  margin-bottom: 12px;
+}
+
+.judge-stat-val {
+  color: var(--slate-900);
+}
+
+.judge-stat-lbl {
+  margin-top: 4px;
+}
+
+.judge-stat-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.judge-section-title {
+  color: var(--slate-900);
+  margin-bottom: 16px;
+}
+
+.judge-icon-primary { color: var(--primary); }
+.judge-icon-warning { color: var(--warning); }
+.judge-icon-success { color: var(--success); }

@@ -1,0 +1,15 @@
+.myregs-title {
+  color: var(--slate-900);
+}
+
+.myregs-subtitle {
+  margin-top: 4px;
+}
+
+.myregs-team-name {
+  color: var(--slate-800);
+}
+
+.myregs-status-badge {
+  margin-top: 8px;
+}

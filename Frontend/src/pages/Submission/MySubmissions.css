@@ -1,0 +1,33 @@
+.mysubs-header-row {
+  margin-bottom: 32px;
+}
+
+.mysubs-page-header {
+  margin-bottom: 0;
+}
+
+.mysubs-project-title {
+  color: var(--slate-900);
+}
+
+.mysubs-meta-group {
+  margin-top: 10px;
+}
+
+.mysubs-meta-val {
+  color: var(--slate-800);
+}
+
+.mysubs-status-badge {
+  margin-top: 4px;
+  align-self: flex-start;
+}
+
+.mysubs-actions-row {
+  margin-top: 16px;
+}
+
+.mysubs-btn-sm {
+  padding: 6px 12px;
+  font-size: 12px;
+}

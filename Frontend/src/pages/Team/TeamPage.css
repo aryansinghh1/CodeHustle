@@ -1,0 +1,80 @@
+.team-form-card {
+  margin-bottom: 32px;
+}
+
+.team-form-header {
+  color: var(--slate-900);
+  margin-bottom: 16px;
+}
+
+.team-form-header-icon {
+  margin-right: 6px;
+  color: var(--primary);
+}
+
+.team-form-grid-top {
+  align-items: start;
+}
+
+.team-members-box {
+  background: var(--slate-50);
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--slate-200);
+  margin-top: 4px;
+}
+
+.team-members-title {
+  margin-bottom: 12px;
+}
+
+.team-icon-primary-mr4 {
+  margin-right: 4px;
+  color: var(--primary);
+}
+
+.team-member-label {
+  color: var(--slate-800);
+}
+
+.team-submit-btn {
+  margin-top: 8px;
+}
+
+.team-card-title {
+  color: var(--slate-900);
+}
+
+.team-card-icon {
+  color: var(--primary);
+}
+
+.team-card-meta-group {
+  margin-top: 12px;
+}
+
+.team-card-leader-icon {
+  color: var(--warning);
+}
+
+.team-card-meta-val {
+  color: var(--slate-800);
+}
+
+.team-members-section {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--slate-100);
+}
+
+.team-members-section-title {
+  margin-bottom: 4px;
+}
+
+.team-member-badge {
+  font-size: 11px;
+}
+
+.team-delete-btn {
+  margin-top: 16px;
+}

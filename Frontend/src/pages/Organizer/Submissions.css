@@ -1,0 +1,150 @@
+.submissions-header-row {
+  margin-bottom: 28px;
+}
+
+.submissions-back-btn {
+  margin-bottom: 16px;
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.submissions-title {
+  color: var(--slate-900);
+}
+
+.submissions-subtitle {
+  margin-top: 4px;
+}
+
+.submissions-card {
+  padding: 24px;
+}
+
+.submissions-card-header {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--slate-100);
+}
+
+.submissions-badge-team {
+  margin-bottom: 8px;
+}
+
+.submissions-project-name {
+  color: var(--slate-900);
+}
+
+.submissions-avg-box {
+  background: rgba(37, 99, 235, 0.08);
+  padding: 8px 16px;
+  border-radius: 12px;
+}
+
+.submissions-star-icon {
+  color: var(--warning);
+}
+
+.submissions-avg-score {
+  color: var(--slate-800);
+}
+
+.submissions-body {
+  margin-top: 16px;
+}
+
+.submissions-section-mb10 {
+  margin-bottom: 10px;
+}
+
+.submissions-section-mb12 {
+  margin-bottom: 12px;
+}
+
+.submissions-text-slate {
+  margin-top: 2px;
+  color: var(--slate-800);
+}
+
+.submissions-tech-row {
+  margin-bottom: 16px;
+}
+
+.submissions-links-row {
+  margin-bottom: 20px;
+}
+
+.submissions-btn-sm {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.submissions-reviews-wrapper {
+  padding-top: 16px;
+  border-top: 1px dashed var(--slate-200);
+}
+
+.submissions-reviews-title {
+  color: var(--slate-900);
+  margin-bottom: 14px;
+}
+
+.submissions-comments-icon {
+  color: var(--primary);
+}
+
+.submissions-no-reviews {
+  background: var(--slate-50);
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.submissions-review-card {
+  background: rgba(248, 250, 252, 0.9);
+  border: 1px solid var(--slate-200);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.submissions-review-top {
+  margin-bottom: 12px;
+}
+
+.submissions-judge-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--primary-light);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.submissions-judge-name {
+  color: var(--slate-900);
+}
+
+.submissions-breakdown-grid {
+  margin-bottom: 12px;
+  background: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--slate-100);
+}
+
+.submissions-breakdown-val {
+  color: var(--slate-900);
+}
+
+.submissions-remarks-box {
+  margin-top: 8px;
+}
+
+.submissions-remarks-text {
+  margin-top: 2px;
+  background: #fff;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--slate-200);
+  line-height: 1.5;
+}

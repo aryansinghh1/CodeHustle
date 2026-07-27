@@ -1,0 +1,47 @@
+.profile-edit-name-btn {
+  font-size: 14px;
+  padding: 4px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.profile-pen-icon {
+  color: var(--primary);
+}
+
+.profile-meta-verified-icon {
+  color: var(--success);
+  font-size: 12px;
+}
+
+.profile-social-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.profile-external-icon {
+  opacity: 0.6;
+}
+
+.profile-avatar-preview-wrapper {
+  width: 60px;
+  height: 60px;
+}
+
+.profile-avatar-preview-wrapper .profile-avatar-placeholder {
+  font-size: 24px;
+}
+
+.profile-skill-help-text {
+  margin-top: 2px;
+}
+
+.profile-edit-actions-row {
+  margin-top: 12px;
+}
+
+.profile-saving-spinner {
+  width: 16px;
+  height: 16px;
+}

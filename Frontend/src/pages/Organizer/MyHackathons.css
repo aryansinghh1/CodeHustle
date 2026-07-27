@@ -1,0 +1,32 @@
+.myhackathons-header-row {
+  margin-bottom: 32px;
+}
+
+.myhackathons-page-header {
+  margin-bottom: 0;
+}
+
+.myhackathons-card-title {
+  color: var(--slate-900);
+}
+
+.myhackathons-card-theme {
+  margin-top: 4px;
+}
+
+.myhackathons-meta-row {
+  margin-top: 8px;
+}
+
+.myhackathons-prize {
+  color: var(--slate-800);
+}
+
+.myhackathons-actions-row {
+  margin-top: 16px;
+}
+
+.myhackathons-btn-sm {
+  padding: 6px 12px;
+  font-size: 12px;
+}

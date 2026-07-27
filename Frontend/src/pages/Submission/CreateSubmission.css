@@ -1,0 +1,13 @@
+.create-sub-container {
+  max-width: 880px;
+}
+
+.create-sub-readonly-input {
+  background: var(--slate-50);
+  cursor: not-allowed;
+}
+
+.create-sub-submit-btn {
+  width: 100%;
+  margin-top: 12px;
+}
