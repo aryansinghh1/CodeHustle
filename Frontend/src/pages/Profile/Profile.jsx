@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import toast from "react-hot-toast";
 import {
   FaUserCircle,
@@ -16,12 +16,15 @@ import {
   FaExternalLinkAlt,
   FaCheckCircle,
   FaImage,
+  FaPen,
 } from "react-icons/fa";
 
 import MainLayout from "../../layouts/MainLayout";
 import api from "../../services/axios";
+import { useAuth } from "../../context/AuthContext";
 
 function Profile() {
+  const { updateUser: updateAuthUser } = useAuth();
   const [user, setUser] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -37,6 +40,8 @@ function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+
+  const nameInputRef = useRef(null);
 
   useEffect(() => {
     fetchProfile();
@@ -67,7 +72,7 @@ function Profile() {
     }
   };
 
-  const handleEditClick = () => {
+  const handleEditClick = (focusName = false) => {
     if (user) {
       setFormData({
         name: user.name || "",
@@ -82,6 +87,12 @@ function Profile() {
       });
     }
     setIsEditing(true);
+
+    if (focusName) {
+      setTimeout(() => {
+        nameInputRef.current?.focus();
+      }, 100);
+    }
   };
 
   const handleCancelEdit = () => {
@@ -94,6 +105,12 @@ function Profile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formData.name.trim()) {
+      toast.error("Name cannot be empty");
+      return;
+    }
+
     setSaving(true);
     try {
       const skillArray = formData.skills
@@ -104,7 +121,7 @@ function Profile() {
         : [];
 
       const payload = {
-        name: formData.name,
+        name: formData.name.trim(),
         college: formData.college,
         bio: formData.bio,
         github: formData.github,
@@ -116,6 +133,12 @@ function Profile() {
       const res = await api.put("/users/profile", payload);
       const updatedUser = res.data.user || { ...user, ...payload };
       setUser(updatedUser);
+
+      // Sync with AuthContext to update Navbar & global app state
+      if (updateAuthUser) {
+        updateAuthUser(updatedUser);
+      }
+
       toast.success("Profile updated successfully!");
       setIsEditing(false);
     } catch (err) {
@@ -198,7 +221,24 @@ function Profile() {
 
                   <div className="profile-user-info">
                     <div className="flex items-center gap-3 flex-wrap">
-                      <h1 className="profile-user-name">{user?.name || "User Profile"}</h1>
+                      <h1 className="profile-user-name flex items-center gap-2">
+                        {user?.name || "User Profile"}
+                        <button
+                          type="button"
+                          onClick={() => handleEditClick(true)}
+                          className="text-muted"
+                          style={{
+                            fontSize: "14px",
+                            padding: "4px",
+                            borderRadius: "50%",
+                            cursor: "pointer",
+                            transition: "all 0.2s ease",
+                          }}
+                          title="Click to edit name"
+                        >
+                          <FaPen style={{ color: "var(--primary)" }} />
+                        </button>
+                      </h1>
                       <span className={getRoleBadgeClass(user?.role)}>
                         {formatRoleName(user?.role)}
                       </span>
@@ -221,7 +261,7 @@ function Profile() {
                   </div>
                 </div>
 
-                <button onClick={handleEditClick} className="primary-btn">
+                <button onClick={() => handleEditClick(false)} className="primary-btn">
                   <FaEdit />
                   Edit Profile
                 </button>
@@ -341,7 +381,7 @@ function Profile() {
                   <FaEdit style={{ color: "var(--primary)" }} />
                   Edit Profile
                 </h2>
-                <p className="text-muted text-sm">Update your public details and social links</p>
+                <p className="text-muted text-sm">Update your personal details, name, and social links</p>
               </div>
 
               <button type="button" onClick={handleCancelEdit} className="outline-btn">
@@ -388,17 +428,21 @@ function Profile() {
               </div>
 
               <div className="form-grid">
-                {/* Name */}
+                {/* Full Name */}
                 <div className="form-group">
-                  <label className="form-label">Full Name *</label>
+                  <label className="form-label flex items-center gap-1">
+                    <FaUser style={{ color: "var(--primary)" }} />
+                    Full Name *
+                  </label>
                   <input
+                    ref={nameInputRef}
                     required
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     className="input"
-                    placeholder="John Doe"
+                    placeholder="Enter your name"
                   />
                 </div>
 
