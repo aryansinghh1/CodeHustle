@@ -100,7 +100,6 @@ function Listing() {
             ))}
           </div>
         )}
-
       </div>
     </MainLayout>
   );

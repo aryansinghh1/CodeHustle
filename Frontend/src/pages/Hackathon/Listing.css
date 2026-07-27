@@ -1,0 +1,21 @@
+.listing-filters-card {
+  margin-bottom: 32px;
+  padding: 20px;
+}
+
+.listing-search-wrapper {
+  position: relative;
+}
+
+.listing-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--slate-400);
+  font-size: 13px;
+}
+
+.listing-search-input {
+  padding-left: 38px;
+}

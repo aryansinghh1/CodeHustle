@@ -5,9 +5,6 @@ Frontend/dist/
 
 
 
-# Pages - Hackathon
-Frontend/src/pages/Hackathon/Listing.jsx
-Frontend/src/pages/Hackathon/Listing.css
 Frontend/src/pages/Hackathon/Details.jsx
 Frontend/src/pages/Hackathon/Details.css
 
