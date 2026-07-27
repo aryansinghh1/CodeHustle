@@ -4,11 +4,7 @@ Frontend/dist/
 
 
 
-Frontend/src/components/hackathon/HackathonForm.jsx
-
 # Components - Home
-Frontend/src/components/home/Hero.jsx
-Frontend/src/components/home/Hero.css
 Frontend/src/components/home/CTA.jsx
 Frontend/src/components/home/CTA.css
 Frontend/src/components/home/Stats.jsx
