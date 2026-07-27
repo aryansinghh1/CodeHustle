@@ -4,8 +4,6 @@ Frontend/dist/
 
 
 # Components - Layout
-Frontend/src/components/layout/Navbar.jsx
-Frontend/src/components/layout/Navbar.css
 Frontend/src/components/layout/Footer.jsx
 Frontend/src/components/layout/Footer.css
 

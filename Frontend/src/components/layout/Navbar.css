@@ -1,0 +1,16 @@
+.nav-login-btn {
+  padding: 8px 18px;
+}
+
+.nav-signup-btn {
+  padding: 8px 18px;
+}
+
+.nav-user-icon {
+  color: #64748b;
+}
+
+.nav-logout-btn {
+  padding: 8px 16px;
+  font-size: 13px;
+}

@@ -124,6 +124,7 @@ function Navbar() {
           )}
         </div>
       )}
+      
     </header>
   );
 }
