@@ -1,0 +1,30 @@
+.signup-brand-wrapper {
+  margin-bottom: 24px;
+}
+
+.signup-brand-title {
+  color: var(--slate-900);
+}
+
+.signup-heading {
+  color: var(--slate-900);
+}
+
+.signup-subheading {
+  margin-top: 4px;
+  margin-bottom: 24px;
+}
+
+.signup-submit-btn {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.signup-footer-text {
+  margin-top: 24px;
+}
+
+.signup-link {
+  color: var(--primary);
+  margin-left: 6px;
+}

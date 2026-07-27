@@ -3,8 +3,7 @@ node_modules
 Frontend/dist/
 
 
-Frontend/src/pages/Auth/Signup.jsx
-Frontend/src/pages/Auth/Signup.css
+
 
 # Pages - Hackathon
 Frontend/src/pages/Hackathon/Listing.jsx

@@ -103,9 +103,7 @@ function Signup() {
           Already have an account?
           <Link to="/login" className="font-bold signup-link">Sign in</Link>
         </p>
-
       </div>
-      
     </div>
   );
 }
