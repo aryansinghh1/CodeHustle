@@ -4,7 +4,7 @@ import { FaBan, FaCheckCircle, FaTrash } from "react-icons/fa";
 
 import MainLayout from "../../layouts/MainLayout";
 import Loader from "../../components/common/Loader";
-import { getAllUsers, blockUser, unblockUser, deleteUser } from "../../services/userService";
+import { getAllUsers, blockUser, unblockUser, deleteUser, updateUserRole } from "../../services/userService";
 import "./Users.css";
 
 function Users() {
@@ -17,6 +17,18 @@ function Users() {
   };
 
   useEffect(() => { fetchUsers(); }, []);
+
+  const handleRoleChange = async (id, newRole) => {
+    try {
+      await updateUserRole(id, newRole);
+      toast.success(`Role updated to ${newRole}`);
+      setUsers((prev) =>
+        prev.map((u) => (u._id === id ? { ...u, role: newRole } : u))
+      );
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to update role");
+    }
+  };
 
   const handleBlock = async (id) => {
     try { await blockUser(id); toast.success("User Blocked"); fetchUsers(); }
@@ -40,7 +52,7 @@ function Users() {
         <div className="page-header">
           <h1>Manage Users</h1>
           <div className="accent-bar" />
-          <p>View, block, and manage all platform users</p>
+          <p>View, block, change roles, and manage all platform users</p>
         </div>
 
         <div className="table-container">
@@ -55,36 +67,63 @@ function Users() {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
-                <tr key={user._id}>
-                  <td className="font-bold">{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>
-                    <span className="badge badge-purple">{user.role}</span>
-                  </td>
-                  <td>
-                    <span className={`badge ${user.isBlocked ? "badge-red" : "badge-green"}`}>
-                      {user.isBlocked ? "Blocked" : "Active"}
-                    </span>
-                  </td>
-                  <td>
-                    <div className="flex gap-2">
-                      {user.isBlocked ? (
-                        <button onClick={() => handleUnblock(user._id)} className="success-btn">
-                          <FaCheckCircle size={10} /> Unblock
-                        </button>
-                      ) : (
-                        <button onClick={() => handleBlock(user._id)} className="outline-btn admin-block-btn">
-                          <FaBan size={10} /> Block
-                        </button>
+              {users.map((user) => {
+                const isSuperiorAdmin = user.email === "aryan@gmail.com";
+                return (
+                  <tr key={user._id}>
+                    <td className="font-bold">
+                      {user.name}
+                      {isSuperiorAdmin && (
+                        <span className="badge badge-purple" style={{ marginLeft: "8px", fontSize: "10px" }}>
+                          Superior Admin
+                        </span>
                       )}
-                      <button onClick={() => handleDelete(user._id)} className="danger-btn">
-                        <FaTrash size={10} /> Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                    </td>
+                    <td>{user.email}</td>
+                    <td>
+                      <select
+                        value={user.role}
+                        onChange={(e) => handleRoleChange(user._id, e.target.value)}
+                        className={`role-select role-select-${user.role}`}
+                        disabled={isSuperiorAdmin}
+                        title={isSuperiorAdmin ? "Superior Admin role is protected" : "Click to change user role"}
+                      >
+                        <option value="participant">participant</option>
+                        <option value="organizer">organizer</option>
+                        <option value="judge">judge</option>
+                        <option value="admin">admin</option>
+                      </select>
+                    </td>
+                    <td>
+                      <span className={`badge ${user.isBlocked ? "badge-red" : "badge-green"}`}>
+                        {user.isBlocked ? "Blocked" : "Active"}
+                      </span>
+                    </td>
+                    <td>
+                      {isSuperiorAdmin ? (
+                        <span className="text-muted text-xs font-bold" style={{ opacity: 0.7 }}>
+                          Protected System Admin
+                        </span>
+                      ) : (
+                        <div className="flex gap-2">
+                          {user.isBlocked ? (
+                            <button onClick={() => handleUnblock(user._id)} className="success-btn">
+                              <FaCheckCircle size={10} /> Unblock
+                            </button>
+                          ) : (
+                            <button onClick={() => handleBlock(user._id)} className="outline-btn admin-block-btn">
+                              <FaBan size={10} /> Block
+                            </button>
+                          )}
+                          <button onClick={() => handleDelete(user._id)} className="danger-btn">
+                            <FaTrash size={10} /> Delete
+                          </button>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

@@ -13,6 +13,7 @@ import {
   unblockUser,
   deleteUser,
   getJudges,
+  updateUserRole,
 } from "../controllers/userController.js";
 
 const router = express.Router();
@@ -26,6 +27,8 @@ router.get("/judges", authMiddleware, roleMiddleware("organizer", "admin"), getJ
 router.get("/", authMiddleware, roleMiddleware("admin"), getAllUsers);
 
 router.get("/:id", authMiddleware, roleMiddleware("admin"), getUserById);
+
+router.put("/:id/role", authMiddleware, roleMiddleware("admin"), updateUserRole);
 
 router.put("/:id/block", authMiddleware, roleMiddleware("admin"), blockUser);
 

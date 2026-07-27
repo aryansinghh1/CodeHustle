@@ -82,6 +82,13 @@ export const blockUser = asyncHandler(async (req, res) => {
     });
   }
 
+  if (user.email === "aryan@gmail.com") {
+    return res.status(400).json({
+      success: false,
+      message: "Superior admin account cannot be blocked.",
+    });
+  }
+
   user.isBlocked = true;
 
   await user.save();
@@ -121,6 +128,13 @@ export const deleteUser = asyncHandler(async (req, res) => {
     return res.status(404).json({
       success: false,
       message: "User not found",
+    });
+  }
+
+  if (user.email === "aryan@gmail.com") {
+    return res.status(400).json({
+      success: false,
+      message: "Superior admin account cannot be deleted.",
     });
   }
 
@@ -174,5 +188,48 @@ export const getJudges = asyncHandler(async (req, res) => {
     success: true,
     count: judges.length,
     judges,
+  });
+});
+
+// Update User Role (Admin)
+export const updateUserRole = asyncHandler(async (req, res) => {
+  const { role } = req.body;
+  const allowedRoles = ["participant", "organizer", "judge", "admin"];
+
+  if (!role || !allowedRoles.includes(role)) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid role specified.",
+    });
+  }
+
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "User not found.",
+    });
+  }
+
+  if (user.email === "aryan@gmail.com") {
+    return res.status(400).json({
+      success: false,
+      message: "Superior admin role can only be changed manually in database.",
+    });
+  }
+
+  user.role = role;
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: `User role updated to ${role} successfully.`,
+    user: {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    },
   });
 });

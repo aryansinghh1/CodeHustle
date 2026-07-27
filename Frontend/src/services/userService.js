@@ -20,3 +20,6 @@ export const createUser = (data) =>
 
 export const getJudges = () =>
   api.get("/users/judges");
+
+export const updateUserRole = (id, role) =>
+  api.put(`/users/${id}/role`, { role });
