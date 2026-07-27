@@ -6,12 +6,24 @@
   margin-bottom: 0;
 }
 
+.myhackathons-card {
+  width: 100%;
+  padding: 20px 24px;
+  border-radius: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.myhackathons-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
 .myhackathons-card-title {
   color: var(--slate-900);
+  margin: 0;
 }
 
 .myhackathons-card-theme {
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 .myhackathons-meta-row {
@@ -19,14 +31,21 @@
 }
 
 .myhackathons-prize {
-  color: var(--slate-800);
+  color: var(--primary, #2563eb);
+  background: rgba(37, 99, 235, 0.08);
+  padding: 4px 10px;
+  border-radius: 20px;
 }
 
 .myhackathons-actions-row {
-  margin-top: 16px;
+  margin-top: 0;
 }
 
 .myhackathons-btn-sm {
-  padding: 6px 12px;
-  font-size: 12px;
+  padding: 8px 14px;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
+

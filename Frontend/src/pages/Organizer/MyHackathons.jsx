@@ -44,30 +44,30 @@ function MyHackathons() {
         {hackathons.length === 0 ? (
           <EmptyState title="No Hackathons Created" subtitle="Create your first hackathon to get started." actionLabel="Create Hackathon" actionTo="/organizer/create-hackathon" />
         ) : (
-          <div className="grid grid-3 gap-4">
+          <div className="flex flex-col gap-4">
             {hackathons.map((h) => (
-              <div key={h._id} className="data-card flex flex-col justify-between">
-                <div>
-                  <h2 className="text-lg font-bold myhackathons-card-title">{h.title}</h2>
-                  <p className="text-xs text-muted myhackathons-card-theme">{h.theme}</p>
-                  <div className="flex items-center gap-2 myhackathons-meta-row">
+              <div key={h._id} className="data-card myhackathons-card flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div className="myhackathons-card-main flex-1">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <h2 className="text-xl font-bold myhackathons-card-title">{h.title}</h2>
                     <span className="badge badge-blue">{h.mode}</span>
-                    <span className="text-xs font-bold myhackathons-prize">₹ {h.prizePool}</span>
+                    <span className="text-sm font-bold myhackathons-prize">₹ {h.prizePool}</span>
                   </div>
+                  {h.theme && <p className="text-sm text-muted myhackathons-card-theme">{h.theme}</p>}
                 </div>
 
-                <div className="flex gap-2 flex-wrap myhackathons-actions-row">
+                <div className="flex gap-2 flex-wrap items-center myhackathons-actions-row">
                   <Link to={`/organizer/submissions/${h._id}`} className="primary-btn myhackathons-btn-sm">
                     <FaFolderOpen size={11} /> Submissions & Reviews
                   </Link>
                   <Link to={`/leaderboard/${h._id}`} className="secondary-btn myhackathons-btn-sm">
                     <FaTrophy size={11} /> Leaderboard
                   </Link>
-                  <Link to={`/organizer/edit-hackathon/${h._id}`} className="outline-btn myhackathons-btn-sm">
-                    <FaEdit size={11} /> Edit
-                  </Link>
                   <Link to={`/organizer/registrations/${h._id}`} className="outline-btn myhackathons-btn-sm">
                     <FaClipboardList size={11} /> Registrations
+                  </Link>
+                  <Link to={`/organizer/edit-hackathon/${h._id}`} className="outline-btn myhackathons-btn-sm">
+                    <FaEdit size={11} /> Edit
                   </Link>
                   <button onClick={() => handleDelete(h._id)} className="danger-btn myhackathons-btn-sm">
                     <FaTrash size={11} /> Delete
@@ -76,7 +76,6 @@ function MyHackathons() {
               </div>
             ))}
           </div>
-          
         )}
       </div>
     </MainLayout>
