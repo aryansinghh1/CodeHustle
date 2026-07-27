@@ -3,12 +3,6 @@ node_modules
 Frontend/dist/
 
 
-
-# Components - Home
-
-Frontend/src/components/home/WhyChoose.jsx
-Frontend/src/components/home/WhyChoose.css
-
 # Components - Layout
 Frontend/src/components/layout/Navbar.jsx
 Frontend/src/components/layout/Navbar.css

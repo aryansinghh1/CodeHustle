@@ -1,0 +1,49 @@
+.whychoose-section {
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+.whychoose-header {
+  max-width: 600px;
+  margin: 0 auto 36px;
+}
+
+.whychoose-badge {
+  margin-bottom: 8px;
+}
+
+.whychoose-title {
+  color: var(--slate-900);
+}
+
+.whychoose-subtitle {
+  margin-top: 4px;
+}
+
+.whychoose-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.whychoose-card-title {
+  color: var(--slate-900);
+  margin-bottom: 8px;
+}
+
+.whychoose-card-desc {
+  line-height: 1.6;
+}
+
+.whychoose-icon-primary { color: var(--primary); }
+.whychoose-icon-purple { color: var(--purple); }
+.whychoose-icon-warning { color: var(--warning); }
+.whychoose-icon-success { color: var(--success); }
+.whychoose-icon-sky { color: #0284c7; }
+.whychoose-icon-danger { color: var(--danger); }

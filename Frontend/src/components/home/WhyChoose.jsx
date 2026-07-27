@@ -33,6 +33,7 @@ function WhyChoose() {
           </div>
         ))}
       </div>
+      
     </section>
   );
 }
